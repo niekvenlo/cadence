@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BasicLink renders a basic active link 1`] = `
+<a
+  class="sc-4cae7736-0 hfrOSG"
+  href="/active"
+>
+  label
+</a>
+`;
+
+exports[`BasicLink renders a basic link 1`] = `
+<a
+  class="sc-4cae7736-1 eCutai"
+  href="/not-active"
+>
+  label
+</a>
+`;

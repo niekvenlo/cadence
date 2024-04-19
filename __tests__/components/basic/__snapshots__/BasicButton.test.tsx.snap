@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BasicButton renders a basic button 1`] = `
+<button
+  class="sc-9ffb4d86-0 cuoYYw"
+>
+  label
+</button>
+`;
+
+exports[`BasicButton renders a primary button 1`] = `
+<button
+  class="sc-9ffb4d86-0 gvMhcg"
+>
+  label
+</button>
+`;

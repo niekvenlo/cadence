@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BasicPill renders a pill 1`] = `
+<span
+  class="sc-3e6d2b04-0 jMqrYW"
+>
+  label
+</span>
+`;

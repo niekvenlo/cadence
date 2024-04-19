@@ -1,0 +1,68 @@
+:root {
+  --hue: 100;
+  --foreground-hsl: 250 50% 40%;
+  --background-hsl: 100 20% 90%;
+}
+
+:root:has(dialog[open]) {
+  overflow: hidden;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-hsl: 200 50% 60%;
+    --background-hsl: 200 50% 10%;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  background: hsl(var(--background-hsl));
+  color: hsl(var(--foreground-hsl));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+main {
+  padding-inline: 3em;
+}
+
+p {
+  padding-block: 0.2em;
+}
+
+dialog[open] {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  left: 50%;
+  padding: 3em;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+dialog::backdrop {
+  background: hsl(var(--foreground-hsl));
+  opacity: 0.75;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
