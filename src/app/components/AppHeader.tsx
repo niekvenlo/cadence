@@ -28,6 +28,7 @@ function AppHeader() {
         <BasicLink href="/">Home</BasicLink>
         <BasicLink href="/about">About</BasicLink>
         <BasicLink href="/contact">Contact</BasicLink>
+        <BasicLink href="/chinese">Chinese</BasicLink>
       </Links>
     </AppHeaderWrapper>
   );

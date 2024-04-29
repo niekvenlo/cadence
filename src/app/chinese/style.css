@@ -1,0 +1,25 @@
+.sentence {
+  display: flex;
+  justify-content: center;
+}
+
+.sentence .one {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  transition: all;
+  transition-duration: 2000;
+}
+
+.sentence .pinyin {
+  opacity: 0.1;
+}
+
+.sentence .pinyin:hover {
+  opacity: 0.6;
+}
+
+.sentence .one .unique {
+  border-bottom: 1px solid blue;
+}
