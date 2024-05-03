@@ -1,15 +1,24 @@
-type One = {
+export type Word = {
   kanji: string;
   pinyin: string;
   defs?: string[];
-}[];
+};
+export type Split = {
+  first: string;
+  second: string;
+  pinyin: string;
+};
+export type One = Word[];
 
-type Sentence = One[];
+export type Sentence = One[];
 
-const _: { [char: string]: One } = {
+export const chars: { [char: string]: One } = {
   不: [{ kanji: "不", pinyin: "bu" }],
   的: [{ kanji: "的", pinyin: "de" }],
   在: [{ kanji: "在", pinyin: "zai" }],
+  是: [{ kanji: "是", pinyin: "shi" }],
+  什么: [{ kanji: "什么", pinyin: "shenme" }],
+  是什么: [{ kanji: "是什么", pinyin: "shishenme" }], //
 };
 
 export const pronoun: One = [
@@ -37,9 +46,9 @@ export const relative: One = [
   { kanji: "叔叔", pinyin: "shushu", defs: ["noun: uncle"] },
 ];
 
-export const relation = [pronoun, _.的, relative];
+export const relation = [pronoun, chars.的, relative];
 
-export const person = [...pronoun, ...acquaintance, ...relative];
+export const person: One = [...pronoun, ...acquaintance, ...relative];
 
 export const verb: One = [
   { kanji: "看", pinyin: "kan" },
@@ -50,6 +59,10 @@ export const verb: One = [
   { kanji: "需要", pinyin: "xuyao" },
   { kanji: "喜欢", pinyin: "xihuan" },
   { kanji: "最喜欢", pinyin: "zuixihuan" },
+];
+export const splitVerb: Split[] = [
+  { first: "刷", second: "牙", pinyin: "shua ya" },
+  { first: "跳", second: "舞", pinyin: "tiao wu" },
 ];
 
 export const animal: One = [
@@ -71,6 +84,11 @@ export const object: One = [
   { kanji: "杯子", pinyin: "beizi" },
 ];
 
+export const adjective: One = [
+  { kanji: "冷", pinyin: "leng" },
+  { kanji: "热", pinyin: "re" },
+];
+
 export const thing = [...animal, ...food, ...object];
 
 export const position: One = [
@@ -85,15 +103,20 @@ export const position: One = [
   { kanji: "对面", pinyin: "duimian", defs: ["across from"] },
 ];
 
+export const type: One = [
+  { kanji: "颜色", pinyin: "yanse" },
+  { kanji: "形状", pinyin: "xíngzhuàng" },
+];
+
 export const sentenceStructures: Sentence[] = [
-  [person, _.在, object, position, verb, object],
+  [person, chars.在, object, position, verb, object],
   [...relation, verb, object],
   [person, verb, object],
-  [pronoun, _.的, relative, verb, thing],
-  [person, _.不, verb, object],
+  [pronoun, chars.的, relative, verb, thing],
+  [person, chars.不, verb, object],
   [animal, verb, person],
-  [_.在, object, position],
+  [chars.在, object, position],
   [person, verb, relative],
-  [pronoun, verb, relative, _.的, acquaintance],
-  [pronoun, verb, acquaintance, _.的, [...acquaintance, ...relative]],
+  [pronoun, verb, relative, chars.的, acquaintance],
+  [pronoun, verb, acquaintance, chars.的, [...acquaintance, ...relative]],
 ];

@@ -38,7 +38,7 @@ a {
 }
 
 main {
-  padding-inline: 3em;
+  padding-inline: calc(10vw - 30px);
 }
 
 p {

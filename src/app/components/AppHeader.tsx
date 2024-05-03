@@ -7,6 +7,7 @@ import BasicLink from "./basic/BasicLink";
 const AppHeaderWrapper = styled.header`
   align-items: center;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   padding: 3em;
   width: 100%;
@@ -17,7 +18,7 @@ const Links = styled.header`
   flew-wrap: wrap;
   gap: 0.5em;
   justify-content: space-between;
-  min=width: 30em;
+  max-width: 30em;
 `;
 
 function AppHeader() {

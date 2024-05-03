@@ -1,0 +1,34 @@
+.sentence {
+  display: flex;
+  justify-content: center;
+}
+
+.sentence .one {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.sentence .pinyin {
+  opacity: 0.1;
+  word-spacing: 700%;
+  -webkit-user-select: none;
+}
+
+.sentence .pinyin:hover {
+  opacity: 0.6;
+}
+
+.sentence .one .unique {
+  border-bottom: 1px solid blue;
+  cursor: default;
+}
+
+.sentence .one .split:hover {
+  border-top: 1px solid blue;
+}
+
+.nowhitespace {
+  white-space: nowrap;
+}

@@ -1,19 +1,51 @@
+button.reload {
+  user-select: all;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 2rem;
+  padding: 0.1em 2.5em 0.1em 0.5em;
+}
+
 .sentence {
+  padding: 0.2em;
+  font-size: 2em;
+}
+.sentence > div {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
 .sentence .one {
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
-  transition: all;
-  transition-duration: 2000;
+}
+
+.sentence .fullstop-wrapper {
+  display: inline-flex;
+}
+
+.sentence .full-stop button {
+  user-select: all;
+  padding-inline-end: 0.6em;
+  background: none;
+  border: none;
+  color: currentColor;
+  cursor: pointer;
+  font-size: 2rem;
+}
+
+.sentence .one .chars {
+  cursor: pointer;
 }
 
 .sentence .pinyin {
-  opacity: 0.1;
+  font-size: 0.8rem;
+  opacity: 0.09;
+  padding-bottom: 0.2em;
+  -webkit-user-select: none;
 }
 
 .sentence .pinyin:hover {
@@ -22,4 +54,13 @@
 
 .sentence .one .unique {
   border-bottom: 1px solid blue;
+  cursor: default;
+}
+
+.sentence .one .split:hover {
+  border-top: 1px solid blue;
+}
+
+.nowhitespace {
+  white-space: nowrap;
 }
