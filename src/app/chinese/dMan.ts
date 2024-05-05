@@ -16,22 +16,26 @@ export type Role =
   | "LongColour"
   | "LongPosition"
   | "Occupation"
-  | "We"
+  | "PersonAdjective"
   | "Place"
   | "Position"
-  | "WeOrThey"
   | "PropertyOfObject"
   | "PvpVerb"
   | "Relative"
   | "Sometimes"
+  | "SplitConcept"
   | "SplitVerb"
   | "These"
   | "There"
+  | "That"
   | "Thing"
   | "Time"
+  | "Times"
   | "TimeNotPast"
   | "Vehicle"
-  | "Verb";
+  | "Verb"
+  | "We"
+  | "WeOrThey";
 export type W = {
   kanji: string | string[];
   pinyin: string | string[];
@@ -49,36 +53,37 @@ const dMan: {
     defs?: string[];
   };
 } = {
-  零: { pinyin: "líng", roles: ["Number"] },
-  一: { pinyin: "yi", roles: ["Number"] },
+  零: { pinyin: "líng", roles: ["Number", "Times"] },
+  一: { pinyin: "yi", roles: ["Number", "Times"] },
+  二: { pinyin: "èr", roles: ["Times"] },
   两: { pinyin: "liǎng", roles: ["Number"] },
-  三: { pinyin: "san", roles: ["Number"] },
-  四: { pinyin: "si", roles: ["Number"] },
-  五: { pinyin: "wu", roles: ["Number"] },
-  六: { pinyin: "liu", roles: ["Number"] },
-  七: { pinyin: "qi", roles: ["Number"] },
-  八: { pinyin: "ba", roles: ["Number"] },
-  九: { pinyin: "jiu", roles: ["Number"] },
-  十: { pinyin: "shí", roles: ["Number"] },
-  十一: { pinyin: "shíyi", roles: ["Number"] },
-  十两: { pinyin: "shíliǎng", roles: ["Number"] },
-  十三: { pinyin: "shísan", roles: ["Number"] },
-  十四: { pinyin: "shísi", roles: ["Number"] },
-  十五: { pinyin: "shíwu", roles: ["Number"] },
-  十六: { pinyin: "shíliu", roles: ["Number"] },
-  十七: { pinyin: "shíqi", roles: ["Number"] },
-  十八: { pinyin: "shíba", roles: ["Number"] },
-  十九: { pinyin: "shíjiu", roles: ["Number"] },
-  二十: { pinyin: "èrshí", roles: ["Number"] },
-  三十: { pinyin: "sanshí", roles: ["Number"] },
-  四十: { pinyin: "sishí", roles: ["Number"] },
-  五十: { pinyin: "wushí", roles: ["Number"] },
-  六十: { pinyin: "liushí", roles: ["Number"] },
-  七十: { pinyin: "qishí", roles: ["Number"] },
-  八十: { pinyin: "bashí", roles: ["Number"] },
-  九十: { pinyin: "jiushí", roles: ["Number"] },
-  百: { pinyin: "bǎi", roles: ["Number"] },
-  千: { pinyin: "qiān", roles: ["Number"] },
+  三: { pinyin: "san", roles: ["Number", "Times"] },
+  四: { pinyin: "si", roles: ["Number", "Times"] },
+  五: { pinyin: "wu", roles: ["Number", "Times"] },
+  六: { pinyin: "liu", roles: ["Number", "Times"] },
+  七: { pinyin: "qi", roles: ["Number", "Times"] },
+  八: { pinyin: "ba", roles: ["Number", "Times"] },
+  九: { pinyin: "jiu", roles: ["Number", "Times"] },
+  十: { pinyin: "shí", roles: ["Number", "Times"] },
+  十一: { pinyin: "shíyi", roles: ["Number", "Times"] },
+  十二: { pinyin: "shí'èr", roles: ["Number", "Times"] },
+  十三: { pinyin: "shísan", roles: ["Number", "Times"] },
+  十四: { pinyin: "shísi", roles: ["Number", "Times"] },
+  十五: { pinyin: "shíwu", roles: ["Number", "Times"] },
+  十六: { pinyin: "shíliu", roles: ["Number", "Times"] },
+  十七: { pinyin: "shíqi", roles: ["Number", "Times"] },
+  十八: { pinyin: "shíba", roles: ["Number", "Times"] },
+  十九: { pinyin: "shíjiu", roles: ["Number", "Times"] },
+  二十: { pinyin: "èrshí", roles: ["Number", "Times"] },
+  三十: { pinyin: "sanshí", roles: ["Number", "Times"] },
+  四十: { pinyin: "sishí", roles: ["Number", "Times"] },
+  五十: { pinyin: "wushí", roles: ["Number", "Times"] },
+  六十: { pinyin: "liushí", roles: ["Number", "Times"] },
+  七十: { pinyin: "qishí", roles: ["Number", "Times"] },
+  八十: { pinyin: "bashí", roles: ["Number", "Times"] },
+  九十: { pinyin: "jiushí", roles: ["Number", "Times"] },
+  一百: { pinyin: "yibǎi", roles: ["Number", "Times"] },
+  一千: { pinyin: "yiqiān", roles: ["Number", "Times"] },
 
   "。": { pinyin: ".", roles: ["Char"] },
   "，": { pinyin: ",", roles: ["Char"] },
@@ -91,7 +96,6 @@ const dMan: {
   是: { pinyin: "shi", roles: ["Char"] },
   什么: { pinyin: "shenme", roles: ["Char"] },
   哪: { pinyin: "nǎ", roles: ["Char"] },
-  那: { pinyin: "nà", roles: ["Char"] },
   了: { pinyin: "le", roles: ["Char"] },
   位: { pinyin: "wèi", roles: ["Char"] },
   会: { pinyin: "huì", roles: ["Char"] },
@@ -102,6 +106,8 @@ const dMan: {
   所: { pinyin: "suǒ", roles: ["Char"] },
   和: { pinyin: "hé", roles: ["Char"] },
   能: { pinyin: "néng", roles: ["Char"] },
+  块钱: { pinyin: "kuài qián", roles: ["Char"] },
+  决定: { pinyin: "juédìng", roles: ["Char"] },
 
   我: { pinyin: "wo", roles: ["Anyone", "WeOrThey", "We"] },
   你: { pinyin: "ni", roles: ["Anyone", "WeOrThey", "We"] },
@@ -115,7 +121,9 @@ const dMan: {
   她们: { pinyin: "tamen", roles: ["Anyone", "WeOrThey"] },
   它们: { pinyin: "tamen", roles: ["WeOrThey"] },
 
-  朋友: { pinyin: "pengyou", roles: ["Anyone", "Acquaintance"] },
+  朋友: { pinyin: "péngyǒu", roles: ["Anyone", "Acquaintance"] },
+  男朋友: { pinyin: "nan péngyǒu", roles: ["Anyone", "Acquaintance"] },
+  女朋友: { pinyin: "nǚ péngyǒu", roles: ["Anyone", "Acquaintance"] },
   老师: {
     pinyin: "laoshi",
     roles: ["Anyone", "Acquaintance", "Occupation"],
@@ -147,12 +155,15 @@ const dMan: {
   猪: { pinyin: "zhū", roles: ["Thing", "Animal"], measure: "只" },
   牛: { pinyin: "niú", roles: ["Thing", "Animal"], measure: "只" },
   羊: { pinyin: "yáng", roles: ["Thing", "Animal"], measure: "只" },
+  老虎: { pinyin: "lǎohǔ", roles: ["Thing", "Animal"], measure: "只" },
   动物: { pinyin: "dongwu", roles: ["Thing", "Animal"], measure: "只" },
 
+  东西: { pinyin: "dōngxī", roles: ["Thing"] },
   菜单: { pinyin: "càidān", roles: ["Thing"] },
   筷子: { pinyin: "kuàizi", roles: ["Thing"] },
   钥匙: { pinyin: "yàoshi", roles: ["Thing"] },
   书: { pinyin: "shū", roles: ["Thing"] },
+  地图: { pinyin: "dìtú", roles: ["Thing"] },
   植物: { pinyin: "zhíwù", roles: ["Thing"] },
 
   水: { pinyin: "shuǐ", roles: ["Thing", "Drink"] },
@@ -180,22 +191,21 @@ const dMan: {
   汽车: { pinyin: "qìchē", roles: ["Thing", "Vehicle", "Container"] },
   飞机: { pinyin: "fēijī", roles: ["Thing", "Vehicle", "Container"] },
   火车: { pinyin: "huǒchē", roles: ["Thing", "Vehicle", "Container"] },
+  地铁: { pinyin: "dìtiě", roles: ["Thing", "Vehicle", "Container"] },
   自行车: { pinyin: "zìxíngchē", roles: ["Thing", "Vehicle"] },
 
   外面: { pinyin: "wàimiàn", roles: ["Place"] },
   城市: { pinyin: "chéngshì", roles: ["Place"] },
+  公园: { pinyin: "gōngyuán", roles: ["Place"] },
   中国: { pinyin: "zhōngguó", roles: ["Place"] },
   荷兰: { pinyin: "hélán", roles: ["Place"] },
   马来西亚: { pinyin: "mǎláixīyà", roles: ["Place"] },
 
   //
+  家: { pinyin: "jiā", roles: ["Place", "NumberPlace", "Container"] },
   饭馆: { pinyin: "fànguǎn", roles: ["Place", "NumberPlace", "Container"] },
   医院: { pinyin: "yīyuàn", roles: ["Place", "NumberPlace", "Container"] },
-  宠物店: {
-    pinyin: "chǒngwù diàn",
-    roles: ["Place", "NumberPlace", "Container"],
-  },
-  鞋店: { pinyin: "xié diàn", roles: ["Place", "NumberPlace", "Container"] },
+  森林: { pinyin: "sēnlín", roles: ["Place", "NumberPlace", "Container"] },
   商店: {
     pinyin: "shāngdiàn",
     roles: ["Thing", "Place", "NumberPlace", "Container"],
@@ -243,8 +253,12 @@ const dMan: {
   热: { pinyin: "re", roles: ["Adjective", "FoodAdjective"] },
   高: { pinyin: "gao", roles: ["Adjective"] },
   矮: { pinyin: "ai", roles: ["Adjective"] },
-  漂亮: { pinyin: "piàoliang", roles: ["Adjective"] },
   高兴: { pinyin: "gāoxìng", roles: ["Adjective"] },
+  漂亮: { pinyin: "piàoliang", roles: ["Adjective", "PersonAdjective"] },
+  好看: { pinyin: "haokan", roles: ["PersonAdjective"] },
+  累: { pinyin: "lei", roles: ["PersonAdjective"] },
+  忙: { pinyin: "mang", roles: ["PersonAdjective"] },
+  不错: { pinyin: "bucao", roles: ["PersonAdjective"] },
 
   红: { pinyin: "hóng", roles: ["Colour"] },
   蓝: { pinyin: "lán", roles: ["Colour"] },
@@ -262,6 +276,9 @@ const dMan: {
   颜色: { pinyin: "yanse", roles: ["PropertyOfObject"] },
   形状: { pinyin: "xíngzhuàng", roles: ["PropertyOfObject"] },
 
+  这: { pinyin: "zhège", roles: ["That"] },
+  那: { pinyin: "nàgè", roles: ["That", "Char"] },
+
   这个: { pinyin: "zhège", roles: ["These"] },
   这些: { pinyin: "zhèxiē", roles: ["These"] },
   那个: { pinyin: "nàgè", roles: ["These"] },
@@ -273,6 +290,7 @@ const dMan: {
   这里: { pinyin: "zhèlǐ", roles: ["There", "Place"] },
 
   经常: { pinyin: "jīngcháng", roles: ["Sometimes"] },
+  常常: { pinyin: "chángcháng", roles: ["Sometimes"] },
   有时: { pinyin: "yǒushí", roles: ["Sometimes"] },
   总是: { pinyin: "zǒng shì", roles: ["Sometimes"] },
 
@@ -294,7 +312,16 @@ const dMan: {
   周四: { pinyin: "zhōu sì", roles: ["Time", "TimeNotPast"] },
   周五: { pinyin: "zhōu wu", roles: ["Time", "TimeNotPast"] },
   周六: { pinyin: "zhōuliu", roles: ["Time", "TimeNotPast"] },
-  周七: { pinyin: "zhōuqi", roles: ["Time", "TimeNotPast"] },
+  周日: { pinyin: "zhōu rì", roles: ["Time", "TimeNotPast"] },
+  周末: { pinyin: "zhōumò", roles: ["Time", "TimeNotPast"] },
+
+  星期一: { pinyin: "xīngqí yī", roles: ["Time", "TimeNotPast"] },
+  星期二: { pinyin: "xīngqí'èr", roles: ["Time", "TimeNotPast"] },
+  星期三: { pinyin: "xīngqí sān", roles: ["Time", "TimeNotPast"] },
+  星期四: { pinyin: "xīngqí sì", roles: ["Time", "TimeNotPast"] },
+  星期五: { pinyin: "xīngqí wu", roles: ["Time", "TimeNotPast"] },
+  星期六: { pinyin: "xīngqí liu", roles: ["Time", "TimeNotPast"] },
+  星期日: { pinyin: "xīngqí rì", roles: ["Time", "TimeNotPast"] },
 
   一点钟: { pinyin: "yīdiǎn zhōng", roles: ["Time", "TimeNotPast"] },
   一点半: { pinyin: "yīdiǎn bàn", roles: ["Time", "TimeNotPast"] },
@@ -334,6 +361,8 @@ const dMan: {
   送: { pinyin: "sòng", roles: ["Char", "GiveVerb"] },
   明白: { pinyin: "míngbái", roles: ["Char", "PvpVerb"] },
   懂: { pinyin: "dǒng", roles: ["Char", "PvpVerb"] },
+  来: { pinyin: "lái", roles: ["Char", "PvpVerb"] },
+  忘记: { pinyin: "wàngjì", roles: ["Char", "Verb"] },
   // 叫
   找: { pinyin: "zhǎo", roles: ["Verb"] },
   找到: { pinyin: "zhǎodào", roles: ["Verb"] },
@@ -348,12 +377,14 @@ const dMan: {
     roles: ["SplitVerb"],
     split: ["喝", "咖啡"],
   },
+  第次: { pinyin: ["di", "ci"], roles: ["SplitConcept"], split: ["第", "次"] },
 
   因为: { pinyin: "yīnwèi", roles: ["Conjunction"] },
   所以: { pinyin: "suǒyǐ", roles: ["Conjunction"] },
   然后: { pinyin: "ránhòu", roles: ["Conjunction"] },
   而且: { pinyin: "érqiě", roles: ["Conjunction"] },
   但是: { pinyin: "dànshì", roles: ["Conjunction"] },
+  当然: { pinyin: "dāngrán", roles: ["Conjunction"] },
 };
 
 /**
@@ -389,4 +420,5 @@ export const getWordsByRole = (role: Role) => {
 export const getWordByChar = (char: string): W => ({
   kanji: char,
   pinyin: dMan[char]?.pinyin || char,
+  split: dMan[char]?.split,
 });

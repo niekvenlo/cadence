@@ -14,6 +14,10 @@ const FullStop = ({ onDoubleClick }) => (
   </span>
 );
 
+export const Paragraph = ({ children }: { children: ReactNode }) => (
+  <>{children}</>
+);
+
 export const Sentence = ({ children }: { children: ReactNode }) => {
   const { reload, key } = useReload();
   const numChildren = Children.count(children);
@@ -23,7 +27,7 @@ export const Sentence = ({ children }: { children: ReactNode }) => {
       return child;
     }
     return (
-      <span className="fullstop-wrapper">
+      <span className="fullstop-wrapper" key={key}>
         {child}
         <FullStop onDoubleClick={reload} />
       </span>
@@ -44,7 +48,6 @@ const Foncept = ({
   onClick?: () => void;
   unique?: boolean;
   style: { color: string };
-  children?: ReactNode;
 }) => {
   return (
     <div className="one">
@@ -114,17 +117,20 @@ const Concept = ({
   );
 };
 
-export const Char = ({ is }: { is: string }) => (
-  <Concept unique word={getWordByChar(is)} />
-);
-
-export const C = (props: { [key: string]: boolean }) => {
-  let char = Object.keys(props).toString();
+export const C = (
+  props: { [key: string]: boolean } | { children?: ReactNode }
+) => {
+  // get prop names, but not 'children'
+  let char = Object.keys(props).toString().replace(",children", "");
   if (char == "" || char === "comma") {
     char = "，";
   }
 
-  return <Concept unique word={getWordByChar(char)} />;
+  return (
+    <Concept unique word={getWordByChar(char)}>
+      {props.children}
+    </Concept>
+  );
 };
 
 export const X = ({
@@ -140,12 +146,13 @@ export const X = ({
   const [idx, increment] = useRandomIdx();
   const safeIdx = idx % wordsList.length;
   const word = wordsList[safeIdx];
+  const isSplit = role === "SplitConcept" || role === "SplitVerb";
   const isSplitVerb = role === "SplitVerb";
   const isAdjective = ["Adjective", "LongColour", "Colour"].includes(
     role || ""
   );
   const isMultiCharKanji = word.kanji.length > 1;
-  const put的Before = children && !isSplitVerb;
+  const put的Before = children && !isSplit;
   const put的After =
     (children && isSplitVerb) || (isAdjective && isMultiCharKanji);
   return (
@@ -153,13 +160,13 @@ export const X = ({
       {number && (
         <>
           <$.Number />
-          <Char is={word.measure || "个"} />
+          {word.measure ? <C {...{ [word.measure]: true }} /> : <C 个 />}
         </>
       )}
       <Concept unique={wordsList.length === 1} word={word} onClick={increment}>
-        {put的Before && <Char is="的" />}
+        {put的Before && <C 的 />}
         {children}
-        {put的After && <Char is="的" />}
+        {put的After && <C 的 />}
       </Concept>
     </>
   );
@@ -168,7 +175,7 @@ export const X = ({
 const useRandomIdx = () => {
   const r = Math.floor(Math.random() * 100);
   const [idx, setIdx] = useState(r);
-  const increment = () => setIdx((idx) => idx + 7);
+  const increment = () => setIdx((idx) => idx + 1);
   return [idx, increment] as [number, () => void];
 };
 

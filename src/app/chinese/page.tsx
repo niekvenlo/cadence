@@ -1,11 +1,11 @@
 "use client";
 
 import NoSSR from "../components/NoSSR";
-import { Sentence, $, C, useReload } from "./components";
+import { Paragraph, Sentence, $, C, useReload } from "./components";
 import "./style.css";
 
 export default function Chinese() {
-  const { reload } = useReload();
+  const { reload, key } = useReload();
   const sentenceVariants = [
     () => {
       // const animal = <$.Animal />;
@@ -77,6 +77,12 @@ export default function Chinese() {
       <$.FoodAdjective />
       <$.Drink />
     </Sentence>,
+    <Sentence key="{anyone}决定喝{drink}">
+      <$.Anyone />
+      <C 决定 />
+      <C 喝 />
+      <$.Drink />
+    </Sentence>,
     <Sentence key="{anyone}{sometimes}{split-verb(person)}">
       <$.Anyone />
       <$.Sometimes />
@@ -94,11 +100,15 @@ export default function Chinese() {
       <$.Verb />
       <$.Food />
     </Sentence>,
-    <Sentence key="{these}{relative}{verb}{anyone}">
+    <Sentence key="{anyone}{verb}{anyone}">
+      <$.Anyone />
+      <$.Verb />
+      <$.Anyone />
+    </Sentence>,
+    <Sentence key="{these}{relative}{verb}">
       <$.These />
       <$.Relative />
       <$.Verb />
-      <$.Anyone />
     </Sentence>,
     <Sentence key="{anyone}{verb}{container}{conjunction}{animal}喝{drink}">
       <$.Anyone />
@@ -146,8 +156,7 @@ export default function Chinese() {
       <$.Verb />
       <$.Food />
     </Sentence>,
-    <Sentence key="{sometimes}{anyone}{verb}{food}">
-      <$.Sometimes />
+    <Sentence key="{anyone}{sometimes}{verb}{food}">
       <$.Anyone />
       <$.Verb />
       <$.Food />
@@ -211,9 +220,52 @@ export default function Chinese() {
       <$.Container />
       <$.Position />
     </Sentence>,
+    <Sentence key="{anyone}很{person-adjective}">
+      <$.Anyone />
+      <C 很 />
+      <$.PersonAdjective />
+    </Sentence>,
+    <Sentence key="{that}是{anyone(thing)}">
+      <$.That />
+      <C 是 />
+      <$.Anyone>
+        <$.Thing />
+      </$.Anyone>
+      <C 吗 />
+    </Sentence>,
+    <Sentence key="{number}块钱">
+      <$.Number />
+      <C 块钱 />
+    </Sentence>,
+
+    <Paragraph key="{number}">
+      <Sentence>
+        <$.That />
+        <C 是 />
+        <C 叫 />
+        <C 什么 />
+      </Sentence>
+      <Sentence>
+        <$.That />
+        <C 是 />
+        <C 叫 />
+        <$.Thing />
+      </Sentence>
+    </Paragraph>,
+    <Sentence key="{">
+      <$.SplitConcept>
+        <$.Number />
+      </$.SplitConcept>
+    </Sentence>,
+    <Sentence key="第九十次">
+      <C 第次>
+        <$.Times />
+      </C>
+    </Sentence>,
   ]
     .sort(() => 0.5 - Math.random())
     .sort(() => 0.5 - Math.random())
+    .slice(0, 20)
     .map((variant) => {
       if (variant instanceof Function) {
         return variant();
@@ -222,7 +274,7 @@ export default function Chinese() {
     });
   return (
     <NoSSR>
-      <main>
+      <main key={key}>
         <div className="sentence">
           <button className="reload" onClick={reload} aria-label="Refresh text">
             ✨

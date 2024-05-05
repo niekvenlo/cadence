@@ -43,9 +43,9 @@ button.reload {
 
 .sentence .pinyin {
   font-size: 0.8rem;
-  opacity: 0.09;
+  opacity: 0.1;
   padding-bottom: 0.2em;
-  -webkit-user-select: none;
+  user-select: none;
 }
 
 .sentence .pinyin:hover {

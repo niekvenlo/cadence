@@ -9,7 +9,7 @@ const AppHeaderWrapper = styled.header`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 3em;
+  padding: 1em;
   width: 100%;
 `;
 const Links = styled.header`
