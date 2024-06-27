@@ -1,46 +1,6 @@
 "use client";
 
-import styled from "styled-components";
-
 import BasicButton from "./basic/BasicButton";
-
-const EditModalWrapper = styled.div`
-  min-height: 20em;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-
-const Flex = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  gap: 0.4em;
-`;
-
-const CommonCadenceLink = styled.a`
-  cursor: pointer;
-`;
-
-const EditModalTitleInput = styled.input`
-  color: hsl(var(--foreground-hsl));
-  flex-grow: 1;
-  font-size: 1.1em;
-  font-weight: bold;
-  padding: 0.5em 1em;
-`;
-
-const EditModalCadenceInput = styled.input`
-  flex-basis: 0;
-  font-size: 1.1em;
-  padding: 0.5em 1em;
-`;
-
-const EditModalFinalButtons = styled.div`
-  display: flex;
-  gap: 0.3em;
-  justify-content: end;
-`;
 
 function EditModal({
   mutateCompleteTask,
@@ -57,52 +17,58 @@ function EditModal({
   if (!selectedTask) return null;
 
   return (
-    <EditModalWrapper>
-      <Flex>
-        <EditModalTitleInput
+    <div id="edit-modal">
+      <div className="flex">
+        <input
+          className="title-input"
           autoFocus
           type="text"
           value={selectedTask.title}
           onChange={(e) =>
             setSelectedTask({ ...selectedTask, title: e.target.value })
           }
-        ></EditModalTitleInput>
-      </Flex>
+        ></input>
+      </div>
       <p>
         {Math.abs(selectedTask.daysFromNow)} days{" "}
         {selectedTask.daysFromNow > 0 ? "from now" : "overdue"}
       </p>
-      <Flex>
+      <div className="flex">
         repeats every
-        <EditModalCadenceInput
+        <input
+          className="cadence-input"
           type="number"
           value={selectedTask.cadenceInDays}
           onChange={(e) => updateCadence(Number(e.target.value))}
-        ></EditModalCadenceInput>
+        />
         days
-      </Flex>
-      <Flex>
+      </div>
+      <div className="flex">
         Common cadences:
         {[1, 10, 30, 60, 100, 200].map((cadence) => (
-          <CommonCadenceLink
+          <BasicButton
+            variant="look-like-a-link"
             onClick={() => updateCadence(cadence)}
             key={cadence}
           >
-            {cadence}d
-          </CommonCadenceLink>
+            {cadence}
+          </BasicButton>
         ))}
-      </Flex>
+      </div>
 
-      <EditModalFinalButtons>
+      <div id="final-buttons">
         <BasicButton onClick={() => setSelectedTask(null)}>Cancel</BasicButton>
         <BasicButton onClick={() => mutateCompleteTask(selectedTask)}>
           Mark task as complete
         </BasicButton>
-        <BasicButton onClick={() => mutateUpdateTask(selectedTask)} isPrimary>
-          Update
+        <BasicButton
+          onClick={() => mutateUpdateTask(selectedTask)}
+          variant="primary"
+        >
+          Submit
         </BasicButton>
-      </EditModalFinalButtons>
-    </EditModalWrapper>
+      </div>
+    </div>
   );
 }
 

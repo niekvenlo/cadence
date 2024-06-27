@@ -1,38 +1,15 @@
 "use client";
 
-import styled from "styled-components";
-
 import BasicLink from "./basic/BasicLink";
 
-const AppHeaderWrapper = styled.header`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 1em;
-  width: 100%;
-`;
-const Links = styled.header`
-  align-items: center;
-  display: flex;
-  flew-wrap: wrap;
-  gap: 0.5em;
-  justify-content: space-between;
-  max-width: 30em;
-`;
-
-function AppHeader() {
+export default function AppHeader() {
   return (
-    <AppHeaderWrapper>
+    <header id="app-header">
       <h1>Cadence</h1>
-      <Links>
+      <div className="links">
         <BasicLink href="/">Home</BasicLink>
-        <BasicLink href="/about">About</BasicLink>
-        <BasicLink href="/contact">Contact</BasicLink>
-        <BasicLink href="/chinese">Chinese</BasicLink>
-      </Links>
-    </AppHeaderWrapper>
+        <BasicLink href="/chinese">读中文</BasicLink>
+      </div>
+    </header>
   );
 }
-
-export default AppHeader;

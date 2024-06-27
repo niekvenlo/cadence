@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { mockedServerSourceOfTruth } from "./mockedServerSourceOfTruth";
 import { getEpochDayNow } from "../../app/utils";
+
+import { getTasks, setTasks } from "./db";
 
 type ResponseData = Object[];
 
@@ -10,23 +11,23 @@ export default function handler(
   res: NextApiResponse<ResponseData>
 ) {
   const taskToUpdate = JSON.parse(`${req.query.taskJson}`);
-  const idx = mockedServerSourceOfTruth.findIndex(
-    (task) => task.id === taskToUpdate.id
-  );
+  const tasks = getTasks();
+  const idx = tasks.findIndex((task) => task.id === taskToUpdate.id);
   if (idx < 0) {
     // If the task is new, we add it:
-    mockedServerSourceOfTruth.push({
+    tasks.push({
       ...taskToUpdate,
       id: crypto.randomUUID(),
       nextEpochDay: getEpochDayNow() + taskToUpdate.cadenceInDays,
     });
   } else {
     // Otherwise we update the existing task
-    const task = mockedServerSourceOfTruth[idx];
-    mockedServerSourceOfTruth[idx] = {
+    const task = tasks[idx];
+    tasks[idx] = {
       ...task,
       ...taskToUpdate,
     };
   }
-  res.status(200).json(mockedServerSourceOfTruth);
+  setTasks(tasks);
+  res.status(200).json(tasks);
 }

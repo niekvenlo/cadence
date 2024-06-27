@@ -146,7 +146,7 @@ export const X = ({
   const [idx, increment] = useRandomIdx();
   const safeIdx = idx % wordsList.length;
   const word = wordsList[safeIdx];
-  const isSplit = role === "SplitConcept" || role === "SplitVerb";
+  const isSplit = role.startsWith("Split");
   const isSplitVerb = role === "SplitVerb";
   const isAdjective = ["Adjective", "LongColour", "Colour"].includes(
     role || ""

@@ -1,22 +1,18 @@
-import styled from "styled-components";
+"use client";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const ActiveLink = styled(Link)`
-  cursor: default;
-  font-size: 1.2em;
-  font-weight: bold;
-  text-decoration: none;
-`;
+type Props = {
+  children: string;
+  href: string;
+};
 
-const DefaultLink = styled(Link)`
-  text-decoration: underline;
-`;
-
-export default function BasicLink({ href, children }) {
+export default function BasicLink({ href, children }: Props) {
   const isActive = usePathname() === href;
-  if (isActive) {
-    return <ActiveLink href={href}>{children}</ActiveLink>;
-  }
-  return <DefaultLink href={href}>{children}</DefaultLink>;
+  return (
+    <Link data-active={isActive || null} href={href}>
+      {children}
+    </Link>
+  );
 }

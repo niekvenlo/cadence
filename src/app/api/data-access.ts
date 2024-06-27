@@ -5,8 +5,9 @@ import { delay } from "../utils";
  */
 
 const basicFetch = async (url) => {
-  await delay(Math.random() * 621); // arbitrary delay
-  const response = await fetch(url);
+  // await delay(Math.random() * 21); // arbitrary delay
+  const cacheBreaker = Math.random();
+  const response = await fetch(url + `#${cacheBreaker}`, { cache: "no-store" });
   if (!response.ok) {
     throw new Error(
       "Network Error: Did you hot-reload? Server data is probably out-of-sync."

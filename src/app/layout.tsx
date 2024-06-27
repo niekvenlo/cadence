@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <AppHeader></AppHeader>
+        <AppHeader />
         <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>
     </html>

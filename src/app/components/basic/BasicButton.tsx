@@ -1,22 +1,17 @@
-import styled from "styled-components";
+"use client";
 
-const Button = styled.button<{ $isPrimary: boolean }>`
-  font-weight: ${(props) => (props.$isPrimary ? "bold" : "inherit")};
-  padding: 0.5em 1em;
-`;
+import type { ReactNode } from "react";
 
-export default function BasicButton({
-  children,
-  isPrimary,
-  onClick,
-}: {
-  children: React.ReactNode;
-  isPrimary?: boolean;
+type Props = {
+  children: ReactNode;
+  variant?: "primary" | "look-like-a-link";
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
-}) {
+};
+
+export default function BasicButton({ children, variant, onClick }: Props) {
   return (
-    <Button $isPrimary={isPrimary || false} onClick={onClick}>
+    <button data-variant={variant} onClick={onClick}>
       {children}
-    </Button>
+    </button>
   );
 }

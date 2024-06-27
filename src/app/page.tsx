@@ -1,8 +1,6 @@
 "use client";
 import type { Task, NewTask } from "./types";
 
-import styled from "styled-components";
-
 import { useState } from "react";
 import { Flipper } from "react-flip-toolkit";
 
@@ -17,12 +15,6 @@ import TaskCardGroup from "./components/TaskCardGroup";
 
 import { delay } from "./utils";
 import { HIGHLIGHT_DELAY } from "./constants";
-
-const NewCadenceButtonWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-`;
 
 export default function Home() {
   const tasksQuery = useTasksQuery();
@@ -49,11 +41,18 @@ export default function Home() {
     setCompletedIds(completedIds.filter((cId) => cId === id));
     return;
   };
+
+  const forOverdue = tasksQuery.data?.filter((t) => t.daysFromNow < 0);
+  const forToday = tasksQuery.data?.filter((t) => t.daysFromNow === 0);
+  const forLessThanAWeek = tasksQuery.data?.filter(
+    (t) => t.daysFromNow >= 1 && t.daysFromNow <= 7
+  );
   return (
     <main>
       {!tasksQuery.data && <p>Loading...</p>}
-      <NewCadenceButtonWrapper>
+      <div id="new-cadence-button-wrapper">
         <BasicButton
+          variant="primary"
           onClick={() =>
             setSelectedTask({
               title: "",
@@ -64,61 +63,54 @@ export default function Home() {
         >
           New cadence task
         </BasicButton>
-      </NewCadenceButtonWrapper>
-      <Flipper flipKey={tasksQuery.data}>
-        <TaskCardGroup
-          header="Overdue"
-          groupColor="red"
-          tasks={tasksQuery.data?.filter((t) => t.daysFromNow < 0) as Task[]}
-          setSelectedTask={setSelectedTask}
-          mutateCompleteTask={mutateCompleteTask}
-          completedIds={completedIds}
-        ></TaskCardGroup>
-        <TaskCardGroup
-          header="Today"
-          groupColor="deeppink"
-          tasks={tasksQuery.data?.filter((t) => t.daysFromNow === 0) as Task[]}
-          setSelectedTask={setSelectedTask}
-          mutateCompleteTask={mutateCompleteTask}
-          completedIds={completedIds}
-        ></TaskCardGroup>
-        <TaskCardGroup
-          header="In less than a week"
-          groupColor="blue"
-          tasks={
-            tasksQuery.data?.filter(
-              (t) => t.daysFromNow >= 1 && t.daysFromNow <= 7
-            ) as Task[]
-          }
-          setSelectedTask={setSelectedTask}
-          mutateCompleteTask={mutateCompleteTask}
-          completedIds={completedIds}
-        ></TaskCardGroup>
-        <TaskCardGroup
-          header="In less than a month"
-          groupColor="purple"
-          tasks={
-            tasksQuery.data?.filter(
-              (t) => t.daysFromNow > 7 && t.daysFromNow <= 31
-            ) as Task[]
-          }
-          setSelectedTask={setSelectedTask}
-          mutateCompleteTask={mutateCompleteTask}
-          completedIds={completedIds}
-        ></TaskCardGroup>
-        <TaskCardGroup
-          header="In a couple of months"
-          groupColor="orange"
-          tasks={
-            tasksQuery.data?.filter(
-              (t) => t.daysFromNow > 31 && t.daysFromNow <= 365
-            ) as Task[]
-          }
-          setSelectedTask={setSelectedTask}
-          mutateCompleteTask={mutateCompleteTask}
-          completedIds={completedIds}
-        ></TaskCardGroup>
-      </Flipper>
+      </div>
+      <div id="cadence-cards">
+        <Flipper flipKey={tasksQuery.data}>
+          <TaskCardGroup
+            group="overdue"
+            tasks={forOverdue}
+            setSelectedTask={setSelectedTask}
+            mutateCompleteTask={mutateCompleteTask}
+            completedIds={completedIds}
+          />
+          <TaskCardGroup
+            group="today"
+            tasks={forToday}
+            setSelectedTask={setSelectedTask}
+            mutateCompleteTask={mutateCompleteTask}
+            completedIds={completedIds}
+          />
+          <TaskCardGroup
+            group="less than a week"
+            tasks={forLessThanAWeek}
+            setSelectedTask={setSelectedTask}
+            mutateCompleteTask={mutateCompleteTask}
+            completedIds={completedIds}
+          />
+          <TaskCardGroup
+            group="less than a month"
+            tasks={
+              tasksQuery.data?.filter(
+                (t) => t.daysFromNow > 7 && t.daysFromNow <= 31
+              ) as Task[]
+            }
+            setSelectedTask={setSelectedTask}
+            mutateCompleteTask={mutateCompleteTask}
+            completedIds={completedIds}
+          />
+          <TaskCardGroup
+            group="in a couple of months"
+            tasks={
+              tasksQuery.data?.filter(
+                (t) => t.daysFromNow > 31 && t.daysFromNow <= 365
+              ) as Task[]
+            }
+            setSelectedTask={setSelectedTask}
+            mutateCompleteTask={mutateCompleteTask}
+            completedIds={completedIds}
+          />
+        </Flipper>
+      </div>
       <BasicModal
         isOpen={selectedTask !== null}
         closeOnBackdropClick

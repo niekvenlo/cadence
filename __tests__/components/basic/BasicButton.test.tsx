@@ -9,16 +9,16 @@ describe("BasicButton", () => {
 
     expect(button).toBeInTheDocument();
     expect(button).toHaveTextContent("label");
-    expect(button).toHaveStyle("font-weight: inherit");
+    expect(button).not.toHaveAttribute("data-variant");
     expect(button).toMatchSnapshot();
   });
   it("renders a primary button", () => {
-    render(<BasicButton isPrimary>label</BasicButton>);
+    render(<BasicButton variant="primary">label</BasicButton>);
     const button = screen.getByRole("button");
 
     expect(button).toBeInTheDocument();
     expect(button).toHaveTextContent("label");
-    expect(button).toHaveStyle("font-weight: bold");
+    expect(button).toHaveAttribute("data-variant");
     expect(button).toMatchSnapshot();
   });
 });

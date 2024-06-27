@@ -1,17 +1,6 @@
 "use client";
-import styled from "styled-components";
-import { useRef, useEffect } from "react";
 
-const CloseButton = styled.button`
-  position: absolute;
-  translate: 3em -3em;
-  padding: 0.5em;
-  width: 3em;
-  height: 3em;
-  background: unset;
-  border: none;
-  cursor: pointer;
-`;
+import { useRef, useEffect } from "react";
 
 export default function BasicModal({
   children,
@@ -45,16 +34,22 @@ export default function BasicModal({
         }
       }}
     >
-      <CloseButton
+      <button
+        className="close-button"
         onClick={() => requestClose()}
         aria-label="Close"
         aria-hidden="true"
       >
-        <svg viewBox="0 0 44 44" aria-hidden="true" focusable="false">
+        <svg
+          viewBox="0 0 44 44"
+          aria-hidden="true"
+          focusable="false"
+          fill="currentColor"
+        >
           <path d="M0.549989 4.44999L4.44999 0.549988L43.45 39.55L39.55 43.45L0.549989 4.44999Z" />
           <path d="M39.55 0.549988L43.45 4.44999L4.44999 43.45L0.549988 39.55L39.55 0.549988Z" />
         </svg>
-      </CloseButton>
+      </button>
       <section>{children}</section>
     </dialog>
   );

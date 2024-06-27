@@ -12,7 +12,7 @@ describe("BasicLink", () => {
     const link = screen.getByText("label");
 
     expect(link).toBeInTheDocument();
-    expect(link).toHaveStyle("text-decoration: underline;");
+    expect(link).not.toHaveAttribute("data-active");
     expect(link).toMatchSnapshot();
   });
   it("renders a basic active link", () => {
@@ -20,7 +20,7 @@ describe("BasicLink", () => {
     const link = screen.getByText("label");
 
     expect(link).toBeInTheDocument();
-    expect(link).toHaveStyle("text-decoration: none;");
+    expect(link).toHaveAttribute("data-active");
     expect(link).toMatchSnapshot();
   });
 });
