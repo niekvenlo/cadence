@@ -65,7 +65,16 @@ body {
   width: 100%;
 }
 
-a {
+main {
+  padding-inline: calc(10vw - 30px);
+}
+
+p {
+  padding-block: 0.2em;
+}
+
+/* BASIC COMPONENT STYLES */
+a.basic {
   color: inherit;
   cursor: pointer;
   text-decoration: underline;
@@ -77,8 +86,7 @@ a {
     text-decoration: none;
   }
 }
-
-button {
+button.basic {
   background: inherit;
   border: none;
   box-shadow: 0px 0px 0px 1px hsl(var(--foreground-hsl));
@@ -98,6 +106,11 @@ button {
     background: hsl(var(--foreground-hsl));
     color: hsl(var(--background-hsl));
   }
+  &:disabled {
+    box-shadow: none;
+    background: rgb(128, 128, 128);
+    color: hsl(var(--background-hsl));
+  }
   &[data-variant="primary"] {
     background: hsl(var(--foreground-hsl));
     color: hsl(var(--background-hsl));
@@ -109,6 +122,11 @@ button {
         0px 0px 0px 6px hsl(var(--background-hsl)),
         0px 0px 0px 7px hsl(var(--foreground-hsl));
     }
+    &:disabled {
+      box-shadow: none;
+      background: rgb(128, 128, 128);
+      color: hsl(var(--background-hsl));
+    }
   }
   &[data-variant="look-like-a-link"] {
     box-shadow: none;
@@ -119,16 +137,13 @@ button {
     padding: 0;
   }
 }
-
-main {
-  padding-inline: calc(10vw - 30px);
-}
-
-p {
-  padding-block: 0.2em;
-}
-
-dialog {
+dialog.basic {
+  top: 150%;
+  opacity: 0.4;
+  box-shadow: 0px 0px 50px 10px hsl(var(--background-hsl)),
+    0 1px 1px hsl(0deg 0% 0% / 0.075), 0 2px 2px hsl(0deg 0% 0% / 0.075),
+    0 4px 4px hsl(0deg 0% 0% / 0.075), 0 8px 8px hsl(0deg 0% 0% / 0.075),
+    0 16px 16px hsl(0deg 0% 0% / 0.075);
   &[open] {
     align-items: flex-end;
     display: flex;
@@ -137,14 +152,29 @@ dialog {
     overflow-x: hidden;
     padding: 3em;
     position: fixed;
-    top: 50%;
     transform: translate(-50%, -50%);
-    width: 60%;
+    width: max(50%, 600px);
+    border: none;
+    @media (max-width: 600px) {
+      width: 100vw;
+      height: 100dvh;
+      max-width: calc(100%);
+    }
+    transition: all 0.4s ease-in;
+    &:hover,
+    &:focus-within {
+      top: 50%;
+      opacity: 1;
+    }
   }
 
   &::backdrop {
     background: hsl(var(--background-hsl));
-    opacity: 0.75;
+    opacity: 0.5;
+  }
+
+  & > section {
+    width: 100%;
   }
 
   .close-button {
@@ -234,7 +264,7 @@ dialog {
 }
 
 #edit-modal {
-  min-height: 20em;
+  min-height: 50dvh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -246,7 +276,6 @@ dialog {
     gap: 0.4em;
     @media (orientation: portrait) {
       flex-wrap: wrap;
-      /* flex-direction: column; */
     }
   }
   .title-input {
@@ -336,10 +365,6 @@ dialog {
         "title title"
         "due every"
         "buttons buttons";
-      /* grid-template-areas:
-          "title title title"
-          "due every recent"
-          "buttons buttons buttons"; */
       grid-template-columns: 1fr 1fr;
       grid-template-rows: unset;
       gap: 0.1em;

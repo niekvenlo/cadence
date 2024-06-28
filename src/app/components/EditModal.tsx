@@ -8,13 +8,18 @@ function EditModal({
   selectedTask,
   setSelectedTask,
 }) {
-  const updateCadence = (cadence) =>
+  const updateCadence = (cadence: string | number) => {
+    const number = cadence ? Number(cadence) : null;
     setSelectedTask({
       ...selectedTask,
-      cadenceInDays: Math.max(1, cadence),
+      cadenceInDays: number,
     });
+  };
 
   if (!selectedTask) return null;
+
+  const isNewTask = selectedTask.id === undefined;
+  const isValidTask = selectedTask.cadenceInDays > 0;
 
   return (
     <div id="edit-modal">
@@ -39,7 +44,7 @@ function EditModal({
           className="cadence-input"
           type="number"
           value={selectedTask.cadenceInDays}
-          onChange={(e) => updateCadence(Number(e.target.value))}
+          onChange={(e) => updateCadence(e.target.value)}
         />
         days
       </div>
@@ -58,12 +63,18 @@ function EditModal({
 
       <div id="final-buttons">
         <BasicButton onClick={() => setSelectedTask(null)}>Cancel</BasicButton>
-        <BasicButton onClick={() => mutateCompleteTask(selectedTask)}>
-          Mark task as complete
-        </BasicButton>
+        {!isNewTask && (
+          <BasicButton
+            onClick={() => mutateCompleteTask(selectedTask)}
+            isDisabled={!isValidTask}
+          >
+            Mark task as complete
+          </BasicButton>
+        )}
         <BasicButton
           onClick={() => mutateUpdateTask(selectedTask)}
           variant="primary"
+          isDisabled={!isValidTask}
         >
           Submit
         </BasicButton>

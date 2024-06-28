@@ -6,16 +6,18 @@ import { cx } from "../../utils";
 type Props = {
   children: React.ReactNode;
   className?: string;
-  isOpen?: boolean;
   closeOnBackdropClick?: boolean;
+  isOpen?: boolean;
+  options: string[];
   requestClose: () => void;
 };
 
-export default function BasicModal({
+export default function BasicSelect({
   children,
   className,
-  isOpen,
   closeOnBackdropClick,
+  isOpen,
+  options,
   requestClose,
 }: Props) {
   const dialogRef = useRef(null);

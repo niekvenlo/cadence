@@ -47,6 +47,12 @@ export default function Home() {
   const forLessThanAWeek = tasksQuery.data?.filter(
     (t) => t.daysFromNow >= 1 && t.daysFromNow <= 7
   );
+  const forLessThanAMonth = tasksQuery.data?.filter(
+    (t) => t.daysFromNow > 7 && t.daysFromNow <= 31
+  );
+  const forInACoupleOfMonths = tasksQuery.data?.filter(
+    (t) => t.daysFromNow > 31 && t.daysFromNow <= 365
+  ) as Task[];
   return (
     <main>
       {!tasksQuery.data && <p>Loading...</p>}
@@ -89,22 +95,14 @@ export default function Home() {
           />
           <TaskCardGroup
             group="less than a month"
-            tasks={
-              tasksQuery.data?.filter(
-                (t) => t.daysFromNow > 7 && t.daysFromNow <= 31
-              ) as Task[]
-            }
+            tasks={forLessThanAMonth}
             setSelectedTask={setSelectedTask}
             mutateCompleteTask={mutateCompleteTask}
             completedIds={completedIds}
           />
           <TaskCardGroup
             group="in a couple of months"
-            tasks={
-              tasksQuery.data?.filter(
-                (t) => t.daysFromNow > 31 && t.daysFromNow <= 365
-              ) as Task[]
-            }
+            tasks={forInACoupleOfMonths}
             setSelectedTask={setSelectedTask}
             mutateCompleteTask={mutateCompleteTask}
             completedIds={completedIds}

@@ -2,16 +2,22 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { cx } from "../../utils";
 
 type Props = {
   children: string;
+  className?: string;
   href: string;
 };
 
-export default function BasicLink({ href, children }: Props) {
+export default function BasicLink({ href, className, children }: Props) {
   const isActive = usePathname() === href;
   return (
-    <Link data-active={isActive || null} href={href}>
+    <Link
+      className={cx("basic", className)}
+      data-active={isActive || null}
+      href={href}
+    >
       {children}
     </Link>
   );
