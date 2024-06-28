@@ -4,9 +4,10 @@ import { useRef, useEffect, useState } from "react";
 import { cx } from "../../utils";
 
 type Props = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
   closeOnBackdropClick?: boolean;
+  columnCount?: 1 | 2 | 3 | 4 | 5;
   options: string[];
   selectedOption: string;
   onSelect: (newSelectedOption: string) => void;
@@ -16,12 +17,15 @@ export default function BasicSelect({
   children,
   className,
   closeOnBackdropClick = true,
+  columnCount = 1,
   options,
   selectedOption,
   onSelect,
 }: Props) {
   const dialogRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
+  const setOpen = () => setIsOpen(true);
+  const setClosed = () => setIsOpen(false);
   useEffect(() => {
     const dialog = dialogRef.current as unknown as
       | HTMLDialogElement
@@ -36,6 +40,7 @@ export default function BasicSelect({
   return (
     <div className={cx("basic-select", className)}>
       <dialog
+        style={{ "--basic-select-columns": columnCount } as React.CSSProperties}
         ref={dialogRef}
         onClick={({ target }) => {
           if (!closeOnBackdropClick) return;
@@ -47,7 +52,7 @@ export default function BasicSelect({
       >
         <button
           className="close-button"
-          onClick={() => setIsOpen(false)}
+          onClick={setClosed}
           aria-label="Close"
           aria-hidden="true"
         >
@@ -62,24 +67,29 @@ export default function BasicSelect({
           </svg>
         </button>
         <section>
-          <h1>Select one</h1>
-          <button
-            className="entrypoint internal"
-            onClick={() => setIsOpen(true)}
-          >
-            {children}
-            <select />
-          </button>
-          <ul>
+          <div onClick={setClosed}>
+            <button className="entrypoint internal">
+              {children || selectedOption}
+            </button>
+          </div>
+          <div className="options">
             {options.map((o) => (
-              <li className={cx({ selected: o === selectedOption })}>{o}</li>
+              <button
+                key={o}
+                onClick={() => {
+                  onSelect(o);
+                  setClosed();
+                }}
+                className={cx({ selected: o === selectedOption.toString() })}
+              >
+                {o}
+              </button>
             ))}
-          </ul>
+          </div>
         </section>
       </dialog>
-      <button className="entrypoint" onClick={() => setIsOpen(true)}>
-        {children}
-        <select />
+      <button className="entrypoint" onClick={setOpen}>
+        {children || selectedOption}
       </button>
     </div>
   );

@@ -8,12 +8,12 @@ body:has(dialog[open]) {
   height: 1px;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-hsl: 50 50% 60%;
-    --background-hsl: 300 50% 15%;
+    --foreground-hsl: 100 50% 95%;
+    --background-hsl: 250 50% 40%;
   }
-}
+} */
 
 *,
 *::before,
@@ -136,6 +136,11 @@ button.basic-button {
     border: none;
     text-decoration: underline;
     padding: 0;
+    &:hover:not(:disabled),
+    &:focus:not(:disabled),
+    &:active:not(:disabled) {
+      color: currentColor;
+    }
   }
 }
 .basic-select {
@@ -148,7 +153,18 @@ button.basic-button {
     cursor: pointer;
     font-weight: inherit;
     outline: none;
-    padding: 0.2em 1em;
+    padding: 0.2em 2em 0.2em 1em;
+    &::after {
+      content: "";
+      position: relative;
+      display: inline-block;
+      margin: 0;
+      top: 0.5em;
+      left: 1em;
+      border: 0.5em solid transparent;
+      border-top-color: hsl(var(--foreground-hsl));
+      opacity: 0.8;
+    }
     margin: 2px;
     transition: all 0.1s ease-out;
     white-space: nowrap;
@@ -158,38 +174,52 @@ button.basic-button {
       box-shadow: 0px 0px 0px 3px hsl(var(--foreground-hsl));
       background: hsl(var(--foreground-hsl));
       color: hsl(var(--background-hsl));
+      &::after {
+        border-top-color: hsl(var(--background-hsl));
+      }
     }
-    select {
-      pointer-events: none;
-    }
-    &.internal {
-      pointer-events: none;
+    &.internal::after {
+      rotate: 180deg;
+      top: 0;
     }
   }
-  ul {
-    display: flex;
-    flex-direction: column;
+  .options {
+    display: grid;
+    grid-template-columns: repeat(var(--basic-select-columns, 1), 1fr);
     list-style-type: none;
     padding: 0px;
-    margin: 0px;
+    margin-top: 0.2em;
     gap: 0.5em;
-    max-height: 100dvh;
+    max-height: 70dvh;
     overflow: scroll;
-  }
-  li {
-    padding: 0.1em 1em;
-    &:hover {
-      background: hsl(var(--foreground-hsl));
-      color: hsl(var(--background-hsl));
-    }
-    &.selected {
-      background: hsl(var(--background-hsl));
+    box-shadow: 0px 0px 0px 1px hsl(var(--foreground-hsl)),
+      0px 0px 50px 10px hsl(var(--background-hsl)),
+      0 1px 1px hsl(0deg 0% 0% / 0.075), 0 2px 2px hsl(0deg 0% 0% / 0.075),
+      0 4px 4px hsl(0deg 0% 0% / 0.075), 0 8px 8px hsl(0deg 0% 0% / 0.075),
+      0 16px 16px hsl(0deg 0% 0% / 0.075);
+    button {
+      background: unset;
+      border-radius: 8px;
+      color: currentColor;
+      border: none;
+      text-align: start;
+      padding: 0.5em 1em;
+      min-width: 18%;
+      text-align: center;
       &:hover {
         background: hsl(var(--foreground-hsl));
         color: hsl(var(--background-hsl));
       }
+      &.selected {
+        background: hsl(var(--background-hsl));
+        &:hover {
+          background: hsl(var(--foreground-hsl));
+          color: hsl(var(--background-hsl));
+        }
+      }
     }
   }
+
   dialog {
     top: 150%;
     opacity: 0.4;
@@ -203,7 +233,7 @@ button.basic-button {
       flex-direction: column;
       left: 50%;
       overflow-x: hidden;
-      padding: 3em;
+      padding: 3em 1em;
       position: fixed;
       width: 100vw;
       height: 100dvh;
@@ -230,21 +260,7 @@ button.basic-button {
     }
 
     .close-button {
-      box-shadow: none;
-      position: absolute;
-      translate: 3em -3em;
-      padding: 0.5em;
-      width: 3em;
-      height: 3em;
-      background: unset;
-      border: none;
-      cursor: pointer;
-      transition: all 0.1s ease-out;
-      &:focus,
-      &:hover {
-        rotate: 10deg;
-        color: hsl(var(--foreground-hsl));
-      }
+      translate: 1em -3em !important;
     }
   }
 }
@@ -305,15 +321,16 @@ dialog.basic-modal {
     &:hover {
       rotate: 10deg;
       color: hsl(var(--foreground-hsl));
+      outline: none;
     }
   }
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
-}
+} */
 
 .basic-pill {
   background: currentColor;
@@ -327,11 +344,11 @@ dialog.basic-modal {
   margin: 0.5em;
   padding: 0.3em 3em;
   white-space: nowrap;
-  @media (prefers-color-scheme: dark) {
+  /* @media (prefers-color-scheme: dark) {
     span {
       color: black;
     }
-  }
+  } */
   &[data-variant="success"] {
     color: green;
   }
@@ -340,11 +357,11 @@ dialog.basic-modal {
     span {
       color: black;
     }
-    @media (prefers-color-scheme: dark) {
+    /* @media (prefers-color-scheme: dark) {
       span {
         color: white;
       }
-    }
+    } */
   }
 }
 
@@ -436,10 +453,10 @@ dialog.basic-modal {
     box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075),
       0 2px 2px hsl(0deg 0% 0% / 0.075), 0 4px 4px hsl(0deg 0% 0% / 0.075),
       0 8px 8px hsl(0deg 0% 0% / 0.075), 0 16px 16px hsl(0deg 0% 0% / 0.075);
-    @media (prefers-color-scheme: dark) {
+    /* @media (prefers-color-scheme: dark) {
       background: #222;
       box-shadow: 0px 0px 0px 1px hsl(var(--foreground-hsl));
-    }
+    } */
     border-radius: 8px;
     cursor: pointer;
     display: grid;

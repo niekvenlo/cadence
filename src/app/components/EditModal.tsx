@@ -1,6 +1,7 @@
 "use client";
 
 import BasicButton from "./basic/BasicButton";
+import BasicSelect from "./basic/BasicSelect";
 
 function EditModal({
   mutateCompleteTask,
@@ -38,16 +39,16 @@ function EditModal({
         {Math.abs(selectedTask.daysFromNow)} days{" "}
         {selectedTask.daysFromNow > 0 ? "from now" : "overdue"}
       </p>
-      <div className="flex">
-        repeats every
-        <input
-          className="cadence-input"
-          type="number"
-          value={selectedTask.cadenceInDays}
-          onChange={(e) => updateCadence(e.target.value)}
-        />
-        days
-      </div>
+
+      <BasicSelect
+        options={Array.from({ length: 400 }).map((_, i) => (i + 1).toString())}
+        selectedOption={selectedTask.cadenceInDays}
+        onSelect={(c) => updateCadence(Number(c))}
+        columnCount={5}
+      >
+        Repeats every {selectedTask.cadenceInDays}{" "}
+        {selectedTask.cadenceInDays === "1" ? "day" : "days"}
+      </BasicSelect>
       <div className="flex">
         Common cadences:
         {[1, 10, 30, 60, 100, 200].map((cadence) => (
