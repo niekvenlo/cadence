@@ -32,7 +32,7 @@ export default function BasicModal({
   }, [isOpen]);
   return (
     <dialog
-      className={cx("basic", className)}
+      className={cx("basic-modal", className)}
       ref={dialogRef}
       onClick={({ target }) => {
         if (!closeOnBackdropClick) return;

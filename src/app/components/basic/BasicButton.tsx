@@ -20,7 +20,7 @@ export default function BasicButton({
 }: Props) {
   return (
     <button
-      className={cx("basic", className)}
+      className={cx("basic-button", className)}
       data-variant={variant}
       onClick={onClick}
       disabled={isDisabled}

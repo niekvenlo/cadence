@@ -15,6 +15,7 @@ import TaskCardGroup from "./components/TaskCardGroup";
 
 import { delay } from "./utils";
 import { HIGHLIGHT_DELAY } from "./constants";
+import BasicSelect from "./components/basic/BasicSelect";
 
 export default function Home() {
   const tasksQuery = useTasksQuery();
@@ -26,6 +27,8 @@ export default function Home() {
 
   // Lists tasks that have _just_ been clicked.
   const [completedIds, setCompletedIds] = useState<string[]>([]);
+
+  const [selectedOption, setSelectedOption] = useState<string>("1");
 
   const mutateUpdateTask = async (task) => {
     await updateMutation.mutateAsync(task);
@@ -70,6 +73,13 @@ export default function Home() {
           New cadence task
         </BasicButton>
       </div>
+      <BasicSelect
+        options={Array.from({ length: 30 }).map((_, i) => (i + 1).toString())}
+        selectedOption={selectedOption}
+        onSelect={setSelectedOption}
+      >
+        Repeats every {selectedOption} {selectedOption === "1" ? "day" : "days"}
+      </BasicSelect>
       <div id="cadence-cards">
         <Flipper flipKey={tasksQuery.data}>
           <TaskCardGroup
