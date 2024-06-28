@@ -5,7 +5,7 @@ import { delay } from "../utils";
  */
 
 const basicFetch = async (url) => {
-  // await delay(Math.random() * 21); // arbitrary delay
+  // await delay(Math.random() * 2001); // arbitrary delay
   const cacheBreaker = Math.random();
   const response = await fetch(url + `#${cacheBreaker}`, { cache: "no-store" });
   if (!response.ok) {
@@ -17,7 +17,7 @@ const basicFetch = async (url) => {
 };
 
 export const getTasks = async () => {
-  return basicFetch("/api/getUserTasks");
+  return basicFetch("http://localhost:3000/api/getUserTasks");
 };
 
 export const completeTask = async (taskId) => {

@@ -24,6 +24,13 @@ body:has(dialog[open]) {
   margin: 0;
   padding: 0;
 }
+
+/* @media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+} */
+
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -74,7 +81,9 @@ p {
   padding-block: 0.2em;
 }
 
-/* BASIC COMPONENT STYLES */
+/*
+ * MARK: b-a
+ */
 a.basic-a {
   color: inherit;
   cursor: pointer;
@@ -87,6 +96,10 @@ a.basic-a {
     text-decoration: none;
   }
 }
+
+/*
+ * MARK: b-button
+ */
 button.basic-button {
   background: inherit;
   border: none;
@@ -143,6 +156,9 @@ button.basic-button {
     }
   }
 }
+/*
+ * MARK: b-select
+ */
 .basic-select {
   button.entrypoint {
     background: inherit;
@@ -264,6 +280,9 @@ button.basic-button {
     }
   }
 }
+/*
+ * MARK: b-modal
+ */
 dialog.basic-modal {
   top: 150%;
   opacity: 0.4;
@@ -326,12 +345,9 @@ dialog.basic-modal {
   }
 }
 
-/* @media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-} */
-
+/*
+ * MARK: b-pill
+ */
 .basic-pill {
   background: currentColor;
   border-radius: 2em;
@@ -365,6 +381,9 @@ dialog.basic-modal {
   }
 }
 
+/*
+ * MARK: App-header
+ */
 #app-header {
   align-items: flex-start;
   background: hsl(var(--foreground-hsl));
@@ -393,6 +412,9 @@ dialog.basic-modal {
   align-items: flex-end;
 }
 
+/*
+ * MARK: EditModal
+ */
 #edit-modal {
   min-height: 50dvh;
   display: flex;
@@ -431,6 +453,9 @@ dialog.basic-modal {
   }
 }
 
+/*
+ * MARK: Cards
+ */
 #cadence-cards {
   & > div {
     display: flex;

@@ -113,6 +113,20 @@
             "daysFromNow": 30,
             "id": "bd70bc8b-114c-45dc-95e8-2a1af71776fb",
             "nextEpochDay": 19909
+        },
+        {
+            "title": "Clean the whole fridge",
+            "cadenceInDays": 200,
+            "daysFromNow": 30,
+            "id": "d926290f-0e69-4ae8-a605-c4736ee8892f",
+            "nextEpochDay": 20102
+        },
+        {
+            "title": "Check bike tyres",
+            "cadenceInDays": 30,
+            "daysFromNow": 30,
+            "id": "75712ac5-dfbe-4f5a-b454-5339b0ae4998",
+            "nextEpochDay": 19932
         }
     ]
 }

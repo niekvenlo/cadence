@@ -10,10 +10,16 @@ function EditModal({
   setSelectedTask,
 }) {
   const updateCadence = (cadence: string | number) => {
-    const number = cadence ? Number(cadence) : null;
+    const cadenceInDays = cadence ? Number(cadence) : null;
     setSelectedTask({
       ...selectedTask,
-      cadenceInDays: number,
+      cadenceInDays,
+    });
+  };
+  const updateDaysFromNow = (daysFromNow: number) => {
+    setSelectedTask({
+      ...selectedTask,
+      daysFromNow,
     });
   };
 
@@ -35,10 +41,17 @@ function EditModal({
           }
         ></input>
       </div>
-      <p>
+      <BasicSelect
+        options={Array.from({ length: selectedTask.cadenceInDays }).map(
+          (_, i) => (i + 1).toString()
+        )}
+        selectedOption={selectedTask.daysFromNow}
+        onSelect={(c) => updateDaysFromNow(Number(c))}
+        columnCount={5}
+      >
         {Math.abs(selectedTask.daysFromNow)} days{" "}
         {selectedTask.daysFromNow > 0 ? "from now" : "overdue"}
-      </p>
+      </BasicSelect>
 
       <BasicSelect
         options={Array.from({ length: 400 }).map((_, i) => (i + 1).toString())}
