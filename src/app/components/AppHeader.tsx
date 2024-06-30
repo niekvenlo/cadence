@@ -7,7 +7,8 @@ export default function AppHeader() {
     <header id="app-header">
       <h1>Cadence</h1>
       <div className="links">
-        <BasicLink href="/">Home</BasicLink>
+        <BasicLink href="/">Tasks</BasicLink>
+        <BasicLink href="/shopping">Shopping</BasicLink>
         <BasicLink href="/chinese">读中文</BasicLink>
       </div>
     </header>

@@ -12,3 +12,8 @@ export type NewTask = {
   nextEpochDay?: number;
   title: string;
 };
+export type ShopItem = {
+  label: string;
+  timestamp: number;
+  isSelected: boolean;
+};

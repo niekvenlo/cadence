@@ -1,7 +1,10 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import BasicButton from "./basic/BasicButton";
 import BasicSelect from "./basic/BasicSelect";
+
+import { getEpochDayNow } from "../utils";
 
 function EditModal({
   mutateCompleteTask,
@@ -9,6 +12,13 @@ function EditModal({
   selectedTask,
   setSelectedTask,
 }) {
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    const input = inputRef.current as unknown as HTMLInputElement | undefined;
+    setTimeout(() => input?.focus(), 200);
+  }, [selectedTask]);
+
   const updateCadence = (cadence: string | number) => {
     const cadenceInDays = cadence ? Number(cadence) : null;
     setSelectedTask({
@@ -19,7 +29,7 @@ function EditModal({
   const updateDaysFromNow = (daysFromNow: number) => {
     setSelectedTask({
       ...selectedTask,
-      daysFromNow,
+      nextEpochDay: getEpochDayNow() + daysFromNow,
     });
   };
 
@@ -32,6 +42,7 @@ function EditModal({
     <div id="edit-modal">
       <div className="flex">
         <input
+          ref={inputRef}
           className="title-input"
           autoFocus
           type="text"

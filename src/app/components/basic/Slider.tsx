@@ -1,18 +1,29 @@
-import { useEffect, useState } from 'react';
-import { cx } from '../../utils';
+import { useEffect, useState } from "react";
+import { cx } from "../../utils";
 
 type Props = {
   className?: string;
   isSelected?: boolean;
+  isProcessing?: boolean;
   label: string;
   lastChangedTs?: number;
   onToggle: () => void;
 };
 
-function BasicSlider({ className, isSelected, label, lastChangedTs, onToggle }: Props) {
+function BasicSlider({
+  className,
+  isSelected,
+  isProcessing,
+  label,
+  lastChangedTs,
+  onToggle,
+}: Props) {
   const timeLabel = useUpToDateLabel(lastChangedTs, getLabel);
   return (
-    <button className={cx('basic-slider', className, { isSelected })} onClick={onToggle}>
+    <button
+      className={cx("basic-slider", className, { isSelected, isProcessing })}
+      onClick={onToggle}
+    >
       <span className="before">{timeLabel}</span>
       <span className="label">{label}</span>
       <span className="after">{timeLabel}</span>
@@ -20,7 +31,10 @@ function BasicSlider({ className, isSelected, label, lastChangedTs, onToggle }: 
   );
 }
 
-function useUpToDateLabel(timestamp: number | undefined, labelGetter: (number: number | undefined) => string | null) {
+function useUpToDateLabel(
+  timestamp: number | undefined,
+  labelGetter: (number: number | undefined) => string | null
+) {
   const [label, setlabel] = useState<string | null>(null);
   useEffect(() => {
     const updateLabel = () => setlabel(labelGetter(timestamp));
@@ -49,9 +63,9 @@ function getLabel(timestamp) {
     return `< ${hours}h`;
   }
   if (diff < MS_IN_DAY) {
-    return 'In the last day';
+    return "In the last day";
   }
-  return 'Long ago';
+  return "Long ago";
 }
 
 export default BasicSlider;

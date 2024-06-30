@@ -1,29 +1,22 @@
-'use client';
-import type { Task, NewTask } from './types';
+"use client";
+import type { Task, NewTask } from "./types";
 
-import { useState } from 'react';
-import { Flipper } from 'react-flip-toolkit';
+import { useState } from "react";
+import { Flipper } from "react-flip-toolkit";
 
-import useTasksQuery from './api/useTasksQuery';
-import useTaskUpdateMutation from './api/useTaskUpdateMutation';
-import useTaskCompleteMutation from './api/useTaskCompleteMutation';
+import useTasksQuery from "./api/useTasksQuery";
+import useTaskUpdateMutation from "./api/useTaskUpdateMutation";
+import useTaskCompleteMutation from "./api/useTaskCompleteMutation";
 
-import BasicButton from './components/basic/BasicButton';
-import BasicModal from './components/basic/BasicModal';
-import EditModal from './components/EditModal';
-import TaskCardGroup from './components/TaskCardGroup';
+import BasicButton from "./components/basic/BasicButton";
+import BasicModal from "./components/basic/BasicModal";
+import EditModal from "./components/EditModal";
+import TaskCardGroup from "./components/TaskCardGroup";
 
-import { delay } from './utils';
-import { HIGHLIGHT_DELAY } from './constants';
-import Slider from './components/basic/Slider';
+import { delay } from "./utils";
+import { HIGHLIGHT_DELAY } from "./constants";
 
 export default function CadencePage({ initialTasks }) {
-  const [x, setX] = useState(false);
-  const [ts, setTs] = useState(1719762252742);
-  const toggle = () => {
-    setTs(Date.now());
-    setX(t => !t);
-  }
   const tasksQuery = useTasksQuery(initialTasks);
   const updateMutation = useTaskUpdateMutation();
   const completeMutation = useTaskCompleteMutation();
@@ -34,13 +27,14 @@ export default function CadencePage({ initialTasks }) {
   // Lists tasks that have _just_ been clicked.
   const [completedIds, setCompletedIds] = useState<string[]>([]);
 
-  const mutateUpdateTask = async (task) => {
-    await updateMutation.mutateAsync(task);
+  const mutateUpdateTask = async (task: Task) => {
+    const { daysFromNow, ...rest } = task;
+    await updateMutation.mutateAsync(rest);
     setSelectedTask(null);
     return;
   };
   const mutateCompleteTask = async (task) => {
-    const id = task?.id || '';
+    const id = task?.id || "";
     setCompletedIds([...completedIds, id]);
     await completeMutation.mutateAsync(id);
     setSelectedTask(null);
@@ -51,26 +45,24 @@ export default function CadencePage({ initialTasks }) {
 
   const forOverdue = tasksQuery.data?.filter((t) => t.daysFromNow < 0);
   const forToday = tasksQuery.data?.filter((t) => t.daysFromNow === 0);
-  const forLessThanAWeek = tasksQuery.data?.filter((t) => t.daysFromNow >= 1 && t.daysFromNow <= 7);
-  const forLessThanAMonth = tasksQuery.data?.filter((t) => t.daysFromNow > 7 && t.daysFromNow <= 31);
-  const forInACoupleOfMonths = tasksQuery.data?.filter((t) => t.daysFromNow > 31 && t.daysFromNow <= 365) as Task[];
+  const forLessThanAWeek = tasksQuery.data?.filter(
+    (t) => t.daysFromNow >= 1 && t.daysFromNow <= 7
+  );
+  const forLessThanAMonth = tasksQuery.data?.filter(
+    (t) => t.daysFromNow > 7 && t.daysFromNow <= 31
+  );
+  const forInACoupleOfMonths = tasksQuery.data?.filter(
+    (t) => t.daysFromNow > 31 && t.daysFromNow <= 365
+  ) as Task[];
   return (
     <main>
       {tasksQuery.isLoading && <p>Loading...</p>}
-
-      <div className="toggles-test">
-        <Slider onToggle={toggle} label="Ice-cream" isSelected={x} lastChangedTs={ts}/>
-        <Slider onToggle={() => {}} label="Bread" isSelected={false} />
-        <Slider onToggle={() => {}} label="Milk" isSelected={true} />
-        <Slider onToggle={() => {}} label="Spring onions" isSelected={false} />
-        <Slider onToggle={() => {}} label="Mince meat" isSelected={false} />
-      </div>
       <div id="new-cadence-button-wrapper">
         <BasicButton
           variant="primary"
           onClick={() =>
             setSelectedTask({
-              title: '',
+              title: "",
               cadenceInDays: 30,
               daysFromNow: 3,
             })
@@ -118,7 +110,11 @@ export default function CadencePage({ initialTasks }) {
           />
         </Flipper>
       </div>
-      <BasicModal isOpen={selectedTask !== null} closeOnBackdropClick requestClose={() => setSelectedTask(null)}>
+      <BasicModal
+        isOpen={selectedTask !== null}
+        closeOnBackdropClick
+        requestClose={() => setSelectedTask(null)}
+      >
         <EditModal
           selectedTask={selectedTask}
           setSelectedTask={setSelectedTask}

@@ -1,4 +1,26 @@
 {
+    "shopping": [
+        {
+            "label": "Bread",
+            "timestamp": 1719769352690,
+            "isSelected": true
+        },
+        {
+            "label": "Milk",
+            "timestamp": 1719766880369,
+            "isSelected": false
+        },
+        {
+            "label": "Eggs",
+            "timestamp": 1719766880369,
+            "isSelected": true
+        },
+        {
+            "label": "Paper",
+            "timestamp": 1719766880369,
+            "isSelected": false
+        }
+    ],
     "tasks": [
         {
             "id": "0c917e8d-f25b-471f-89f8-fc8307c768cf",
@@ -28,7 +50,8 @@
             "id": "51158bb1-7d58-478c-9324-6d8fc0583c34",
             "title": "Replace contact lenses",
             "nextEpochDay": 19906,
-            "cadenceInDays": 30
+            "cadenceInDays": 30,
+            "daysFromNow": 4
         },
         {
             "id": "d8561ebc-5f78-4ad6-9af3-d5f97879c033",
@@ -45,7 +68,7 @@
         {
             "id": "58c36c00-58df-4130-907f-f7869b701312",
             "title": "Take pills",
-            "nextEpochDay": 19904,
+            "nextEpochDay": 19905,
             "cadenceInDays": 1
         },
         {
@@ -75,58 +98,56 @@
         {
             "title": "Look at tax stuff",
             "cadenceInDays": 100,
-            "daysFromNow": 30,
             "id": "79a67030-5362-4263-9d7e-7cbaf663954d",
             "nextEpochDay": 20001
         },
         {
             "title": "Vacuum the little storage room",
             "cadenceInDays": 15,
-            "daysFromNow": 30,
             "id": "2e247db3-3a37-405c-8e8d-590d4e7c7c33",
             "nextEpochDay": 19916
         },
         {
             "title": "Clean the fans",
             "cadenceInDays": 30,
-            "daysFromNow": 30,
             "id": "9066efa8-95c9-41d7-8f8e-71315c8ce79b",
             "nextEpochDay": 19931
         },
         {
             "title": "Clean kitchen cabinet doors",
             "cadenceInDays": 14,
-            "daysFromNow": 30,
             "id": "7f7e0d6e-497b-49f7-b6e9-21388451ec9d",
             "nextEpochDay": 19915
         },
         {
             "title": "Water the plants",
             "cadenceInDays": 3,
-            "daysFromNow": 30,
             "id": "2c3e317c-6c09-4116-a92f-569356dc3945",
-            "nextEpochDay": 19904
+            "nextEpochDay": 19907
         },
         {
             "title": "Vacuum bedroom",
             "cadenceInDays": 7,
-            "daysFromNow": 30,
             "id": "bd70bc8b-114c-45dc-95e8-2a1af71776fb",
             "nextEpochDay": 19909
         },
         {
             "title": "Clean the whole fridge",
             "cadenceInDays": 200,
-            "daysFromNow": 30,
             "id": "d926290f-0e69-4ae8-a605-c4736ee8892f",
             "nextEpochDay": 20102
         },
         {
             "title": "Check bike tyres",
             "cadenceInDays": 30,
-            "daysFromNow": 30,
             "id": "75712ac5-dfbe-4f5a-b454-5339b0ae4998",
             "nextEpochDay": 19932
+        },
+        {
+            "title": "Change the cats' water",
+            "cadenceInDays": 14,
+            "id": "c4cf117b-7410-4e9e-bba4-5a1f2d55c78b",
+            "nextEpochDay": 19916
         }
     ]
 }

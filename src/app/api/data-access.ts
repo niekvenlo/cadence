@@ -1,15 +1,15 @@
-import { delay } from "../utils";
-
-const ROOT = 'http://localhost:3000' || 'http://penguin.termina.linux.test:3000';
+const ROOT = "http://192.168.2.7:3000" || "http://localhost:3000";
 
 /*
  * Handle API calls.
  */
 
-const basicFetch = async (url) => {
-  // await delay(Math.random() * 2001); // arbitrary delay
+export const basicFetch = async (url) => {
   const cacheBreaker = Math.random();
-  const response = await fetch(ROOT + url + `#${cacheBreaker}`, { mode: 'no-cors', cache: "no-store" });
+  const response = await fetch(ROOT + url + `#${cacheBreaker}`, {
+    cache: "no-store",
+    mode: "no-cors",
+  });
   if (!response.ok) {
     throw new Error(
       "Network Error: Did you hot-reload? Server data is probably out-of-sync."
@@ -31,3 +31,14 @@ export const updateTask = async (taskToUpdate) => {
     `/api/updateUserTask?taskJson=${JSON.stringify(taskToUpdate)}`
   );
 };
+
+export const fetchShoppingList = async () => {
+  return basicFetch(`/api/getUserShopping`);
+};
+
+export const toggleShoppingListItem = async (label) => {
+  const re = await fetch("http://localhost:3000/api/toggleShop?label=Bread");
+  // return re.json();
+  throw new Error("dddd");
+};
+// basicFetch(`/api/toggleShop?label=${label}`);
