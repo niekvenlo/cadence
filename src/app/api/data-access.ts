@@ -1,5 +1,7 @@
 import { delay } from "../utils";
 
+const ROOT = 'http://localhost:3000' || 'http://penguin.termina.linux.test:3000';
+
 /*
  * Handle API calls.
  */
@@ -7,7 +9,7 @@ import { delay } from "../utils";
 const basicFetch = async (url) => {
   // await delay(Math.random() * 2001); // arbitrary delay
   const cacheBreaker = Math.random();
-  const response = await fetch(url + `#${cacheBreaker}`, { cache: "no-store" });
+  const response = await fetch(ROOT + url + `#${cacheBreaker}`, { mode: 'no-cors', cache: "no-store" });
   if (!response.ok) {
     throw new Error(
       "Network Error: Did you hot-reload? Server data is probably out-of-sync."
@@ -17,7 +19,7 @@ const basicFetch = async (url) => {
 };
 
 export const getTasks = async () => {
-  return basicFetch("http://localhost:3000/api/getUserTasks");
+  return basicFetch(`/api/getUserTasks`);
 };
 
 export const completeTask = async (taskId) => {

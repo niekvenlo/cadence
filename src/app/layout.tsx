@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import ReactQueryProvider from "./api/ReactQueryProvider";
 import AppHeader from "./components/AppHeader";
 import "./globals.css";
+import "./basic-components.css";
 
 export const metadata: Metadata = {
   title: "Cadence - Recurring Reminders",
