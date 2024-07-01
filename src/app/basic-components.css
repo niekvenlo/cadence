@@ -302,6 +302,7 @@ dialog.basic-modal {
  * MARK: b-slider
  */
 .basic-slider {
+  --time: 1s;
   --slide-distance: 4rem;
   align-items: center;
   background: #eee;
@@ -310,8 +311,7 @@ dialog.basic-modal {
   display: grid;
   grid-template-columns: var(--slide-distance) 1fr var(--slide-distance);
   overflow: hidden;
-  margin-block: 1em;
-  transition: all 0.1s ease-out;
+  transition: all var(--time) linear;
   width: 100%;
   span.before,
   span.after {
@@ -321,19 +321,19 @@ dialog.basic-modal {
     color: hsl(var(--foreground-hsl));
     white-space: nowrap;
     margin-inline: 0.5em;
-    transition: all 0.1s ease-out;
+    transition: all var(--time) linear;
     &:empty {
       opacity: 0;
     }
   }
   span.label {
-    background: hsl(300 20% 40%);
+    background: hsl(250 20% 40%);
     border-radius: 0 8px 8px 0;
     color: white;
     font-size: 1em;
     padding-block: 0.5em;
     text-align: center;
-    transition: all 0.1s ease-out;
+    transition: all var(--time) linear;
     translate: calc(-1 * var(--slide-distance));
   }
   span.before {

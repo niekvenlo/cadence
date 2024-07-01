@@ -24,10 +24,9 @@ export default function CadencePage({ initialList }) {
   };
 
   return (
-    <main style={{ minWidth: "80vw" }}>
-      {processing}
-      {toggleMutation.isError ? toggleMutation.error.message : ""}
+    <main id="shopping-page">
       {shoppingListQuery.isLoading && <p>Loading...</p>}
+      {toggleMutation.isError ? toggleMutation.error.message : ""}
       {shoppingListQuery.data.map(({ label, isSelected, timestamp }) => (
         <Slider
           key={label}

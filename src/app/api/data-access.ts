@@ -8,7 +8,6 @@ export const basicFetch = async (url) => {
   const cacheBreaker = Math.random();
   const response = await fetch(ROOT + url + `#${cacheBreaker}`, {
     cache: "no-store",
-    mode: "no-cors",
   });
   if (!response.ok) {
     throw new Error(

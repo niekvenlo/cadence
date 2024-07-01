@@ -2,23 +2,38 @@
     "shopping": [
         {
             "label": "Bread",
-            "timestamp": 1719769352690,
-            "isSelected": true
+            "timestamp": 1719770958981,
+            "isSelected": false
         },
         {
             "label": "Milk",
-            "timestamp": 1719766880369,
+            "timestamp": 1719820198561,
             "isSelected": false
         },
         {
             "label": "Eggs",
-            "timestamp": 1719766880369,
-            "isSelected": true
+            "timestamp": 1719769426288,
+            "isSelected": false
         },
         {
             "label": "Paper",
-            "timestamp": 1719766880369,
+            "timestamp": 1719820010755,
             "isSelected": false
+        },
+        {
+            "label": "Fruits",
+            "timestamp": 1719820009013,
+            "isSelected": false
+        },
+        {
+            "label": "Misc. Cleaning",
+            "timestamp": 1719820009013,
+            "isSelected": false
+        },
+        {
+            "label": "Misc. Pantry",
+            "timestamp": 1719820133200,
+            "isSelected": true
         }
     ],
     "tasks": [
@@ -68,7 +83,7 @@
         {
             "id": "58c36c00-58df-4130-907f-f7869b701312",
             "title": "Take pills",
-            "nextEpochDay": 19905,
+            "nextEpochDay": 19906,
             "cadenceInDays": 1
         },
         {
@@ -148,6 +163,18 @@
             "cadenceInDays": 14,
             "id": "c4cf117b-7410-4e9e-bba4-5a1f2d55c78b",
             "nextEpochDay": 19916
+        },
+        {
+            "title": "Take out the trash",
+            "cadenceInDays": 3,
+            "nextEpochDay": 19908,
+            "id": "eb9220be-02ba-4db3-988f-c0b119d4d053"
+        },
+        {
+            "title": "Laundry",
+            "cadenceInDays": 6,
+            "id": "e57352c3-c92f-4433-ac9a-a5456a395048",
+            "nextEpochDay": 19911
         }
     ]
 }
