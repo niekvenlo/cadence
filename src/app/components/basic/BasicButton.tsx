@@ -7,7 +7,7 @@ type Props = {
   children: ReactNode;
   className?: string;
   isDisabled?: boolean;
-  variant?: "primary" | "look-like-a-link";
+  variant?: "primary" | "accent" | "look-like-a-link";
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 };
 

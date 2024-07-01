@@ -3,9 +3,10 @@
  */
 :root {
   --primary-color: hsl(250 50% 40%);
+  --primary-color-subdued: hsl(250 20% 30%);
   --primary-color-darker: hsl(250 50% 20%);
   --primary-color-lighter: hsl(250 50% 60%);
-  --accent-color: hsl(350 50% 40%);
+  --accent-color: hsl(23, 95%, 52%);
   --background-color: hsl(100 20% 85%);
   --on-primary-color: hsl(250 10% 90%);
   --card-color: hsl(100 20% 95%);
@@ -78,6 +79,8 @@ body {
 
 main {
   padding-inline: calc(10vw - 30px);
+  flex-grow: 1;
+  align-content: flex-start;
 }
 
 p {
@@ -110,7 +113,6 @@ p {
     max-width: 30em;
     a {
       font-size: 0.9em;
-      font-variant: small-caps;
       white-space: nowrap;
     }
   }
@@ -133,12 +135,6 @@ p {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 1em;
-}
-
-#new-cadence-button-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
 }
 
 /*
@@ -183,95 +179,137 @@ p {
 }
 
 /*
- * MARK: Cards
- */
-#cadence-cards {
-  & > div {
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
-  }
-  h1 {
-    opacity: 0.8;
-    text-align: center;
-  }
-  h2 {
-    font-size: 1.3em;
-  }
-  .no-tasks {
-    font-weight: 100;
-    font-style: italic;
-    opacity: 0.5;
-  }
-  .card {
-    align-items: center;
-    background: white;
-
-    box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075),
-      0 2px 2px hsl(0deg 0% 0% / 0.075), 0 4px 4px hsl(0deg 0% 0% / 0.075),
-      0 8px 8px hsl(0deg 0% 0% / 0.075), 0 16px 16px hsl(0deg 0% 0% / 0.075);
-    border-radius: var(--medium-radius);
-    cursor: pointer;
-    display: grid;
-    gap: 0 2.5em;
-    grid-template-areas:
-      "title title title . buttons"
-      "due every . recent buttons";
-    grid-template-columns: repeat(4, 1fr);
-    justify-content: space-between;
-    padding: 1em;
-    transition: all 0.1s ease-out;
-    &.isPending {
-      background: lightgreen;
-    }
-    h2 {
-      grid-area: title;
-    }
-    .due {
-      grid-area: due;
-    }
-    .every {
-      grid-area: every;
-    }
-    .recently-complete {
-      grid-area: recent;
-    }
-    .buttons {
-      grid-area: buttons;
-      display: flex;
-      justify-content: flex-end;
-      gap: 0.5em;
-    }
-    @media (orientation: portrait) {
-      grid-template-areas:
-        "title title"
-        "due ."
-        "every recent"
-        "buttons buttons";
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: unset;
-      gap: 0.1em;
-      h2 {
-        text-align: center;
-        font-size: 1.1em;
-      }
-      & > * {
-        justify-self: center;
-      }
-      .buttons {
-        justify-content: center;
-        gap: 0.5em;
-      }
-    }
-  }
-}
-
-/*
  * MARK: Main
  */
+main#cadence {
+  #cadence-cards {
+    & > div {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+    }
+    h1 {
+      opacity: 0.8;
+      text-align: center;
+    }
+    h2 {
+      font-size: 1.3em;
+    }
+    .no-tasks {
+      font-weight: 100;
+      font-style: italic;
+      opacity: 0.5;
+    }
+    .card {
+      align-items: center;
+      background: white;
+
+      box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075),
+        0 2px 2px hsl(0deg 0% 0% / 0.075), 0 4px 4px hsl(0deg 0% 0% / 0.075),
+        0 8px 8px hsl(0deg 0% 0% / 0.075), 0 16px 16px hsl(0deg 0% 0% / 0.075);
+      border-radius: var(--medium-radius);
+      cursor: pointer;
+      display: grid;
+      gap: 0 2.5em;
+      grid-template-areas:
+        "title title title title buttons buttons"
+        "due every . recent buttons buttons";
+      grid-template-columns: 1fr 1fr 1fr 1fr 2fr 3fr;
+      justify-content: space-between;
+      padding: 1em;
+      transition: all 0.1s ease-out;
+      &.isPending {
+        background: lightgreen;
+      }
+      h2 {
+        grid-area: title;
+      }
+      .due {
+        grid-area: due;
+      }
+      .every {
+        grid-area: every;
+      }
+      .recently-complete {
+        grid-area: recent;
+      }
+      .buttons {
+        grid-area: buttons;
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.5em;
+      }
+      @media (max-width: 800px) {
+        grid-template-areas:
+          "title title"
+          "due ."
+          "every recent"
+          "buttons buttons";
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: unset;
+        gap: 0.1em;
+        h2 {
+          text-align: center;
+          font-size: 1.1em;
+        }
+        & > * {
+          justify-self: center;
+        }
+        .buttons {
+          justify-content: center;
+          gap: 0.5em;
+        }
+      }
+    }
+  }
+
+  #new-cadence-button-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+}
 main#shopping-page {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
   gap: 1em;
   width: 90vw;
+}
+
+main#ai {
+  margin-top: -1em;
+  --s: 10px; /* control the size*/
+  --c1: var(--primary-color-lighter);
+  --c2: var(--primary-color-subdued);
+  width: 100%;
+  background: conic-gradient(at 60% 60%, var(--c1) 75%, #0000 0) 0 0 /
+      calc(5 * var(--s) / 2) calc(5 * var(--s) / 2),
+    repeating-conic-gradient(var(--c1) 0 25%, #0000 0 50%) 0 0 /
+      calc(5 * var(--s)) calc(5 * var(--s)),
+    repeating-conic-gradient(var(--c2) 0 25%, var(--c1) 0 50%) 0 0 / var(--s)
+      var(--s);
+  div {
+    margin: 20vh auto;
+    background: var(--card-color);
+    width: 50%;
+    aspect-ratio: 1/1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 40%;
+    rotate: 10deg;
+    box-shadow: 10px 5px 0px 3px var(--primary-color),
+      -10px -5px 0px 3px var(--primary-color-lighter);
+    animation: 3s slide infinite ease-in;
+  }
+}
+
+@keyframes slide {
+  from {
+    translate: 100vw 0;
+  }
+
+  to {
+    translate: -100vw 0;
+  }
 }

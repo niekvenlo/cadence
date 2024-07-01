@@ -63,7 +63,7 @@ export default function CadencePage({ initialTasks }: Props) {
       {tasksQuery.isLoading && <p>Loading...</p>}
       <div id="new-cadence-button-wrapper">
         <BasicButton
-          variant="primary"
+          variant="accent"
           onClick={() =>
             setSelectedTask({
               title: "",

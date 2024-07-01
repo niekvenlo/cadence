@@ -14,6 +14,7 @@ export default function AppHeader({ initialShoppingList }) {
           <BasicLink href="/">Tasks</BasicLink>
           <BasicLink href="/shopping">Shopping</BasicLink>
           <BasicLink href="/chinese">读中文</BasicLink>
+          <BasicLink href="/ai">AI</BasicLink>
         </div>
       </header>
       <div id="app-header-shopping-list">
