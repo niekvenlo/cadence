@@ -29,12 +29,6 @@ body:has(dialog[open]) {
   padding: 0;
 }
 
-/* @media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-} */
-
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -289,7 +283,7 @@ main#ai {
     repeating-conic-gradient(var(--c2) 0 25%, var(--c1) 0 50%) 0 0 / var(--s)
       var(--s);
   div {
-    margin: 20vh auto;
+    margin: 10vh auto;
     background: var(--card-color);
     width: 50%;
     aspect-ratio: 1/1;
@@ -300,16 +294,20 @@ main#ai {
     rotate: 10deg;
     box-shadow: 10px 5px 0px 3px var(--primary-color),
       -10px -5px 0px 3px var(--primary-color-lighter);
-    animation: 3s slide infinite ease-in;
+    animation: 5s slide infinite alternate ease-in-out;
+    font-size: 3em;
+    @media (max-width: 600px) {
+      font-size: 1em;
+    }
   }
 }
 
 @keyframes slide {
   from {
-    translate: 100vw 0;
+    translate: 20vw 10vh;
   }
 
   to {
-    translate: -100vw 0;
+    translate: -20vw -10vh;
   }
 }
