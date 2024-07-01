@@ -32,8 +32,8 @@
         },
         {
             "label": "Misc. Pantry",
-            "timestamp": 1719820133200,
-            "isSelected": true
+            "timestamp": 1719825062199,
+            "isSelected": false
         }
     ],
     "tasks": [
@@ -58,7 +58,7 @@
         {
             "id": "aec808ac-b2dd-4b97-9673-adad313cdd0f",
             "title": "Clean the sink with soda crystals",
-            "nextEpochDay": 19905,
+            "nextEpochDay": 19912,
             "cadenceInDays": 7
         },
         {

@@ -98,6 +98,10 @@ p {
   width: 100%;
   align-items: center;
 
+  h1 {
+    text-transform: uppercase;
+  }
+
   .links {
     align-items: center;
     display: flex;
@@ -105,6 +109,21 @@ p {
     gap: 1em;
     justify-content: space-between;
     max-width: 30em;
+    a {
+      white-space: nowrap;
+    }
+  }
+
+  @media (orientation: portrait) {
+    h1 {
+      /* display: none; */
+      font-size: 1em;
+    }
+  }
+  @media (max-width: 600px) {
+    h1 {
+      display: none;
+    }
   }
 }
 
@@ -221,6 +240,7 @@ p {
       grid-template-areas:
         "title title"
         "due every"
+        ". recent"
         "buttons buttons";
       grid-template-columns: 1fr 1fr;
       grid-template-rows: unset;
@@ -231,9 +251,9 @@ p {
       & > * {
         justify-self: center;
       }
-      .recently-complete {
+      /* .recently-complete {
         display: none;
-      }
+      } */
       .buttons {
         justify-content: center;
         gap: 0.5em;
