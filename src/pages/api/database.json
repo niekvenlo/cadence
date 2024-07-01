@@ -22,13 +22,28 @@
         },
         {
             "label": "Fruits",
-            "timestamp": 1719820009013,
-            "isSelected": false
+            "timestamp": 1719829022973,
+            "isSelected": true
         },
         {
             "label": "Coke",
             "timestamp": 1719828037766,
             "isSelected": true
+        },
+        {
+            "label": "Coffee",
+            "timestamp": 1719828513379,
+            "isSelected": false
+        },
+        {
+            "label": "Snacks",
+            "timestamp": 1719828524728,
+            "isSelected": false
+        },
+        {
+            "label": "Amazing Oriental",
+            "timestamp": 1719828543844,
+            "isSelected": false
         },
         {
             "label": "Misc. Cleaning",

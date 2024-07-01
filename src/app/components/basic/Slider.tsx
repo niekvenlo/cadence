@@ -56,11 +56,11 @@ function getLabel(timestamp) {
   const diff = now - timestamp;
   if (diff < MS_IN_HOUR) {
     const mins = Math.ceil(diff / MS_IN_MIN);
-    return `< ${mins}m`;
+    return `<${mins}m`;
   }
   if (diff < 3 * MS_IN_DAY) {
     const hours = Math.ceil(diff / MS_IN_HOUR);
-    return `< ${hours}h`;
+    return `<${hours}h`;
   }
   return null;
 }

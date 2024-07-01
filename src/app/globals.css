@@ -195,6 +195,9 @@ p {
     opacity: 0.8;
     text-align: center;
   }
+  h2 {
+    font-size: 1.3em;
+  }
   .no-tasks {
     font-weight: 100;
     font-style: italic;
@@ -215,7 +218,6 @@ p {
       "title title title . buttons"
       "due every . recent buttons";
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 3fr 1fr;
     justify-content: space-between;
     padding: 1em;
     transition: all 0.1s ease-out;
@@ -243,14 +245,15 @@ p {
     @media (orientation: portrait) {
       grid-template-areas:
         "title title"
-        "due every"
-        ". recent"
+        "due ."
+        "every recent"
         "buttons buttons";
       grid-template-columns: 1fr 1fr;
       grid-template-rows: unset;
       gap: 0.1em;
       h2 {
         text-align: center;
+        font-size: 1.1em;
       }
       & > * {
         justify-self: center;
