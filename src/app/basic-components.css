@@ -20,9 +20,9 @@ a.basic-a {
 button.basic-button {
   background: inherit;
   border: none;
-  box-shadow: 0px 0px 0px 1px hsl(var(--foreground-hsl));
+  box-shadow: 0px 0px 0px 1px var(--primary-color);
   border-radius: 8px;
-  color: hsl(var(--foreground-hsl));
+  color: var(--primary-color);
   cursor: pointer;
   font-weight: inherit;
   outline: none;
@@ -33,30 +33,30 @@ button.basic-button {
   &:hover,
   &:focus,
   &:active {
-    box-shadow: 0px 0px 0px 3px hsl(var(--foreground-hsl));
-    background: hsl(var(--foreground-hsl));
-    color: hsl(var(--background-hsl));
+    box-shadow: 0px 0px 0px 3px var(--primary-color);
+    background: var(--primary-color);
+    color: var(--background-color);
   }
   &:disabled {
     box-shadow: none;
     background: rgb(128, 128, 128);
-    color: hsl(var(--background-hsl));
+    color: var(--background-color);
   }
   &[data-variant="primary"] {
-    background: hsl(var(--foreground-hsl));
-    color: hsl(var(--background-hsl));
+    background: var(--primary-color);
+    color: var(--background-color);
     &:hover,
     &:focus,
     &:active {
-      box-shadow: 0px 0px 0px 2px hsl(var(--background-hsl)),
-        0px 0px 0px 3px hsl(var(--foreground-hsl)),
-        0px 0px 0px 6px hsl(var(--background-hsl)),
-        0px 0px 0px 7px hsl(var(--foreground-hsl));
+      box-shadow: 0px 0px 0px 2px var(--background-color),
+        0px 0px 0px 3px var(--primary-color),
+        0px 0px 0px 6px var(--background-color),
+        0px 0px 0px 7px var(--primary-color);
     }
     &:disabled {
       box-shadow: none;
       background: rgb(128, 128, 128);
-      color: hsl(var(--background-hsl));
+      color: var(--background-color);
     }
   }
   &[data-variant="look-like-a-link"] {
@@ -80,9 +80,9 @@ button.basic-button {
   button.entrypoint {
     background: inherit;
     border: none;
-    box-shadow: 0px 0px 0px 1px hsl(var(--foreground-hsl));
+    box-shadow: 0px 0px 0px 1px var(--primary-color);
     border-radius: 8px;
-    color: hsl(var(--foreground-hsl));
+    color: var(--primary-color);
     cursor: pointer;
     font-weight: inherit;
     outline: none;
@@ -95,7 +95,7 @@ button.basic-button {
       top: 0.5em;
       left: 1em;
       border: 0.5em solid transparent;
-      border-top-color: hsl(var(--foreground-hsl));
+      border-top-color: var(--primary-color);
       opacity: 0.8;
     }
     margin: 2px;
@@ -104,11 +104,11 @@ button.basic-button {
     &:hover,
     &:focus,
     &:active {
-      box-shadow: 0px 0px 0px 3px hsl(var(--foreground-hsl));
-      background: hsl(var(--foreground-hsl));
-      color: hsl(var(--background-hsl));
+      box-shadow: 0px 0px 0px 3px var(--primary-color);
+      background: var(--primary-color);
+      color: var(--background-color);
       &::after {
-        border-top-color: hsl(var(--background-hsl));
+        border-top-color: var(--background-color);
       }
     }
     &.internal::after {
@@ -125,8 +125,8 @@ button.basic-button {
     gap: 0.5em;
     max-height: 70dvh;
     overflow: scroll;
-    box-shadow: 0px 0px 0px 1px hsl(var(--foreground-hsl)),
-      0px 0px 50px 10px hsl(var(--background-hsl)),
+    box-shadow: 0px 0px 0px 1px var(--primary-color),
+      0px 0px 50px 10px var(--background-color),
       0 1px 1px hsl(0deg 0% 0% / 0.075), 0 2px 2px hsl(0deg 0% 0% / 0.075),
       0 4px 4px hsl(0deg 0% 0% / 0.075), 0 8px 8px hsl(0deg 0% 0% / 0.075),
       0 16px 16px hsl(0deg 0% 0% / 0.075);
@@ -140,14 +140,14 @@ button.basic-button {
       min-width: 18%;
       text-align: center;
       &:hover {
-        background: hsl(var(--foreground-hsl));
-        color: hsl(var(--background-hsl));
+        background: var(--primary-color);
+        color: var(--background-color);
       }
       &.selected {
-        background: hsl(var(--background-hsl));
+        background: var(--background-color);
         &:hover {
-          background: hsl(var(--foreground-hsl));
-          color: hsl(var(--background-hsl));
+          background: var(--primary-color);
+          color: var(--background-color);
         }
       }
     }
@@ -156,7 +156,7 @@ button.basic-button {
   dialog {
     top: 150%;
     opacity: 0.4;
-    box-shadow: 0px 0px 50px 10px hsl(var(--background-hsl)),
+    box-shadow: 0px 0px 50px 10px var(--background-color),
       0 1px 1px hsl(0deg 0% 0% / 0.075), 0 2px 2px hsl(0deg 0% 0% / 0.075),
       0 4px 4px hsl(0deg 0% 0% / 0.075), 0 8px 8px hsl(0deg 0% 0% / 0.075),
       0 16px 16px hsl(0deg 0% 0% / 0.075);
@@ -184,7 +184,7 @@ button.basic-button {
     }
 
     &::backdrop {
-      background: hsl(var(--background-hsl));
+      background: var(--background-color);
       opacity: 0.5;
     }
 
@@ -203,7 +203,7 @@ button.basic-button {
 dialog.basic-modal {
   top: 150%;
   opacity: 0.4;
-  box-shadow: 0px 0px 50px 10px hsl(var(--background-hsl)),
+  box-shadow: 0px 0px 50px 10px var(--primary-color),
     0 1px 1px hsl(0deg 0% 0% / 0.075), 0 2px 2px hsl(0deg 0% 0% / 0.075),
     0 4px 4px hsl(0deg 0% 0% / 0.075), 0 8px 8px hsl(0deg 0% 0% / 0.075),
     0 16px 16px hsl(0deg 0% 0% / 0.075);
@@ -234,7 +234,7 @@ dialog.basic-modal {
   }
 
   &::backdrop {
-    background: hsl(var(--background-hsl));
+    background: var(--background-color);
     opacity: 0.5;
   }
 
@@ -256,7 +256,7 @@ dialog.basic-modal {
     &:focus,
     &:hover {
       rotate: 10deg;
-      color: hsl(var(--foreground-hsl));
+      color: var(--primary-color);
       outline: none;
     }
   }
@@ -266,35 +266,25 @@ dialog.basic-modal {
  * MARK: b-pill
  */
 .basic-pill {
-  background: currentColor;
+  background: black;
+  color: white;
   border-radius: 2em;
   width: fit-content;
   text-align: center;
-  span {
-    color: white;
-  }
   font-size: 60%;
   margin: 0.5em;
   padding: 0.3em 3em;
   white-space: nowrap;
-  /* @media (prefers-color-scheme: dark) {
-    span {
-      color: black;
-    }
-  } */
   &[data-variant="success"] {
-    color: green;
+    background: green;
+  }
+  &[data-variant="to-shop"] {
+    background: var(--primary-color-darker);
+    color: var(--on-primary-color);
   }
   &[data-variant="subtle"] {
-    color: hsl(var(--background-hsl));
-    span {
-      color: black;
-    }
-    /* @media (prefers-color-scheme: dark) {
-      span {
-        color: white;
-      }
-    } */
+    background: var(--background-color);
+    color: black;
   }
 }
 
@@ -306,7 +296,7 @@ dialog.basic-modal {
   --slide-distance: 4rem;
   align-items: center;
   background: #eee;
-  border: 2px solid hsl(var(--foreground-hsl));
+  border: 2px solid var(--primary-color);
   cursor: pointer;
   display: grid;
   grid-template-columns: var(--slide-distance) 1fr var(--slide-distance);
@@ -318,7 +308,7 @@ dialog.basic-modal {
     text-align: center;
     font-size: 0.8em;
     font-weight: bold;
-    color: hsl(var(--foreground-hsl));
+    color: var(--primary-color);
     white-space: nowrap;
     margin-inline: 0.5em;
     transition: all var(--time) linear;
@@ -353,7 +343,7 @@ dialog.basic-modal {
       translate: 0;
     }
     span.label {
-      background: hsl(var(--foreground-hsl));
+      background: var(--primary-color);
       border-radius: 8px 0 0 8px;
       translate: var(--slide-distance);
     }

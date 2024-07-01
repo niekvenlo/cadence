@@ -26,6 +26,11 @@
             "isSelected": false
         },
         {
+            "label": "Coke",
+            "timestamp": 1719828037766,
+            "isSelected": true
+        },
+        {
             "label": "Misc. Cleaning",
             "timestamp": 1719820009013,
             "isSelected": false

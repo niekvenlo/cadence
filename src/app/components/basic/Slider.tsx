@@ -58,14 +58,11 @@ function getLabel(timestamp) {
     const mins = Math.ceil(diff / MS_IN_MIN);
     return `< ${mins}m`;
   }
-  if (diff < MS_IN_DAY) {
+  if (diff < 3 * MS_IN_DAY) {
     const hours = Math.ceil(diff / MS_IN_HOUR);
     return `< ${hours}h`;
   }
-  if (diff < MS_IN_DAY) {
-    return "In the last day";
-  }
-  return "Long ago";
+  return null;
 }
 
 export default BasicSlider;

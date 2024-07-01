@@ -1,5 +1,5 @@
 "use client";
-import type { Task, NewTask } from "./types";
+import type { Task, NewTask, ShopItem } from "./types";
 
 import { useState } from "react";
 import { Flipper } from "react-flip-toolkit";
@@ -16,7 +16,11 @@ import TaskCardGroup from "./components/TaskCardGroup";
 import { delay } from "./utils";
 import { HIGHLIGHT_DELAY } from "./constants";
 
-export default function CadencePage({ initialTasks }) {
+type Props = {
+  initialTasks: Task[];
+};
+
+export default function CadencePage({ initialTasks }: Props) {
   const tasksQuery = useTasksQuery(initialTasks);
   const updateMutation = useTaskUpdateMutation();
   const completeMutation = useTaskCompleteMutation();
@@ -55,7 +59,7 @@ export default function CadencePage({ initialTasks }) {
     (t) => t.daysFromNow > 31 && t.daysFromNow <= 365
   ) as Task[];
   return (
-    <main>
+    <main id="cadence">
       {tasksQuery.isLoading && <p>Loading...</p>}
       <div id="new-cadence-button-wrapper">
         <BasicButton
