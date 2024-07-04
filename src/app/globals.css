@@ -340,7 +340,7 @@ main#ai {
     border-radius: 40%;
     rotate: 10deg;
     box-shadow: 10px 5px 0px 3px var(--primary-color),
-      -10px -5px 0px 3px var(--primary-color-lighter);
+      -5px -2px 0px 3px var(--primary-color-lighter);
     animation: 5s slide infinite alternate ease-in-out;
     font-size: 3em;
     @media (max-width: 600px) {
