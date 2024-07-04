@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cx } from "../../utils";
+import type { ReactNode } from "react";
 
 type Props = {
-  children: string;
+  children: ReactNode;
   className?: string;
   href: string;
 };

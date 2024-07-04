@@ -135,7 +135,6 @@ export default function CadencePage({ initialTasks }: Props) {
         closeOnBackdropClick
         requestClose={() => setSelectedTask(null)}
       >
-        {JSON.stringify(selectedTask)}
         <EditModal
           selectedTask={selectedTask}
           setSelectedTask={setSelectedTask}

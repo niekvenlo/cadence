@@ -1,7 +1,7 @@
 export default async function Ai() {
   return (
     <main id="ai">
-      <div>Artificial Insemination</div>
+      <div>Placeholder</div>
     </main>
   );
 }
