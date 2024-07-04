@@ -3,6 +3,7 @@ import type { Task } from "../types";
 import { Flipped } from "react-flip-toolkit";
 
 import TaskCard from "./TaskCard";
+import { cx } from "../utils";
 
 type Props = {
   completedIds: string[];
@@ -27,11 +28,8 @@ function TaskCardGroup({
   return (
     <>
       <Flipped flipId={headers[group]} key={headers[group]}>
-        <h1>{headers[group]}</h1>
+        <h1 className={cx({ crossOut: tasks.length < 1 })}>{headers[group]}</h1>
       </Flipped>
-      {tasks.length < 1 && (
-        <div className="no-tasks">No tasks in this group</div>
-      )}
       {tasks
         .sort((a, b) => (a.cadenceInDays > b.cadenceInDays ? -1 : 1))
         .map((task) => (

@@ -312,7 +312,7 @@ dialog.basic-modal {
 .basic-slider {
   --time: 1s;
   --slide-distance: 3rem;
-  --radius: 4px;
+  --radius: 5em;
   align-items: center;
   background: #eee;
   border: 2px solid var(--primary-color);
@@ -322,6 +322,7 @@ dialog.basic-modal {
   overflow: hidden;
   transition: all var(--time) linear;
   width: 100%;
+  border-radius: var(--radius);
   span.before,
   span.after {
     text-align: center;
@@ -338,7 +339,7 @@ dialog.basic-modal {
   }
   span.label {
     background: var(--primary-color-subdued);
-    border-radius: 0 var(--radius) var(--radius) 0;
+    border-radius: var(--radius);
     color: white;
     font-size: 1em;
     padding-block: 0.5em;
@@ -364,14 +365,14 @@ dialog.basic-modal {
     }
     span.label {
       background: var(--primary-color);
-      border-radius: var(--radius) 0 0 var(--radius);
+      /* border-radius: var(--radius) 0 0 var(--radius); */
       translate: var(--slide-distance);
     }
   }
   &.isProcessing {
     span.label {
       background: grey;
-      border-radius: var(--radius);
+      /* border-radius: var(--radius); */
       translate: 0;
     }
   }

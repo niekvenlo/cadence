@@ -1,6 +1,7 @@
 import BasicPill from "./basic/BasicPill";
 import BasicButton from "./basic/BasicButton";
 import { cx } from "../utils";
+import ConfirmButton from "./basic/ComfirmButton";
 
 type Props = {
   cadenceInDays: number;
@@ -24,7 +25,7 @@ function TaskCard({
     daysFromNow / cadenceInDays > 0.7 && cadenceInDays > 4;
   return (
     <div className={cx({ isPending }, "card")} {...flipperProps}>
-      <h2>{title}</h2>
+      <div className="title">{title}</div>
       <BasicPill className="due">
         {daysFromNow > 0 && `in `}
         {`${Math.abs(daysFromNow)}d`}
@@ -39,14 +40,14 @@ function TaskCard({
         </BasicPill>
       )}
       <div className="buttons">
-        <BasicButton
+        <ConfirmButton
           onClick={(e) => {
             e.stopPropagation();
             onComplete();
           }}
         >
           Mark as done
-        </BasicButton>
+        </ConfirmButton>
         <BasicButton
           onClick={(e) => {
             e.stopPropagation();

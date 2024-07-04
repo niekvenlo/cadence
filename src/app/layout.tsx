@@ -28,6 +28,11 @@ export default async function RootLayout({
   const shoppingList = await fetchShoppingList();
   return (
     <html lang="en">
+      <head>
+        <meta name="apple-mobile-web-app-title" content="Cadence" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="red" />
+      </head>
       <body className={cx(source.variable)}>
         <ReactQueryProvider>
           <AppHeader initialShoppingList={shoppingList} />

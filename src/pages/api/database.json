@@ -2,12 +2,12 @@
     "shopping": [
         {
             "label": "Bread",
-            "timestamp": 1719770958981,
-            "isSelected": false
+            "timestamp": 1719995372414,
+            "isSelected": true
         },
         {
             "label": "Milk",
-            "timestamp": 1719820198561,
+            "timestamp": 1719991373653,
             "isSelected": false
         },
         {
@@ -22,8 +22,8 @@
         },
         {
             "label": "Fruits",
-            "timestamp": 1719840010430,
-            "isSelected": true
+            "timestamp": 1719995380205,
+            "isSelected": false
         },
         {
             "label": "Coke",
@@ -42,7 +42,7 @@
         },
         {
             "label": "Amazing Oriental",
-            "timestamp": 1719828543844,
+            "timestamp": 1720078765520,
             "isSelected": false
         },
         {
@@ -52,7 +52,7 @@
         },
         {
             "label": "Misc. Pantry",
-            "timestamp": 1719825062199,
+            "timestamp": 1720011342314,
             "isSelected": false
         }
     ],
@@ -60,7 +60,7 @@
         {
             "id": "0c917e8d-f25b-471f-89f8-fc8307c768cf",
             "title": "Replace toothbrushes",
-            "nextEpochDay": 19991,
+            "nextEpochDay": 19917,
             "cadenceInDays": 90
         },
         {
@@ -84,7 +84,7 @@
         {
             "id": "51158bb1-7d58-478c-9324-6d8fc0583c34",
             "title": "Replace contact lenses",
-            "nextEpochDay": 19906,
+            "nextEpochDay": 19942,
             "cadenceInDays": 35,
             "daysFromNow": 4
         },
@@ -103,7 +103,7 @@
         {
             "id": "58c36c00-58df-4130-907f-f7869b701312",
             "title": "Take pills",
-            "nextEpochDay": 19906,
+            "nextEpochDay": 19909,
             "cadenceInDays": 1
         },
         {
@@ -158,7 +158,7 @@
             "title": "Water the plants",
             "cadenceInDays": 3,
             "id": "2c3e317c-6c09-4116-a92f-569356dc3945",
-            "nextEpochDay": 19907
+            "nextEpochDay": 19910
         },
         {
             "title": "Vacuum bedroom",
@@ -170,7 +170,7 @@
             "title": "Clean the whole fridge",
             "cadenceInDays": 200,
             "id": "d926290f-0e69-4ae8-a605-c4736ee8892f",
-            "nextEpochDay": 20102
+            "nextEpochDay": 19989
         },
         {
             "title": "Check bike tyres",
@@ -180,14 +180,14 @@
         },
         {
             "title": "Change the cats' water",
-            "cadenceInDays": 14,
+            "cadenceInDays": 12,
             "id": "c4cf117b-7410-4e9e-bba4-5a1f2d55c78b",
-            "nextEpochDay": 19916
+            "nextEpochDay": 19919
         },
         {
             "title": "Take out the trash",
             "cadenceInDays": 3,
-            "nextEpochDay": 19908,
+            "nextEpochDay": 19911,
             "id": "eb9220be-02ba-4db3-988f-c0b119d4d053"
         },
         {
@@ -195,6 +195,30 @@
             "cadenceInDays": 6,
             "id": "e57352c3-c92f-4433-ac9a-a5456a395048",
             "nextEpochDay": 19911
+        },
+        {
+            "title": "Clean stove hood",
+            "cadenceInDays": 32,
+            "id": "25679d98-79d7-4501-9d9f-48df0311c2c8",
+            "nextEpochDay": 19916
+        },
+        {
+            "title": "Trim Tux's nails",
+            "cadenceInDays": 14,
+            "id": "a70db5ba-765f-4e09-82b8-b98becf3ae71",
+            "nextEpochDay": 19921
+        },
+        {
+            "title": "Trim Toto's nails",
+            "cadenceInDays": 21,
+            "id": "82b303fb-d579-464c-bba7-6b4f07cf5a82",
+            "nextEpochDay": 19910
+        },
+        {
+            "title": "Fertilize the climbing hydrangea",
+            "cadenceInDays": 182,
+            "nextEpochDay": 19970,
+            "id": "b619405a-3c91-4cd9-92c0-59fcb2a83bfb"
         }
     ]
 }

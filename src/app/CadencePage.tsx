@@ -28,6 +28,8 @@ export default function CadencePage({ initialTasks }: Props) {
   // Copy of the selected task. Safe to mutate.
   const [selectedTask, setSelectedTask] = useState<Task | NewTask | null>(null);
 
+  const [isFilterActive, setIsFilterActive] = useState(true);
+
   // Lists tasks that have _just_ been clicked.
   const [completedIds, setCompletedIds] = useState<string[]>([]);
 
@@ -50,10 +52,16 @@ export default function CadencePage({ initialTasks }: Props) {
   const forOverdue = tasksQuery.data?.filter((t) => t.daysFromNow < 0);
   const forToday = tasksQuery.data?.filter((t) => t.daysFromNow === 0);
   const forLessThanAWeek = tasksQuery.data?.filter(
-    (t) => t.daysFromNow >= 1 && t.daysFromNow <= 7
+    (t) =>
+      t.daysFromNow >= 1 &&
+      t.daysFromNow <= 7 &&
+      (t.cadenceInDays > 7 || !isFilterActive)
   );
   const forLessThanAMonth = tasksQuery.data?.filter(
-    (t) => t.daysFromNow > 7 && t.daysFromNow <= 31
+    (t) =>
+      t.daysFromNow > 7 &&
+      t.daysFromNow <= 31 &&
+      (t.cadenceInDays > 31 || !isFilterActive)
   );
   const forInACoupleOfMonths = tasksQuery.data?.filter(
     (t) => t.daysFromNow > 31 && t.daysFromNow <= 365
@@ -62,6 +70,12 @@ export default function CadencePage({ initialTasks }: Props) {
     <main id="cadence">
       {tasksQuery.isLoading && <p>Loading...</p>}
       <div id="new-cadence-button-wrapper">
+        <BasicButton
+          variant="primary"
+          onClick={() => setIsFilterActive((t) => !t)}
+        >
+          Toggle filter
+        </BasicButton>
         <BasicButton
           variant="accent"
           onClick={() =>
@@ -114,6 +128,8 @@ export default function CadencePage({ initialTasks }: Props) {
           />
         </Flipper>
       </div>
+      <br />
+      <br />
       <BasicModal
         isOpen={selectedTask !== null}
         closeOnBackdropClick

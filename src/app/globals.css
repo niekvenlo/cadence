@@ -10,8 +10,12 @@
   --background-color: hsl(100 20% 85%);
   --on-primary-color: hsl(250 10% 90%);
   --card-color: hsl(100 20% 95%);
+  --card-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075),
+    0 2px 2px hsl(0deg 0% 0% / 0.075), 0 4px 4px hsl(0deg 0% 0% / 0.075),
+    0 8px 8px hsl(0deg 0% 0% / 0.075), 0 16px 16px hsl(0deg 0% 0% / 0.075);
 
   --medium-radius: 4px;
+  --large-radius: 12px;
 }
 
 body:has(dialog[open]) {
@@ -176,32 +180,42 @@ p {
  * MARK: Main
  */
 main#cadence {
+  width: 100%;
   #cadence-cards {
     & > div {
       display: flex;
       flex-direction: column;
       gap: 1em;
     }
+    @media (max-width: 800px) {
+      & > div {
+        gap: 0;
+      }
+    }
+    width: 100%;
     h1 {
-      opacity: 0.8;
+      font-size: 1.2em;
+      color: var(--primary-color-lighter);
       text-align: center;
+      &.crossOut {
+        &::after {
+          text-decoration: none;
+          content: " (none)";
+          font-weight: 100;
+        }
+      }
     }
     h2 {
-      font-size: 1.3em;
-    }
-    .no-tasks {
-      font-weight: 100;
-      font-style: italic;
-      opacity: 0.5;
+      font-size: 1.1em;
+      font-weight: 300;
     }
     .card {
       align-items: center;
       background: white;
 
-      box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075),
-        0 2px 2px hsl(0deg 0% 0% / 0.075), 0 4px 4px hsl(0deg 0% 0% / 0.075),
-        0 8px 8px hsl(0deg 0% 0% / 0.075), 0 16px 16px hsl(0deg 0% 0% / 0.075);
+      box-shadow: var(--card-shadow);
       border-radius: var(--medium-radius);
+      border: none;
       cursor: pointer;
       display: grid;
       gap: 0 2.5em;
@@ -215,7 +229,10 @@ main#cadence {
       &.isPending {
         background: lightgreen;
       }
-      h2 {
+      &:not(:last-of-type) {
+        border-bottom: 1px solid var(--primary-color-darker);
+      }
+      .title {
         grid-area: title;
       }
       .due {
@@ -233,25 +250,37 @@ main#cadence {
         justify-content: flex-end;
         gap: 0.5em;
       }
+      transition: all 0.5s ease-in;
       @media (max-width: 800px) {
-        grid-template-areas:
-          "title title"
-          "due ."
-          "every recent"
-          "buttons buttons";
-        grid-template-columns: 1fr 1fr;
+        box-shadow: none;
+        padding: 0.5em;
+        grid-template-areas: "title buttons";
+        grid-template-columns: 4fr 1fr;
         grid-template-rows: unset;
         gap: 0.1em;
-        h2 {
-          text-align: center;
-          font-size: 1.1em;
-        }
-        & > * {
-          justify-self: center;
-        }
+        max-height: 4em;
+        overflow-y: hidden;
         .buttons {
-          justify-content: center;
           gap: 0.5em;
+          font-size: 0.6em;
+        }
+        .due,
+        .every,
+        .recently-complete {
+          display: none;
+        }
+        &:hover {
+          max-height: 6em;
+          grid-template-areas:
+            "title buttons"
+            "due ."
+            "every ."
+            "recent .";
+          .due,
+          .every,
+          .recently-complete {
+            display: block;
+          }
         }
       }
     }
@@ -259,8 +288,26 @@ main#cadence {
 
   #new-cadence-button-wrapper {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    flex-direction: row;
+    justify-content: end;
+    position: fixed;
+    bottom: 1em;
+    right: 1.5em;
+    background: var(--background-color);
+    padding: 0.3em;
+    border-radius: var(--large-radius);
+    gap: 0.1em;
+    box-shadow: var(--card-shadow);
+    @media (max-width: 600px) {
+      width: 100%;
+      border-radius: 0;
+      justify-content: center;
+      bottom: 0;
+      right: 0;
+      box-shadow: 0 -1px 1px hsl(0deg 0% 0% / 0.075),
+        0 -2px 2px hsl(0deg 0% 0% / 0.075), 0 -4px 4px hsl(0deg 0% 0% / 0.075),
+        0 -8px 8px hsl(0deg 0% 0% / 0.075), 0 -16px 16px hsl(0deg 0% 0% / 0.075);
+    }
   }
 }
 main#shopping-page {
