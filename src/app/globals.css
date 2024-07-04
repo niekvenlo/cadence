@@ -132,13 +132,22 @@ p {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 1em;
   flex-wrap: wrap;
-  & > div {
+  & > a {
     display: flex;
     justify-content: flex-end;
     width: min-content;
     flex-grow: 1;
+    flex-wrap: wrap;
+    text-decoration: none;
+    & > span.none {
+      color: white;
+      font-weight: 300;
+      font-size: 0.5em;
+      padding-inline: 0.5em;
+    }
   }
   .tasks {
     justify-content: flex-start;

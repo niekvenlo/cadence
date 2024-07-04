@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import useShoppingQuery from "../api/useShoppingQuery";
 import useTasksQuery from "../api/useTasksQuery";
 import BasicLink from "./basic/BasicLink";
@@ -8,6 +9,9 @@ import BasicPill from "./basic/BasicPill";
 export default function AppHeader({ initialShoppingList, initialTasks }) {
   const shoppingListQuery = useShoppingQuery(initialShoppingList);
   const tasksQuery = useTasksQuery(initialTasks);
+  const todayTasks = tasksQuery?.data.filter((i) => i.daysFromNow === 0) ?? [];
+  const selectedShopping =
+    shoppingListQuery?.data.filter((i) => i.isSelected) ?? [];
   return (
     <>
       <header id="app-header">
@@ -20,24 +24,26 @@ export default function AppHeader({ initialShoppingList, initialTasks }) {
         </div>
       </header>
       <div id="app-header-quick-section">
-        <div className="tasks">
-          {tasksQuery?.data
-            .filter((i) => i.daysFromNow === 0)
-            .map((i) => (
-              <BasicPill variant="to-do" key={i.title}>
-                {i.title}
-              </BasicPill>
-            ))}
-        </div>
-        <div className="shopping">
-          {shoppingListQuery?.data
-            .filter((i) => i.isSelected)
-            .map((i) => (
-              <BasicPill variant="to-shop" key={i.label}>
-                {i.label}
-              </BasicPill>
-            ))}
-        </div>
+        <Link className="tasks" href="/">
+          {todayTasks.map((i) => (
+            <BasicPill variant="to-do" key={i.title}>
+              {i.title}
+            </BasicPill>
+          ))}
+          {todayTasks.length < 1 && (
+            <span className="none">all done today</span>
+          )}
+        </Link>
+        <Link className="shopping" href="/shopping">
+          {selectedShopping.map((i) => (
+            <BasicPill variant="to-shop" key={i.label}>
+              {i.label}
+            </BasicPill>
+          ))}
+          {selectedShopping.length < 1 && (
+            <span className="none">all done today</span>
+          )}
+        </Link>
       </div>
     </>
   );

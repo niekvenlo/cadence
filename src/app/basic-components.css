@@ -319,7 +319,7 @@ dialog.basic-modal {
   --radius: 5em;
   align-items: center;
   background: #eee;
-  border: 2px solid var(--primary-color);
+  border: 2px solid var(--primary-color-subdued);
   cursor: pointer;
   display: grid;
   grid-template-columns: var(--slide-distance) 1fr var(--slide-distance);
@@ -359,6 +359,7 @@ dialog.basic-modal {
     opacity: 1;
   }
   &.isSelected {
+    border: 2px solid var(--primary-color);
     span.after {
       opacity: 0;
       translate: var(--slide-distance);
