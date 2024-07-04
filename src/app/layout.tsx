@@ -8,6 +8,7 @@ import "./globals.css";
 import "./basic-components.css";
 import { fetchShoppingList } from "./api/data-access";
 import { cx } from "./utils";
+import { getTasks } from "../pages/api/db";
 
 export const metadata: Metadata = {
   title: "Cadence - Recurring Reminders",
@@ -26,6 +27,7 @@ export default async function RootLayout({
   children?: React.ReactNode;
 }>) {
   const shoppingList = await fetchShoppingList();
+  const tasks = await getTasks();
   return (
     <html lang="en">
       <head>
@@ -35,7 +37,7 @@ export default async function RootLayout({
       </head>
       <body className={cx(source.variable)}>
         <ReactQueryProvider>
-          <AppHeader initialShoppingList={shoppingList} />
+          <AppHeader initialShoppingList={shoppingList} initialTasks={tasks} />
           {children}
         </ReactQueryProvider>
       </body>

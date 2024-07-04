@@ -27,9 +27,11 @@ function EditModal({
     });
   };
   const updateDaysFromNow = (daysFromNow: number) => {
+    console.log({ daysFromNow });
     setSelectedTask({
       ...selectedTask,
       nextEpochDay: getEpochDayNow() + daysFromNow,
+      daysFromNow,
     });
   };
 
@@ -53,8 +55,8 @@ function EditModal({
         ></input>
       </div>
       <BasicSelect
-        options={Array.from({ length: selectedTask.cadenceInDays }).map(
-          (_, i) => (i + 1).toString()
+        options={Array.from({ length: selectedTask.cadenceInDays + 1 }).map(
+          (_, i) => i.toString()
         )}
         selectedOption={selectedTask.daysFromNow}
         onSelect={(c) => updateDaysFromNow(Number(c))}
