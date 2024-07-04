@@ -20,16 +20,16 @@ export default function AppHeader({ initialShoppingList, initialTasks }) {
         </div>
       </header>
       <div id="app-header-quick-section">
-        <div>
+        <div className="tasks">
           {tasksQuery?.data
             .filter((i) => i.daysFromNow === 0)
             .map((i) => (
-              <BasicPill variant="to-shop" key={i.title}>
+              <BasicPill variant="to-do" key={i.title}>
                 {i.title}
               </BasicPill>
             ))}
         </div>
-        <div>
+        <div className="shopping">
           {shoppingListQuery?.data
             .filter((i) => i.isSelected)
             .map((i) => (

@@ -133,9 +133,15 @@ p {
   display: flex;
   justify-content: space-between;
   margin-bottom: 1em;
+  flex-wrap: wrap;
   & > div {
     display: flex;
     justify-content: flex-end;
+    width: min-content;
+    flex-grow: 1;
+  }
+  .tasks {
+    justify-content: flex-start;
   }
 }
 

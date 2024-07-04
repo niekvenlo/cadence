@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 import { cx } from "../../utils";
 
 type Props = {
-  variant?: "success" | "subtle" | "to-shop";
+  variant?: "success" | "subtle" | "to-shop" | "to-do";
   className?: string;
   children?: ReactNode;
 };

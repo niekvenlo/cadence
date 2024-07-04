@@ -300,6 +300,10 @@ dialog.basic-modal {
     background: var(--primary-color-darker);
     color: var(--on-primary-color);
   }
+  &[data-variant="to-do"] {
+    background: var(--primary-color);
+    color: var(--on-primary-color);
+  }
   &[data-variant="subtle"] {
     background: var(--background-color);
     color: black;
