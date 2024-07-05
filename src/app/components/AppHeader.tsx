@@ -5,13 +5,19 @@ import useShoppingQuery from "../api/useShoppingQuery";
 import useTasksQuery from "../api/useTasksQuery";
 import BasicLink from "./basic/BasicLink";
 import BasicPill from "./basic/BasicPill";
+import { cx } from "../utils";
 
-export default function AppHeader({ initialShoppingList, initialTasks }) {
+export default function AppHeader({
+  initialShoppingList,
+  initialTasks,
+  weather,
+}) {
   const shoppingListQuery = useShoppingQuery(initialShoppingList);
   const tasksQuery = useTasksQuery(initialTasks);
   const todayTasks = tasksQuery?.data.filter((i) => i.daysFromNow === 0) ?? [];
   const selectedShopping =
     shoppingListQuery?.data.filter((i) => i.isSelected) ?? [];
+
   return (
     <>
       <header id="app-header">
@@ -44,6 +50,16 @@ export default function AppHeader({ initialShoppingList, initialTasks }) {
             <span className="none">all done today</span>
           )}
         </Link>
+      </div>
+      <div id="app-header-weather-section">
+        {weather.slice(5, 24).map((i) => (
+          <div key={i.time}>
+            <span>{Math.round(i.temp / 2) * 2}°</span>
+            <span className={cx({ heavyPrecip: i.precip > 1 })}>
+              {i.precip < 0.2 ? null : Math.floor(5 * i.precip) * 2}
+            </span>
+          </div>
+        ))}
       </div>
     </>
   );
