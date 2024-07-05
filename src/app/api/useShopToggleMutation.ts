@@ -7,7 +7,7 @@ const useShopToggleMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (label) => {
-      return basicFetch(`/api/toggleShop?label=${label}`);
+      return basicFetch(`/api/toggleShop?label=${label}`, {});
     },
     onSettled: (updatedShopping: ShopItem[]) => {
       queryClient.setQueryData(["shopping"], updatedShopping);

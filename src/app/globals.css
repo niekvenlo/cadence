@@ -106,12 +106,25 @@ p {
     align-items: center;
     display: flex;
     flex-wrap: wrap;
-    gap: 1em;
+    gap: 0.5em;
     justify-content: space-between;
     max-width: 30em;
     a {
       font-size: 0.9em;
       white-space: nowrap;
+    }
+    @media (orientation: portrait) {
+      flex-direction: column;
+      flex-wrap: nowrap;
+      max-height: 1.5em;
+      overflow: hidden;
+      &:hover {
+        max-height: 10em;
+      }
+      &:not(:hover)::before {
+        content: "🍔";
+        text-align: right;
+      }
     }
   }
 
@@ -166,14 +179,28 @@ p {
     font-size: 0.9em;
     text-align: center;
     white-space: wrap;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    min-height: 3em;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    height: 4em;
   }
-  div:nth-of-type(6n) {
+  div:nth-of-type(2n) {
     background: var(--primary-color);
     border-radius: var(--medium-radius) var(--medium-radius) 0 0;
+  }
+  .time {
+    font-size: 0.6em;
+    &::after {
+      content: ":00";
+      font-size: 0.8em;
+    }
+  }
+  .temp:not(:empty)::after {
+    content: "°";
+    font-size: 0.8em;
+  }
+  .precip:not(:empty)::after {
+    content: "cm";
+    font-size: 0.8em;
   }
   .heavyPrecip {
     font-weight: 700;

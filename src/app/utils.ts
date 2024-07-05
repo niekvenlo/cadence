@@ -25,3 +25,5 @@ export const cx = (...params) => {
   });
   return classes.join(" ");
 };
+
+export const round = (n, factor) => Math.round(n / factor) * factor;

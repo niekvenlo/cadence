@@ -36,3 +36,19 @@ export const updateTask = async (taskToUpdate) => {
 export const fetchShoppingList = async () => {
   return basicFetch(`/api/getUserShopping`, {});
 };
+
+export const fetchWeather = async () => {
+  const url = new URL("https://api.open-meteo.com/v1/forecast");
+  const params = {
+    latitude: 52.374, // AMS
+    longitude: 4.8897, // AMS
+    hourly: ["temperature_2m", "precipitation"],
+    timezone: "auto",
+    forecast_days: 3,
+  };
+  Object.entries(params).forEach(([k, v]) => {
+    url.searchParams.append(k, v.toString());
+  });
+
+  return basicFetch(url.href, { absolute: true });
+};

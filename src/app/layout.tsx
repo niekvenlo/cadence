@@ -6,7 +6,7 @@ import ReactQueryProvider from "./api/ReactQueryProvider";
 import AppHeader from "./components/AppHeader";
 import "./globals.css";
 import "./basic-components.css";
-import { basicFetch, fetchShoppingList } from "./api/data-access";
+import { basicFetch, fetchShoppingList, fetchWeather } from "./api/data-access";
 import { cx } from "./utils";
 import { getTasks } from "../pages/api/db";
 
@@ -28,28 +28,7 @@ export default async function RootLayout({
 }>) {
   const shoppingList = await fetchShoppingList();
   const tasks = await getTasks();
-
-  const url = new URL("https://api.open-meteo.com/v1/forecast");
-  const params = {
-    latitude: 52.374,
-    longitude: 4.8897,
-    hourly: ["temperature_2m", "precipitation"],
-    timezone: "auto",
-    forecast_days: 3,
-  };
-  Object.entries(params).forEach(([k, v]) => {
-    url.searchParams.append(k, v.toString());
-  });
-
-  const { hourly } = await basicFetch(url.href, { absolute: true });
-  const { time, temperature_2m, precipitation } = hourly;
-  const weather = Array.from({ length: time.length }).map((_, i) => {
-    return {
-      time: time[i],
-      temp: temperature_2m[i],
-      precip: precipitation[i],
-    };
-  });
+  const weather = await fetchWeather();
 
   return (
     <html lang="en">
@@ -63,7 +42,7 @@ export default async function RootLayout({
           <AppHeader
             initialShoppingList={shoppingList}
             initialTasks={tasks}
-            weather={weather}
+            initialWeather={weather}
           />
           {children}
         </ReactQueryProvider>

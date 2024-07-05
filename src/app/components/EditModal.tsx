@@ -27,7 +27,6 @@ function EditModal({
     });
   };
   const updateDaysFromNow = (daysFromNow: number) => {
-    console.log({ daysFromNow });
     setSelectedTask({
       ...selectedTask,
       nextEpochDay: getEpochDayNow() + daysFromNow,

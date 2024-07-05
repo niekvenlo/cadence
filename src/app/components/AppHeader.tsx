@@ -6,14 +6,17 @@ import useTasksQuery from "../api/useTasksQuery";
 import BasicLink from "./basic/BasicLink";
 import BasicPill from "./basic/BasicPill";
 import { cx } from "../utils";
+import useWeatherQuery from "../api/useWeatherQuery";
 
 export default function AppHeader({
   initialShoppingList,
   initialTasks,
-  weather,
+  initialWeather,
 }) {
   const shoppingListQuery = useShoppingQuery(initialShoppingList);
   const tasksQuery = useTasksQuery(initialTasks);
+  const weatherQuery = useWeatherQuery(initialWeather);
+
   const todayTasks = tasksQuery?.data.filter((i) => i.daysFromNow === 0) ?? [];
   const selectedShopping =
     shoppingListQuery?.data.filter((i) => i.isSelected) ?? [];
@@ -27,6 +30,7 @@ export default function AppHeader({
           <BasicLink href="/shopping">Shopping</BasicLink>
           <BasicLink href="/chinese">读中文</BasicLink>
           <BasicLink href="/ai">AI</BasicLink>
+          <BasicLink href="/weather">Weather</BasicLink>
         </div>
       </header>
       <div id="app-header-quick-section">
@@ -51,16 +55,27 @@ export default function AppHeader({
           )}
         </Link>
       </div>
-      <div id="app-header-weather-section">
-        {weather.slice(5, 24).map((i) => (
-          <div key={i.time}>
-            <span>{Math.round(i.temp / 2) * 2}°</span>
-            <span className={cx({ heavyPrecip: i.precip > 1 })}>
-              {i.precip < 0.2 ? null : Math.floor(5 * i.precip) * 2}
-            </span>
-          </div>
-        ))}
-      </div>
+      <AppHeaderWeatherSection weather={weatherQuery?.data} />
     </>
+  );
+}
+
+function AppHeaderWeatherSection({ weather }) {
+  return (
+    <div id="app-header-weather-section">
+      {weather.map((section) => (
+        <div key={section.time}>
+          <span className="temp">{section.temp}</span>
+          <span
+            className={cx("precip", {
+              heavyPrecip: (section.precip || 0) > 10,
+            })}
+          >
+            {section.precip === 0 ? null : section.precip}
+          </span>
+          <span className="time">{section.time}</span>
+        </div>
+      ))}
+    </div>
   );
 }

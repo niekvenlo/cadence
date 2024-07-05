@@ -2,8 +2,8 @@
     "shopping": [
         {
             "label": "Bread",
-            "timestamp": 1719995372414,
-            "isSelected": true
+            "timestamp": 1720166477097,
+            "isSelected": false
         },
         {
             "label": "Milk",
@@ -32,8 +32,8 @@
         },
         {
             "label": "Pancake stuff",
-            "timestamp": 1720088080436,
-            "isSelected": true
+            "timestamp": 1720166474698,
+            "isSelected": false
         },
         {
             "label": "Snacks",
@@ -103,7 +103,7 @@
         {
             "id": "58c36c00-58df-4130-907f-f7869b701312",
             "title": "Take pills",
-            "nextEpochDay": 19909,
+            "nextEpochDay": 19910,
             "cadenceInDays": 1
         },
         {
