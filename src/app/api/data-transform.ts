@@ -30,11 +30,13 @@ export const transformWeather = (response) => {
     const maxTemp = Math.max(...temperature_2m.slice(start, end));
     const maxPrecip = Math.max(...precipitation.slice(start, end));
     return {
+      startHour: new Date(startTime).getHours() + 1,
+      endHour: new Date(endTime).getHours() + 2,
       time: `${new Date(startTime).getHours() + 1} - ${
-        new Date(endTime).getHours() + 1
+        new Date(endTime).getHours() + 2
       }`,
       temp: round(maxTemp, 2),
-      precip: round(maxPrecip * 10, 2),
+      precip: maxPrecip,
     };
   };
   return [

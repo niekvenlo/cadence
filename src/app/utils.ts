@@ -23,6 +23,9 @@ export const cx = (...params) => {
       });
     }
   });
+  if (classes.length < 1) {
+    return undefined;
+  }
   return classes.join(" ");
 };
 

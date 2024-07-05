@@ -7,6 +7,7 @@ import BasicLink from "./basic/BasicLink";
 import BasicPill from "./basic/BasicPill";
 import { cx } from "../utils";
 import useWeatherQuery from "../api/useWeatherQuery";
+import { useEffect, useState } from "react";
 
 export default function AppHeader({
   initialShoppingList,
@@ -61,17 +62,29 @@ export default function AppHeader({
 }
 
 function AppHeaderWeatherSection({ weather }) {
+  const [currentHour, setCurrentHour] = useState(new Date().getHours() + 1);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentHour(new Date().getHours() + 1);
+    }, 1000 * 60 * 10);
+    return () => clearInterval(timer);
+  }, []);
+  const getIsCurrent = ({ startHour, endHour }) =>
+    startHour <= currentHour && endHour >= currentHour;
   return (
     <div id="app-header-weather-section">
       {weather.map((section) => (
-        <div key={section.time}>
+        <div
+          key={section.time}
+          className={cx({ isCurrent: getIsCurrent(section) })}
+        >
           <span className="temp">{section.temp}</span>
           <span
             className={cx("precip", {
-              heavyPrecip: (section.precip || 0) > 10,
+              heavyPrecip: (section.precip || 0) > 1,
             })}
           >
-            {section.precip === 0 ? null : section.precip}
+            {section.precip <= 0.1 ? null : section.precip}
           </span>
           <span className="time">{section.time}</span>
         </div>

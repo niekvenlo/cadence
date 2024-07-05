@@ -140,7 +140,7 @@
             "title": "Vacuum the little storage room",
             "cadenceInDays": 15,
             "id": "2e247db3-3a37-405c-8e8d-590d4e7c7c33",
-            "nextEpochDay": 19916
+            "nextEpochDay": 19924
         },
         {
             "title": "Clean the fans",
@@ -219,6 +219,12 @@
             "cadenceInDays": 182,
             "nextEpochDay": 19970,
             "id": "b619405a-3c91-4cd9-92c0-59fcb2a83bfb"
+        },
+        {
+            "title": "Wipe bathroom surfaces",
+            "cadenceInDays": 4,
+            "nextEpochDay": 19913,
+            "id": "420032ac-3a25-4800-a19b-841856bb4293"
         }
     ]
 }
