@@ -81,7 +81,7 @@ function AppHeaderWeatherSection({ weather }) {
         >
           <span className="temp">{section.temp}</span>
           <span
-            title={`${section.clouds}% cloudy, ${section.precip}mm of precipitation`}
+            title={`At least ${section.clouds}% cloudy, ${section.precip}mm of precipitation`}
             className={cx("precip", {
               heavyPrecip: (section.precip || 0) > 1,
               heavyClouds: section.clouds > 90,

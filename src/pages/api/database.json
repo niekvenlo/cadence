@@ -1,62 +1,62 @@
 {
     "shopping": [
         {
-            "label": "Bread",
+            "label": "🍞 Bread",
             "timestamp": 1720166477097,
             "isSelected": false
         },
         {
-            "label": "Milk",
+            "label": "🥛 Milk",
             "timestamp": 1719991373653,
             "isSelected": false
         },
         {
-            "label": "Eggs",
+            "label": "🥚 Eggs",
             "timestamp": 1719769426288,
             "isSelected": false
         },
         {
-            "label": "Paper",
+            "label": "🧻 Paper",
             "timestamp": 1719820010755,
             "isSelected": false
         },
         {
-            "label": "Fruits",
+            "label": "🍋 Fruits",
             "timestamp": 1719995380205,
             "isSelected": false
         },
         {
-            "label": "Coke",
+            "label": "🥤 Coke",
             "timestamp": 1719840008379,
             "isSelected": false
         },
         {
-            "label": "Pancake stuff",
+            "label": "🥞 Pancake stuff",
             "timestamp": 1720166474698,
             "isSelected": false
         },
         {
-            "label": "Snacks",
+            "label": "🍪 Snacks",
             "timestamp": 1720088006421,
             "isSelected": true
         },
         {
-            "label": "Cat litter",
+            "label": "🏝️ Cat litter",
             "timestamp": 1720341452872,
             "isSelected": true
         },
         {
-            "label": "Amazing Oriental",
+            "label": "🍚 Amazing Oriental",
             "timestamp": 1720078765520,
             "isSelected": false
         },
         {
-            "label": "Misc. Cleaning",
+            "label": "🧼 Misc. Cleaning",
             "timestamp": 1719820009013,
             "isSelected": false
         },
         {
-            "label": "Misc. Pantry",
+            "label": "🚪 Misc. Pantry",
             "timestamp": 1720345278177,
             "isSelected": true
         }
@@ -236,6 +236,12 @@
             "cadenceInDays": 1,
             "nextEpochDay": 19912,
             "id": "ba96235d-7601-4d56-914e-484bc2904c30"
+        },
+        {
+            "title": "Feed the plants",
+            "cadenceInDays": 8,
+            "nextEpochDay": 19919,
+            "id": "bccccd80-4466-4a6e-a05a-17e4e6f66ce5"
         }
     ]
 }

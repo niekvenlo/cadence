@@ -29,7 +29,7 @@ export const transformWeather = (response) => {
     const endTime = time[end];
     const maxTemp = Math.max(...temperature_2m.slice(start, end));
     const maxPrecip = Math.max(...precipitation.slice(start, end));
-    const maxClouds = Math.max(...cloud_cover.slice(start, end));
+    const minClouds = Math.min(...cloud_cover.slice(start, end));
     return {
       startHour: new Date(startTime).getHours() + 1,
       endHour: new Date(endTime).getHours() + 2,
@@ -38,7 +38,7 @@ export const transformWeather = (response) => {
       }`,
       temp: round(maxTemp, 2),
       precip: maxPrecip,
-      clouds: maxClouds,
+      clouds: minClouds,
     };
   };
   return [
