@@ -17,9 +17,11 @@ export default function BasicButton({
   isDisabled,
   variant,
   onClick,
+  ...rest
 }: Props) {
   return (
     <button
+      {...rest}
       className={cx("basic-button", className)}
       data-variant={variant}
       onClick={onClick}

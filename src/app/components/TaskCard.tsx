@@ -45,6 +45,7 @@ function TaskCard({
             e.stopPropagation();
             onComplete();
           }}
+          aria-label={`${title}: Mark as done`}
         >
           Mark as done
         </ConfirmButton>

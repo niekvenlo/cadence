@@ -18,7 +18,7 @@ export default function AppHeader({
   const tasksQuery = useTasksQuery(initialTasks);
   const weatherQuery = useWeatherQuery(initialWeather);
 
-  const todayTasks = tasksQuery?.data.filter((i) => i.daysFromNow === 0) ?? [];
+  const todayTasks = tasksQuery?.data.filter((i) => i.daysFromNow <= 0) ?? [];
   const selectedShopping =
     shoppingListQuery?.data.filter((i) => i.isSelected) ?? [];
 
@@ -39,6 +39,7 @@ export default function AppHeader({
           {todayTasks.map((i) => (
             <BasicPill variant="to-do" key={i.title}>
               {i.title}
+              {i.daysFromNow !== 0 && " ❗"}
             </BasicPill>
           ))}
           {todayTasks.length < 1 && (
@@ -70,7 +71,7 @@ function AppHeaderWeatherSection({ weather }) {
     return () => clearInterval(timer);
   }, []);
   const getIsCurrent = ({ startHour, endHour }) =>
-    startHour <= currentHour && endHour >= currentHour;
+    startHour < currentHour && endHour >= currentHour;
   return (
     <div id="app-header-weather-section">
       {weather.map((section) => (
@@ -80,12 +81,17 @@ function AppHeaderWeatherSection({ weather }) {
         >
           <span className="temp">{section.temp}</span>
           <span
+            title={`${section.clouds}% cloudy, ${section.precip}mm of precipitation`}
             className={cx("precip", {
               heavyPrecip: (section.precip || 0) > 1,
+              heavyClouds: section.clouds > 90,
+              mediumClouds: section.clouds > 60 && section.clouds <= 90,
+              smallClouds: section.clouds > 20 && section.clouds <= 60,
             })}
           >
             {section.precip <= 0.1 ? null : section.precip}
           </span>
+          <span className="time">{section.clouds}</span>
           <span className="time">{section.time}</span>
         </div>
       ))}

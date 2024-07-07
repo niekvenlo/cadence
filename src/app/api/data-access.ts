@@ -42,7 +42,7 @@ export const fetchWeather = async () => {
   const params = {
     latitude: 52.374, // AMS
     longitude: 4.8897, // AMS
-    hourly: ["temperature_2m", "precipitation"],
+    hourly: ["temperature_2m", "precipitation", "cloud_cover"],
     timezone: "auto",
     forecast_days: 3,
   };

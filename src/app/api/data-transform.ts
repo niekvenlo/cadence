@@ -22,13 +22,14 @@ export const transformTasks = (tasks) => {
 
 export const transformWeather = (response) => {
   const {
-    hourly: { time, temperature_2m, precipitation },
+    hourly: { time, temperature_2m, precipitation, cloud_cover },
   } = response;
   const transformSection = (start, end) => {
     const startTime = time[start];
     const endTime = time[end];
     const maxTemp = Math.max(...temperature_2m.slice(start, end));
     const maxPrecip = Math.max(...precipitation.slice(start, end));
+    const maxClouds = Math.max(...cloud_cover.slice(start, end));
     return {
       startHour: new Date(startTime).getHours() + 1,
       endHour: new Date(endTime).getHours() + 2,
@@ -37,6 +38,7 @@ export const transformWeather = (response) => {
       }`,
       temp: round(maxTemp, 2),
       precip: maxPrecip,
+      clouds: maxClouds,
     };
   };
   return [

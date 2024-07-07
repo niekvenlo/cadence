@@ -72,7 +72,7 @@
         {
             "id": "f01d955c-b950-47b0-88ae-09554b7e5737",
             "title": "Wash the bedsheets",
-            "nextEpochDay": 19913,
+            "nextEpochDay": 19924,
             "cadenceInDays": 14
         },
         {
@@ -103,7 +103,7 @@
         {
             "id": "58c36c00-58df-4130-907f-f7869b701312",
             "title": "Take pills",
-            "nextEpochDay": 19910,
+            "nextEpochDay": 19911,
             "cadenceInDays": 1
         },
         {
@@ -200,7 +200,7 @@
             "title": "Clean stove hood",
             "cadenceInDays": 32,
             "id": "25679d98-79d7-4501-9d9f-48df0311c2c8",
-            "nextEpochDay": 19916
+            "nextEpochDay": 19941
         },
         {
             "title": "Trim Tux's nails",
@@ -212,7 +212,7 @@
             "title": "Trim Toto's nails",
             "cadenceInDays": 21,
             "id": "82b303fb-d579-464c-bba7-6b4f07cf5a82",
-            "nextEpochDay": 19909
+            "nextEpochDay": 19931
         },
         {
             "title": "Fertilize the climbing hydrangea",

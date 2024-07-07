@@ -203,8 +203,23 @@ p {
     content: "°";
     font-size: 0.8em;
   }
+
+  .precip::after {
+    content: "🌤️";
+    font-size: 0.8em;
+  }
+  .precip.heavyClouds::after {
+    content: "☁️";
+  }
+  .precip.mediumClouds::after {
+    content: "🌥️";
+  }
+  .precip.smallClouds::after {
+    content: "🌤️";
+  }
+
   .precip:not(:empty)::after {
-    content: "🌧️";
+    content: " 🌧️";
     font-size: 0.8em;
   }
   .heavyPrecip {
@@ -391,6 +406,7 @@ main#shopping-page {
   grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
   gap: 1em;
   width: 90vw;
+  padding-bottom: 3em;
 }
 
 main#ai {

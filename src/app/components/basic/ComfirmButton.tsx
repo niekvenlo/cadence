@@ -18,6 +18,7 @@ export default function ConfirmButton({
   isDisabled,
   variant,
   onClick,
+  ...rest
 }: Props) {
   const [isClickedOnce, setIsClickedOnce] = useState(false);
   const safeOnClick = isClickedOnce ? onClick : () => setIsClickedOnce(true);
@@ -30,6 +31,7 @@ export default function ConfirmButton({
   }, [isClickedOnce]);
   return (
     <BasicButton
+      {...rest}
       className={cx("basic-button", className)}
       variant={isClickedOnce ? "accent" : variant}
       onClick={safeOnClick}
