@@ -18,7 +18,7 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
         <div className="phrase">
           <div className="column">
             <span className="init">
-              <span className="label">initial</span>
+              <span className="label">template</span>
             </span>
             <span className="random">
               <span className="label">random</span>
@@ -55,7 +55,11 @@ const Column = ({ init, constant, options }) => {
       <span className="init">{init}</span>
       <span className="random">{random}</span>
       <textarea defaultValue={options.join("\n")} />
-      {suggested}
+      <div className="suggested">
+        {suggested?.map((s) => (
+          <div key={s}>{s}</div>
+        ))}
+      </div>
     </div>
   );
 };

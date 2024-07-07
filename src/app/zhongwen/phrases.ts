@@ -13,7 +13,7 @@ export const phrases = [
       { init: "我", options: ["我", "你", "他"] },
       { init: "给", options: ["给"] },
       { init: "你", options: ["我", "你", "他"] },
-      { init: "水", options: ["水", "茶", "猫"] },
+      { init: "水", options: ["水", "茶", "猫", "东西"] },
     ],
   },
   {
@@ -25,7 +25,7 @@ export const phrases = [
       { constant: "，" },
       { init: "你", options: ["我", "你", "他"] },
       { constant: "有" },
-      { init: "水", options: ["水", "茶"] },
+      { init: "水", options: ["水", "茶", "钥匙"] },
     ],
   },
 ];

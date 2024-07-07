@@ -17,19 +17,14 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
         <div className="phrase">
           <div className="column">
             <span className="init">
-              <span className="label">initial</span>
+              <span className="label">template</span>
             </span>
             <span className="random">
               <span className="label">random</span>
             </span>
           </div>
-          {parts.map(({ init, options, constant }) => (
-            <Column
-              key={init}
-              init={init}
-              options={options}
-              constant={constant}
-            />
+          {parts.map(({ init, options, constant }, i) => (
+            <Column key={i} init={init} options={options} constant={constant} />
           ))}
         </div>
       </main>

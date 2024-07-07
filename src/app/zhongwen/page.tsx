@@ -8,13 +8,14 @@ import { phrases } from "./phrases";
 export default function Chinese() {
   return (
     <main id="zhongwen">
-      <h1>List of phrases</h1>
+      <div className="top">
+        <h1>Zhongwen home</h1>
+        <BasicLink href="/zhongwen/list">List</BasicLink>
+      </div>
       <div className="sdjhh">
         {phrases.map(({ label }) => (
           <p key={label}>
-            {label}
-            <BasicLink href={`/zhongwen/${label}`}>[Review]</BasicLink>
-            <BasicLink href={`/zhongwen/${label}/edit`}>[Edit]</BasicLink>
+            <span>{label}</span>
           </p>
         ))}
       </div>

@@ -12,10 +12,13 @@ main#zhongwen {
   }
 
   .sdjhh {
-    font-size: 1.5em;
+    font-size: 1.1em;
     & > p {
       display: flex;
       gap: 1em;
+      & > span {
+        font-weight: 600;
+      }
     }
   }
 
