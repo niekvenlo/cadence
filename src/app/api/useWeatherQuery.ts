@@ -10,7 +10,7 @@ const useWeatherQuery = (initialData?: Task[]) =>
     queryFn: fetchWeather,
     select: transformWeather,
     initialData,
-    staleTime: 1000,
+    staleTime: 1000 * 60 * 30,
   });
 
 export default useWeatherQuery;

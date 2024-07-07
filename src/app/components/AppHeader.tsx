@@ -29,7 +29,8 @@ export default function AppHeader({
         <div className="links">
           <BasicLink href="/">Tasks</BasicLink>
           <BasicLink href="/shopping">Shopping</BasicLink>
-          <BasicLink href="/chinese">读中文</BasicLink>
+          <BasicLink href="/chinese">Chinese</BasicLink>
+          <BasicLink href="/zhongwen">中文</BasicLink>
           <BasicLink href="/ai">AI</BasicLink>
           <BasicLink href="/weather">Weather</BasicLink>
         </div>

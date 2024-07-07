@@ -1,0 +1,60 @@
+main#zhongwen {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .sdjhh {
+    font-size: 1.5em;
+    & > p {
+      display: flex;
+      gap: 1em;
+    }
+  }
+
+  .phrase {
+    display: flex;
+  }
+  .column {
+    text-align: center;
+    font-size: 1.5em;
+    width: 5ch;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    textarea {
+      resize: none;
+      outline: none;
+      border: none;
+      text-align: center;
+      height: 8lh;
+      --c: rgb(233, 232, 170);
+      background: repeating-linear-gradient(
+        180deg,
+        var(--c),
+        var(--c) 1.45em,
+        currentColor 1.5em
+      );
+    }
+    .label {
+      font-size: 0.4em;
+    }
+    .init {
+      background: rgb(233, 170, 170);
+    }
+    .random {
+      background: rgb(233, 211, 170);
+      user-select: none;
+    }
+    .options {
+      background: rgb(233, 232, 170);
+    }
+  }
+}

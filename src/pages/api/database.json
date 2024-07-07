@@ -42,8 +42,8 @@
         },
         {
             "label": "🏝️ Cat litter",
-            "timestamp": 1720341452872,
-            "isSelected": true
+            "timestamp": 1720384493277,
+            "isSelected": false
         },
         {
             "label": "🍚 Amazing Oriental",
@@ -57,8 +57,8 @@
         },
         {
             "label": "🚪 Misc. Pantry",
-            "timestamp": 1720345278177,
-            "isSelected": true
+            "timestamp": 1720384496038,
+            "isSelected": false
         }
     ],
     "tasks": [
@@ -192,7 +192,7 @@
         {
             "title": "Take out the trash",
             "cadenceInDays": 3,
-            "nextEpochDay": 19911,
+            "nextEpochDay": 19914,
             "id": "eb9220be-02ba-4db3-988f-c0b119d4d053"
         },
         {
