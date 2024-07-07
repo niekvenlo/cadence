@@ -9,14 +9,22 @@ type Props = {
   children: ReactNode;
   className?: string;
   href: string;
+  matchSection?: boolean;
 };
 
-export default function BasicLink({ href, className, children }: Props) {
+export default function BasicLink({
+  href,
+  className,
+  children,
+  matchSection,
+}: Props) {
   const isActive = usePathname() === href;
+  const isActiveSection = usePathname()?.startsWith(href);
+  const isMatch = matchSection ? isActiveSection : isActive;
   return (
     <Link
       className={cx("basic-a", className)}
-      data-active={isActive || null}
+      data-active={isMatch || null}
       href={href}
     >
       {children}

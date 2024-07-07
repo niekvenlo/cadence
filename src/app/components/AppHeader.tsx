@@ -30,7 +30,9 @@ export default function AppHeader({
           <BasicLink href="/">Tasks</BasicLink>
           <BasicLink href="/shopping">Shopping</BasicLink>
           <BasicLink href="/chinese">Chinese</BasicLink>
-          <BasicLink href="/zhongwen">中文</BasicLink>
+          <BasicLink href="/zhongwen" matchSection>
+            中文
+          </BasicLink>
           <BasicLink href="/ai">AI</BasicLink>
           <BasicLink href="/weather">Weather</BasicLink>
         </div>
