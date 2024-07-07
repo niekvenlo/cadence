@@ -20,3 +20,14 @@ export const toggleShopping = (label) => {
   db.set("shopping", shoppingList);
   return shoppingList;
 };
+
+export const addShoppingLabel = (label: string) => {
+  const shoppingList = getShopping();
+  shoppingList.push({
+    label,
+    timestamp: Date.now(),
+    isSelected: true,
+  });
+  db.set("shopping", shoppingList);
+  return shoppingList;
+};

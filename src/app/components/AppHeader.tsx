@@ -91,7 +91,6 @@ function AppHeaderWeatherSection({ weather }) {
           >
             {section.precip <= 0.1 ? null : section.precip}
           </span>
-          <span className="time">{section.clouds}</span>
           <span className="time">{section.time}</span>
         </div>
       ))}

@@ -69,26 +69,6 @@ export default function CadencePage({ initialTasks }: Props) {
   return (
     <main id="cadence">
       {tasksQuery.isLoading && <p>Loading...</p>}
-      <div id="new-cadence-button-wrapper">
-        <BasicButton
-          variant="primary"
-          onClick={() => setIsFilterActive((t) => !t)}
-        >
-          Toggle filter
-        </BasicButton>
-        <BasicButton
-          variant="accent"
-          onClick={() =>
-            setSelectedTask({
-              title: "",
-              cadenceInDays: 30,
-              daysFromNow: 3,
-            })
-          }
-        >
-          New cadence task
-        </BasicButton>
-      </div>
       <div id="cadence-cards">
         <Flipper flipKey={tasksQuery.data}>
           <TaskCardGroup
@@ -142,6 +122,26 @@ export default function CadencePage({ initialTasks }: Props) {
           mutateUpdateTask={mutateUpdateTask}
         ></EditModal>
       </BasicModal>
+      <div id="page-buttons-wrapper">
+        <BasicButton
+          variant="primary"
+          onClick={() => setIsFilterActive((t) => !t)}
+        >
+          Toggle filter
+        </BasicButton>
+        <BasicButton
+          variant="accent"
+          onClick={() =>
+            setSelectedTask({
+              title: "",
+              cadenceInDays: 30,
+              daysFromNow: 3,
+            })
+          }
+        >
+          New cadence task
+        </BasicButton>
+      </div>
     </main>
   );
 }

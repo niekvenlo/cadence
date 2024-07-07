@@ -342,6 +342,7 @@ dialog.basic-modal {
     }
   }
   span.label {
+    outline: none;
     background: var(--primary-color-subdued);
     border-radius: var(--radius);
     color: white;

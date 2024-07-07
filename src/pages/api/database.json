@@ -41,6 +41,11 @@
             "isSelected": true
         },
         {
+            "label": "Cat litter",
+            "timestamp": 1720341452872,
+            "isSelected": true
+        },
+        {
             "label": "Amazing Oriental",
             "timestamp": 1720078765520,
             "isSelected": false
@@ -52,8 +57,8 @@
         },
         {
             "label": "Misc. Pantry",
-            "timestamp": 1720011342314,
-            "isSelected": false
+            "timestamp": 1720345278177,
+            "isSelected": true
         }
     ],
     "tasks": [
@@ -103,7 +108,7 @@
         {
             "id": "58c36c00-58df-4130-907f-f7869b701312",
             "title": "Take pills",
-            "nextEpochDay": 19911,
+            "nextEpochDay": 19912,
             "cadenceInDays": 1
         },
         {
@@ -158,7 +163,7 @@
             "title": "Water the plants",
             "cadenceInDays": 3,
             "id": "2c3e317c-6c09-4116-a92f-569356dc3945",
-            "nextEpochDay": 19910
+            "nextEpochDay": 19914
         },
         {
             "title": "Vacuum bedroom",
@@ -194,7 +199,7 @@
             "title": "Laundry",
             "cadenceInDays": 6,
             "id": "e57352c3-c92f-4433-ac9a-a5456a395048",
-            "nextEpochDay": 19911
+            "nextEpochDay": 19917
         },
         {
             "title": "Clean stove hood",
@@ -225,6 +230,12 @@
             "cadenceInDays": 4,
             "nextEpochDay": 19913,
             "id": "420032ac-3a25-4800-a19b-841856bb4293"
+        },
+        {
+            "title": "Clean out Eufy",
+            "cadenceInDays": 1,
+            "nextEpochDay": 19912,
+            "id": "ba96235d-7601-4d56-914e-484bc2904c30"
         }
     ]
 }
