@@ -12,8 +12,6 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
 
   const [_, setX] = useState(0);
 
-  console.log(label);
-
   const timer = useRef<NodeJS.Timeout>();
   const onChangePart = (i, value, append) => {
     const foundValues = value.split("\n").filter((f) => f);
@@ -24,7 +22,6 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
     }
     clearTimeout(timer.current);
     timer.current = setTimeout(() => {
-      console.log("writing");
       writePhrase({ label, parts });
       setX((x) => x + 1);
     }, 1000);

@@ -23,8 +23,8 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
               <span className="label">random</span>
             </span>
           </div>
-          {parts.map(({ type, value, options }, i) => (
-            <Column key={i} type={type} value={value} options={options} />
+          {parts.map((part, i) => (
+            <Column key={i} part={part} />
           ))}
         </div>
       </main>
@@ -32,8 +32,9 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
   );
 }
 
-const Column = ({ type, value, options }) => {
-  if (type === "constant") {
+const Column = ({ part }) => {
+  const value = part[0];
+  if (part.length < 2) {
     return (
       <div className="column">
         <span className="init">{value}</span>
@@ -42,10 +43,14 @@ const Column = ({ type, value, options }) => {
         <span className="random">{value}</span>
         <span className="random">{value}</span>
         <span className="random">{value}</span>
+        <span className="random">{value}</span>
+        <span className="random">{value}</span>
+        <span className="random">{value}</span>
+        <span className="random">{value}</span>
       </div>
     );
   }
-  const getRandom = () => options[Math.floor(Math.random() * options.length)];
+  const getRandom = () => part[Math.floor(Math.random() * part.length)];
   return (
     <div className="column">
       <span className="init">{value}</span>
@@ -54,6 +59,11 @@ const Column = ({ type, value, options }) => {
       <span className="random">{getRandom()}</span>
       <span className="random">{getRandom()}</span>
       <span className="random">{getRandom()}</span>
+      <span className="random">{getRandom()}</span>
+      <span className="random">{getRandom()}</span>
+      <span className="random">{getRandom()}</span>
+      <span className="random">{getRandom()}</span>
+      <span className="count">{part.length}</span>
     </div>
   );
 };

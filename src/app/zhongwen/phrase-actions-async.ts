@@ -19,7 +19,6 @@ export const writePhrase = async (phraseToWrite) => {
   if (foundPhraseIdx === -1) {
     phrases.push(phraseToWrite);
   } else {
-    console.log("found", foundPhraseIdx);
     phrases[foundPhraseIdx] = phraseToWrite;
   }
   writePhrases(phrases);
