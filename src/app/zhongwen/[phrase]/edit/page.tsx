@@ -6,28 +6,22 @@ import BasicLink from "../../../components/basic/BasicLink";
 import { findPhraseByLabel, getSuggested } from "../../phrase-util-sync";
 import { writePhrase } from "../../phrase-actions-async";
 import "../../style.css";
+import { getIsChinese } from "../../util";
 
 export default function Chinese({ params }: { params: { phrase: string } }) {
   const { label, parts } = findPhraseByLabel(decodeURI(params.phrase));
 
   const [_, setX] = useState(0);
 
-  const timer = useRef<NodeJS.Timeout>();
-  const onChangePart = (i, value, append) => {
-    const foundValues = value
-      .split("\n")
-      .filter((f) => f)
-      .map((f) => f.trim());
+  const onChangePart = (i, part, append) => {
     if (append) {
-      parts[i] = [...(parts[i] || []), ...foundValues];
+      parts[i] = [...(parts[i] || []), ...part];
     } else {
-      parts[i] = foundValues;
+      parts[i] = part;
     }
-    clearTimeout(timer.current);
-    timer.current = setTimeout(() => {
-      writePhrase({ label, parts });
-      setX((x) => x + 1);
-    }, 10000);
+
+    writePhrase({ label, parts });
+    setX((x) => x + 1);
   };
   return (
     <NoSSR>
@@ -67,7 +61,6 @@ type ColumnProps = {
 };
 
 const Column = ({ part, onChangePart }: ColumnProps) => {
-  const [temp, setTemp] = useState("");
   const value = part?.[0] || "";
   const suggested = useMemo(() => {
     return getSuggested(part);
@@ -75,15 +68,10 @@ const Column = ({ part, onChangePart }: ColumnProps) => {
   if (part.length < 2) {
     // Only one value.
     return (
-      <div className="column">
+      <div className="column constant">
         <span className="init">{value}</span>
         <span className="random">{value}</span>
-        <textarea
-          className="constant"
-          defaultValue={value}
-          onChange={(e) => setTemp(e.target.value)}
-          onBlur={() => onChangePart(temp)}
-        />
+        <TextArea part={part} onBlur={(value) => onChangePart(value)} />
       </div>
     );
   }
@@ -93,12 +81,7 @@ const Column = ({ part, onChangePart }: ColumnProps) => {
     <div className="column">
       <span className="init">{value}</span>
       <span className="random">{random}</span>
-      <textarea
-        className="options"
-        defaultValue={part.join("\n") + "\n"}
-        onChange={(e) => setTemp(e.target.value)}
-        onBlur={() => onChangePart(temp)}
-      />
+      <TextArea part={part} onBlur={(value) => onChangePart(value)} />
       <div className="suggested">
         {suggested?.map((s) => (
           <div key={s} onClick={() => onChangePart(s, true)}>
@@ -106,6 +89,25 @@ const Column = ({ part, onChangePart }: ColumnProps) => {
           </div>
         ))}
       </div>
+      {/* {getSuggested(["猫"])} */}
     </div>
+  );
+};
+
+const TextArea = ({ part, onBlur }) => {
+  const cleanValues = (string) => {
+    const foundValues = string
+      .split("\n")
+      .filter(getIsChinese)
+      .map((f) => f.trim());
+    const unique = [...new Set(foundValues)];
+    return unique;
+  };
+  return (
+    <textarea
+      className="options"
+      defaultValue={part.join("\n") + "\n"}
+      onBlur={(e) => onBlur(cleanValues(e.target.value))}
+    />
   );
 };

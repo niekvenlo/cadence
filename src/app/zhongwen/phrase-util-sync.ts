@@ -33,16 +33,9 @@ export const getSuggested = (options: string[]) => {
     fillSuggestedMap();
   }
 
-  console.log("dx", [
-    ...new Set(
-      ...options.map((chars) => [...(suggestionMap.get(chars) || [])])
-    ),
-  ]);
-
-  // Return all possible matches, removing the original options.
-  return [
-    ...new Set(
-      ...options.map((chars) => [...(suggestionMap.get(chars) || [])])
-    ),
-  ].filter((o) => !options.includes(o)) as string[];
+  const suggestions = options
+    .map((chars) => [...(suggestionMap.get(chars) ?? [])])
+    .flat()
+    .filter((s) => !options.includes(s));
+  return [...new Set(suggestions)];
 };
