@@ -3,7 +3,7 @@
 import BasicLink from "../components/basic/BasicLink";
 import "./style.css";
 
-import { phrases } from "./phrases";
+import { phrases } from "./phrase-util-sync";
 
 export default function Chinese() {
   return (

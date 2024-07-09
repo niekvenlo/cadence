@@ -2,7 +2,7 @@
 
 import NoSSR from "../../components/NoSSR";
 import BasicLink from "../../components/basic/BasicLink";
-import { findPhraseByLabel } from "../phrases";
+import { findPhraseByLabel } from "../phrase-util-sync";
 import "../style.css";
 
 export default function Chinese({ params }: { params: { phrase: string } }) {
@@ -11,7 +11,7 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
     <NoSSR>
       <main id="zhongwen">
         <div className="top">
-          <BasicLink href="/zhongwen">Back</BasicLink>
+          <BasicLink href="/zhongwen/list">Back</BasicLink>
           <h1>Phrase review</h1>
         </div>
         <div className="phrase">
@@ -23,8 +23,8 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
               <span className="label">random</span>
             </span>
           </div>
-          {parts.map(({ init, options, constant }, i) => (
-            <Column key={i} init={init} options={options} constant={constant} />
+          {parts.map(({ type, value, options }, i) => (
+            <Column key={i} type={type} value={value} options={options} />
           ))}
         </div>
       </main>
@@ -32,23 +32,23 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
   );
 }
 
-const Column = ({ init, constant, options }) => {
-  if (constant) {
+const Column = ({ type, value, options }) => {
+  if (type === "constant") {
     return (
       <div className="column">
-        <span className="init">{constant}</span>
-        <span className="random">{constant}</span>
-        <span className="random">{constant}</span>
-        <span className="random">{constant}</span>
-        <span className="random">{constant}</span>
-        <span className="random">{constant}</span>
+        <span className="init">{value}</span>
+        <span className="random">{value}</span>
+        <span className="random">{value}</span>
+        <span className="random">{value}</span>
+        <span className="random">{value}</span>
+        <span className="random">{value}</span>
       </div>
     );
   }
   const getRandom = () => options[Math.floor(Math.random() * options.length)];
   return (
     <div className="column">
-      <span className="init">{init}</span>
+      <span className="init">{value}</span>
       <span className="random">{getRandom()}</span>
       <span className="random">{getRandom()}</span>
       <span className="random">{getRandom()}</span>

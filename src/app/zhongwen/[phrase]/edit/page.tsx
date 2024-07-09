@@ -1,9 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import NoSSR from "../../../components/NoSSR";
 import BasicLink from "../../../components/basic/BasicLink";
-import { findPhraseByLabel, getSuggested } from "../../phrases";
+import { Part, findPhraseByLabel, getSuggested } from "../../phrase-util-sync";
+import { create } from "../../phrase-actions-async";
 import "../../style.css";
 
 export default function Chinese({ params }: { params: { phrase: string } }) {
@@ -12,7 +13,7 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
     <NoSSR>
       <main id="zhongwen">
         <div className="top">
-          <BasicLink href="/zhongwen">Back</BasicLink>
+          <BasicLink href="/zhongwen/list">Back</BasicLink>
           <h1>Phrase editor</h1>
         </div>
         <div className="phrase">
@@ -27,34 +28,37 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
               <span className="label">options</span>
             </span>
           </div>
-          {parts.map(({ init, options, constant }, i) => (
-            <Column key={i} init={init} constant={constant} options={options} />
+          {parts.map(({ value, options }, i) => (
+            <Column key={i} value={value} options={options} />
           ))}
         </div>
+        <button onClick={() => create()}>ssdsddsd</button>
       </main>
     </NoSSR>
   );
 }
 
-const Column = ({ init, constant, options }) => {
-  // const [suggested, setSuggested] = useState<string[] | null>(null);
+const Column = ({ value, options }: Part) => {
   const suggested = useMemo(() => {
     return Array.isArray(options) ? getSuggested(options) : null;
   }, [options]);
-  if (constant) {
+  if (options === undefined || options.length < 2) {
+    // Only one value.
     return (
       <div className="column">
-        <span className="init">{constant}</span>
-        <span className="random">{constant}</span>
+        <span className="init">{value}</span>
+        <span className="random">{value}</span>
+        <textarea className="constant" defaultValue={value} />
       </div>
     );
   }
+  // Multiple possible values.
   const random = options[Math.floor(Math.random() * options.length)];
   return (
     <div className="column">
-      <span className="init">{init}</span>
+      <span className="init">{value}</span>
       <span className="random">{random}</span>
-      <textarea defaultValue={options.join("\n")} />
+      <textarea className="options" defaultValue={options.join("\n")} />
       <div className="suggested">
         {suggested?.map((s) => (
           <div key={s}>{s}</div>
