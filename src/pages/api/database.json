@@ -83,7 +83,7 @@
         {
             "id": "aec808ac-b2dd-4b97-9673-adad313cdd0f",
             "title": "Clean the sink with soda crystals",
-            "nextEpochDay": 19912,
+            "nextEpochDay": 19920,
             "cadenceInDays": 7
         },
         {
@@ -108,7 +108,7 @@
         {
             "id": "58c36c00-58df-4130-907f-f7869b701312",
             "title": "Take pills",
-            "nextEpochDay": 19913,
+            "nextEpochDay": 19914,
             "cadenceInDays": 1
         },
         {
@@ -167,9 +167,9 @@
         },
         {
             "title": "Vacuum bedroom",
-            "cadenceInDays": 7,
+            "cadenceInDays": 16,
             "id": "bd70bc8b-114c-45dc-95e8-2a1af71776fb",
-            "nextEpochDay": 19912
+            "nextEpochDay": 19917
         },
         {
             "title": "Clean the whole fridge",
@@ -228,13 +228,13 @@
         {
             "title": "Wipe bathroom surfaces",
             "cadenceInDays": 4,
-            "nextEpochDay": 19913,
+            "nextEpochDay": 19917,
             "id": "420032ac-3a25-4800-a19b-841856bb4293"
         },
         {
             "title": "Clean out Eufy",
             "cadenceInDays": 1,
-            "nextEpochDay": 19913,
+            "nextEpochDay": 19914,
             "id": "ba96235d-7601-4d56-914e-484bc2904c30"
         },
         {

@@ -1,14 +1,34 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useRef, useState } from "react";
 import NoSSR from "../../../components/NoSSR";
 import BasicLink from "../../../components/basic/BasicLink";
 import { Part, findPhraseByLabel, getSuggested } from "../../phrase-util-sync";
-import { create } from "../../phrase-actions-async";
+import { writePhrase } from "../../phrase-actions-async";
 import "../../style.css";
 
 export default function Chinese({ params }: { params: { phrase: string } }) {
   const { label, parts } = findPhraseByLabel(decodeURI(params.phrase));
+
+  const [_, setX] = useState(0);
+
+  console.log(label);
+
+  const timer = useRef<NodeJS.Timeout>();
+  const onChangePart = (i, value, append) => {
+    const foundValues = value.split("\n").filter((f) => f);
+    if (append) {
+      parts[i].options = [...(parts[i].options || []), ...foundValues];
+    } else {
+      parts[i].options = foundValues;
+    }
+    clearTimeout(timer.current);
+    timer.current = setTimeout(() => {
+      console.log("writing");
+      writePhrase({ label, parts });
+      setX((x) => x + 1);
+    }, 1000);
+  };
   return (
     <NoSSR>
       <main id="zhongwen">
@@ -29,16 +49,24 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
             </span>
           </div>
           {parts.map(({ value, options }, i) => (
-            <Column key={i} value={value} options={options} />
+            <Column
+              key={options?.join()}
+              value={value}
+              options={options}
+              onChangePart={(value, append) => onChangePart(i, value, append)}
+            />
           ))}
         </div>
-        <button onClick={() => create()}>ssdsddsd</button>
       </main>
     </NoSSR>
   );
 }
 
-const Column = ({ value, options }: Part) => {
+type ColumnProps = {
+  onChangePart: (value: string, append?: boolean) => void;
+} & Part;
+
+const Column = ({ value, options, onChangePart }: ColumnProps) => {
   const suggested = useMemo(() => {
     return Array.isArray(options) ? getSuggested(options) : null;
   }, [options]);
@@ -58,10 +86,18 @@ const Column = ({ value, options }: Part) => {
     <div className="column">
       <span className="init">{value}</span>
       <span className="random">{random}</span>
-      <textarea className="options" defaultValue={options.join("\n")} />
+      <textarea
+        className="options"
+        defaultValue={options.join("\n")}
+        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+          onChangePart(e.target.value)
+        }
+      />
       <div className="suggested">
         {suggested?.map((s) => (
-          <div key={s}>{s}</div>
+          <div key={s} onClick={() => onChangePart(s, true)}>
+            {s}
+          </div>
         ))}
       </div>
     </div>
