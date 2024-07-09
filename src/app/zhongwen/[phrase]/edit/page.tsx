@@ -14,7 +14,10 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
 
   const timer = useRef<NodeJS.Timeout>();
   const onChangePart = (i, value, append) => {
-    const foundValues = value.split("\n").filter((f) => f);
+    const foundValues = value
+      .split("\n")
+      .filter((f) => f)
+      .map((f) => f.trim());
     if (append) {
       parts[i] = [...(parts[i] || []), ...foundValues];
     } else {
@@ -24,7 +27,7 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
     timer.current = setTimeout(() => {
       writePhrase({ label, parts });
       setX((x) => x + 1);
-    }, 1000);
+    }, 10000);
   };
   return (
     <NoSSR>
@@ -64,7 +67,8 @@ type ColumnProps = {
 };
 
 const Column = ({ part, onChangePart }: ColumnProps) => {
-  const value = part?.[0] || "$";
+  const [temp, setTemp] = useState("");
+  const value = part?.[0] || "";
   const suggested = useMemo(() => {
     return getSuggested(part);
   }, [part]);
@@ -77,9 +81,8 @@ const Column = ({ part, onChangePart }: ColumnProps) => {
         <textarea
           className="constant"
           defaultValue={value}
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-            onChangePart(e.target.value)
-          }
+          onChange={(e) => setTemp(e.target.value)}
+          onBlur={() => onChangePart(temp)}
         />
       </div>
     );
@@ -93,9 +96,8 @@ const Column = ({ part, onChangePart }: ColumnProps) => {
       <textarea
         className="options"
         defaultValue={part.join("\n") + "\n"}
-        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-          onChangePart(e.target.value)
-        }
+        onChange={(e) => setTemp(e.target.value)}
+        onBlur={() => onChangePart(temp)}
       />
       <div className="suggested">
         {suggested?.map((s) => (

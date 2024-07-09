@@ -33,6 +33,12 @@ export const getSuggested = (options: string[]) => {
     fillSuggestedMap();
   }
 
+  console.log("dx", [
+    ...new Set(
+      ...options.map((chars) => [...(suggestionMap.get(chars) || [])])
+    ),
+  ]);
+
   // Return all possible matches, removing the original options.
   return [
     ...new Set(
