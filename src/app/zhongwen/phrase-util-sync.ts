@@ -5,29 +5,23 @@ export const phrases = phrasesJson as Phrase[];
 
 export type Phrase = {
   label: string;
-  parts: Part[];
-};
-
-export type Part = {
-  value: string;
-  options?: string[];
+  parts: string[][];
 };
 
 export const findPhraseByLabel = (label: string): Phrase =>
-  phrases.find((phrase) => phrase.label === label) ||
-  phrases[0] || { label: "d", parts: [] };
+  phrases.find((phrase) => phrase.label === label) || phrases[0];
 
 const suggestionMap = new Map();
 
 const fillSuggestedMap = () => {
   phrases.forEach((phrase) => {
-    phrase.parts.forEach(({ options }) => {
-      if (options === undefined) {
+    phrase.parts.forEach((part) => {
+      if (part.length < 2) {
         return;
       }
-      options?.forEach((chars) => {
+      part.forEach((chars) => {
         const suggestionSet = suggestionMap.get(chars) ?? new Set();
-        options.forEach((option) => suggestionSet.add(option));
+        part.forEach((option) => suggestionSet.add(option));
         suggestionMap.set(chars, suggestionSet);
       });
     });

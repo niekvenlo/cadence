@@ -3,7 +3,7 @@
 import { useMemo, useRef, useState } from "react";
 import NoSSR from "../../../components/NoSSR";
 import BasicLink from "../../../components/basic/BasicLink";
-import { Part, findPhraseByLabel, getSuggested } from "../../phrase-util-sync";
+import { findPhraseByLabel, getSuggested } from "../../phrase-util-sync";
 import { writePhrase } from "../../phrase-actions-async";
 import "../../style.css";
 
@@ -18,9 +18,9 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
   const onChangePart = (i, value, append) => {
     const foundValues = value.split("\n").filter((f) => f);
     if (append) {
-      parts[i].options = [...(parts[i].options || []), ...foundValues];
+      parts[i] = [...(parts[i] || []), ...foundValues];
     } else {
-      parts[i].options = foundValues;
+      parts[i] = foundValues;
     }
     clearTimeout(timer.current);
     timer.current = setTimeout(() => {
@@ -48,11 +48,10 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
               <span className="label">options</span>
             </span>
           </div>
-          {parts.map(({ value, options }, i) => (
+          {parts.map((part, i) => (
             <Column
-              key={options?.join()}
-              value={value}
-              options={options}
+              key={part?.join() + i}
+              part={part}
               onChangePart={(value, append) => onChangePart(i, value, append)}
             />
           ))}
@@ -63,32 +62,40 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
 }
 
 type ColumnProps = {
+  part: string[];
   onChangePart: (value: string, append?: boolean) => void;
-} & Part;
+};
 
-const Column = ({ value, options, onChangePart }: ColumnProps) => {
+const Column = ({ part, onChangePart }: ColumnProps) => {
+  const value = part?.[0] || "$";
   const suggested = useMemo(() => {
-    return Array.isArray(options) ? getSuggested(options) : null;
-  }, [options]);
-  if (options === undefined || options.length < 2) {
+    return getSuggested(part);
+  }, [part]);
+  if (part.length < 2) {
     // Only one value.
     return (
       <div className="column">
         <span className="init">{value}</span>
         <span className="random">{value}</span>
-        <textarea className="constant" defaultValue={value} />
+        <textarea
+          className="constant"
+          defaultValue={value}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+            onChangePart(e.target.value)
+          }
+        />
       </div>
     );
   }
   // Multiple possible values.
-  const random = options[Math.floor(Math.random() * options.length)];
+  const random = part[Math.floor(Math.random() * part.length)];
   return (
     <div className="column">
       <span className="init">{value}</span>
       <span className="random">{random}</span>
       <textarea
         className="options"
-        defaultValue={options.join("\n")}
+        defaultValue={part.join("\n") + "\n"}
         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
           onChangePart(e.target.value)
         }
