@@ -35,8 +35,8 @@ function Add() {
     const messyLabel = ref.current?.value ?? Math.random().toString();
     const label = cleanChineseString(messyLabel).replace("|", "");
     const parts = label.includes("|")
-      ? label.split("|").map((f) => [f])
-      : label.split("").map((f) => [f]);
+      ? label.split(/|/g).map((f) => [f])
+      : label.split(/|/g).map((f) => [f]);
     writePhrase({ label, parts });
   };
   return (
