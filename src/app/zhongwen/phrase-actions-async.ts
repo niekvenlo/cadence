@@ -5,7 +5,7 @@ import fs from "fs/promises";
 import type { Phrase } from "./phrase-util-sync";
 
 const phrasesJsonFilePath = "src/app/zhongwen/phrases.json";
-const pinyinJsonFilePath = "src/app/zhongwen/phrases.json";
+const pinyinJsonFilePath = "src/app/zhongwen/pinyin.json";
 
 const readPhrases = async () =>
   JSON.parse(await fs.readFile(phrasesJsonFilePath, "utf-8"));
@@ -34,5 +34,5 @@ export const writePhrase = async (phraseToWrite) => {
 export const setPinyin = async (kanji, pinyin) => {
   const allPinyin = (await readPinyin()) as { [kanji: string]: string }[];
   allPinyin[kanji] = pinyin;
-  writePinyin(allPinyin);
+  writePinyin({ ...allPinyin });
 };

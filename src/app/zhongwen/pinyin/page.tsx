@@ -14,7 +14,15 @@ export default function Chinese() {
   const partsWithoutPinyin = partsPlus.filter(([_, v]) => v === undefined);
   const partsWithPinyin = partsPlus.filter(([_, v]) => v !== undefined);
 
-  const update = (kanji, pinyin) => setPinyin(kanji, pinyin);
+  const update = (kanji, pinyin) => {
+    setPinyin(kanji, pinyin);
+  };
+  // const d = `yī kè , sān kè , líng jū , zuò shén me , cè suǒ , zhī māo , tóng shì , míng yī shēng , zài nǎ lǐ , jiā fàn guǎn , zhāng zhǐ , nín , ài rén , wán yóu xì , xiāng xìn , píng guǒ , shuō shén me`;
+  // const f = d.split(",").map((f) => f.trim());
+  // return partsWithoutPinyin.map((p, i) => {
+  //   setTimeout(() => update(p, f[i]), i * 100);
+  //   return [p, f[i]];
+  // });
   return (
     <main id="zhongwen">
       <div className="top">
