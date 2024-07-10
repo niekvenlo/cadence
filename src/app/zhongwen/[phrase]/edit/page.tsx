@@ -77,25 +77,11 @@ type ColumnProps = {
 };
 
 const Column = ({ part, onChangePart }: ColumnProps) => {
-  const value = part?.[0] || "";
   const suggested = useMemo(() => getSuggested(part), [part]);
-  if (part.length < 2) {
-    // Only one value.
-    return (
-      <div className="column constant">
-        <span className="init">{value}</span>
-        <span className="random">{value}</span>
-        <span className="random">{value}</span>
-        <span className="random">{value}</span>
-        <TextArea part={part} onBlur={(part) => onChangePart(part)} />
-      </div>
-    );
-  }
-  // Multiple possible values.
   const getRandom = () => part[Math.floor(Math.random() * part.length)];
   return (
     <div className="column">
-      <span className="init">{value}</span>
+      <span className="init">{part?.[0]}</span>
       <span className="random">{getRandom()}</span>
       <span className="random">{getRandom()}</span>
       <span className="random">{getRandom()}</span>

@@ -33,13 +33,22 @@ function Add() {
   const ref = useRef<HTMLInputElement | null>(null);
   const addNewPhrase = () => {
     const messyLabel = ref.current?.value ?? Math.random().toString();
-    const label = cleanChineseString(messyLabel);
-    writePhrase({ label, parts: label.split("").map((f) => [f]) });
+    const label = cleanChineseString(messyLabel).replace("|", "");
+    const parts = label.includes("|")
+      ? label.split("|").map((f) => [f])
+      : label.split("").map((f) => [f]);
+    writePhrase({ label, parts });
   };
   return (
     <div style={{ paddingTop: "3em" }}>
-      <input ref={ref} type="text" defaultValue="" placeholder="你好" />
+      <input
+        ref={ref}
+        type="text"
+        defaultValue=""
+        placeholder="使用'|'符分隔"
+      />
       <button onClick={addNewPhrase}>加句子</button>
+      <p>Use | to group characters.</p>
     </div>
   );
 }
