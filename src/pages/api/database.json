@@ -2,8 +2,8 @@
     "shopping": [
         {
             "label": "🍞 Bread",
-            "timestamp": 1720421696287,
-            "isSelected": true
+            "timestamp": 1720595365155,
+            "isSelected": false
         },
         {
             "label": "🥛 Milk",
@@ -65,7 +65,7 @@
         {
             "id": "0c917e8d-f25b-471f-89f8-fc8307c768cf",
             "title": "Replace toothbrushes",
-            "nextEpochDay": 19917,
+            "nextEpochDay": 20004,
             "cadenceInDays": 90
         },
         {
@@ -108,7 +108,7 @@
         {
             "id": "58c36c00-58df-4130-907f-f7869b701312",
             "title": "Take pills",
-            "nextEpochDay": 19914,
+            "nextEpochDay": 19915,
             "cadenceInDays": 1
         },
         {
@@ -234,7 +234,7 @@
         {
             "title": "Clean out Eufy",
             "cadenceInDays": 1,
-            "nextEpochDay": 19914,
+            "nextEpochDay": 19915,
             "id": "ba96235d-7601-4d56-914e-484bc2904c30"
         },
         {
@@ -242,6 +242,24 @@
             "cadenceInDays": 8,
             "nextEpochDay": 19919,
             "id": "bccccd80-4466-4a6e-a05a-17e4e6f66ce5"
+        },
+        {
+            "title": "Deep clean nespresso",
+            "cadenceInDays": 170,
+            "nextEpochDay": 20084,
+            "id": "b36e8614-af8e-4008-aa9b-8275a95d37c0"
+        },
+        {
+            "title": "Clean the shower doors",
+            "cadenceInDays": 21,
+            "nextEpochDay": 19935,
+            "id": "efdb8179-b16f-43a6-ad18-3ca6aee0d5d1"
+        },
+        {
+            "title": "Recycle paper ",
+            "cadenceInDays": 10,
+            "id": "926978d8-1248-4077-a8db-007271792fde",
+            "nextEpochDay": 19924
         }
     ]
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import NoSSR from "../../../components/NoSSR";
 import BasicLink from "../../../components/basic/BasicLink";
 import { findPhraseByLabel, getSuggested } from "../../phrase-util-sync";
@@ -8,16 +8,18 @@ import { writePhrase } from "../../phrase-actions-async";
 import "../../style.css";
 import { getIsChinese } from "../../util";
 
+const no_text = "。";
+
 export default function Chinese({ params }: { params: { phrase: string } }) {
   const { label, parts } = findPhraseByLabel(decodeURI(params.phrase));
 
   const [_, setX] = useState(0);
 
-  const onChangePart = (i, part, append) => {
+  const onChangePart = (i, part, append = false) => {
     if (append) {
       parts[i] = [...(parts[i] || []), ...part];
     } else {
-      parts[i] = part;
+      parts[i] = part.length < 1 ? [no_text] : part;
     }
 
     writePhrase({ label, parts });
@@ -46,9 +48,17 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
             <Column
               key={part?.join() + i}
               part={part}
-              onChangePart={(value, append) => onChangePart(i, value, append)}
+              onChangePart={(part, append) => onChangePart(i, part, append)}
             />
           ))}
+          <div>
+            <button
+              className="plus"
+              onClick={() => onChangePart(parts.length, [no_text])}
+            >
+              加字
+            </button>
+          </div>
         </div>
       </main>
     </NoSSR>
@@ -89,7 +99,6 @@ const Column = ({ part, onChangePart }: ColumnProps) => {
           </div>
         ))}
       </div>
-      {/* {getSuggested(["猫"])} */}
     </div>
   );
 };

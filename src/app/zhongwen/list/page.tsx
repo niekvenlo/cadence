@@ -4,6 +4,9 @@ import BasicLink from "../../components/basic/BasicLink";
 import "../style.css";
 
 import { phrases } from "../phrase-util-sync";
+import { useRef } from "react";
+import { writePhrase } from "../phrase-actions-async";
+import { cleanChineseString } from "../util";
 
 export default function Chinese() {
   return (
@@ -21,6 +24,22 @@ export default function Chinese() {
           </p>
         ))}
       </div>
+      <Add />
     </main>
+  );
+}
+
+function Add() {
+  const ref = useRef<HTMLInputElement | null>(null);
+  const addNewPhrase = () => {
+    const messyLabel = ref.current?.value ?? Math.random().toString();
+    const label = cleanChineseString(messyLabel);
+    writePhrase({ label, parts: label.split("").map((f) => [f]) });
+  };
+  return (
+    <div style={{ paddingTop: "3em" }}>
+      <input ref={ref} type="text" defaultValue="" placeholder="你好" />
+      <button onClick={addNewPhrase}>加句子</button>
+    </div>
   );
 }

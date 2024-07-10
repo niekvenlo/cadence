@@ -74,7 +74,7 @@ function AppHeaderWeatherSection({ weather }) {
     return () => clearInterval(timer);
   }, []);
   const getIsCurrent = ({ startHour, endHour }) =>
-    startHour < currentHour && endHour >= currentHour;
+    startHour < currentHour && (endHour >= currentHour || endHour < 5);
   return (
     <div id="app-header-weather-section">
       {weather.map((section) => (
