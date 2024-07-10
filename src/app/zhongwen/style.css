@@ -25,6 +25,17 @@ main#zhongwen {
       }
     }
   }
+  .selected {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    translate: 50vw;
+    text-align: center;
+    p:empty::after {
+      filter: hue-rotate(200deg);
+      content: "❌";
+    }
+  }
 
   .phrase {
     display: flex;
@@ -137,3 +148,20 @@ main#zhongwen {
       border-radius: 4px;
     } */
 /* } */
+
+#pin {
+  .pin-kanji {
+    font-size: 1.5em;
+    width: 10ch;
+  }
+  .pin-k {
+    text-align: right;
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+  }
+  input {
+    font-size: 1.4em;
+    text-align: center;
+  }
+}
