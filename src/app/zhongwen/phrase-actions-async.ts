@@ -22,6 +22,7 @@ export const writePhrase = async (phraseToWrite) => {
   const foundPhraseIdx = phrases.findIndex(
     (p) => p.label === phraseToWrite.label
   );
+  console.log(phraseToWrite.parts);
   if (foundPhraseIdx === -1) {
     phrases.push(phraseToWrite);
   } else {

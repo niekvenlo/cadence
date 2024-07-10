@@ -17,7 +17,7 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
 
   const onChangePart = (i, part, append = false) => {
     if (part === "hack") {
-      writePhrase({ label, parts: parts.toSpliced(i, 0) });
+      writePhrase({ label, parts: parts.toSpliced(i, 1) });
       return;
     }
     if (append) {
@@ -93,7 +93,7 @@ const Column = ({ part, onChangePart }: ColumnProps) => {
       <TextArea part={part} onBlur={(part) => onChangePart(part)} />
       {canBeDeleted && (
         <button className="minus" onClick={() => onChangePart("hack")}>
-          -
+          除字
         </button>
       )}
       <div className="suggested">

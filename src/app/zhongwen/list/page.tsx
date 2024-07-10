@@ -44,15 +44,16 @@ function Add() {
     writePhrase({ label: label.replace(/[|]/g, ""), parts });
   };
   return (
-    <div style={{ paddingTop: "3em" }}>
+    <div style={{ paddingTop: "3em", display: "flex", gap: "0.1em" }}>
       <input
         ref={ref}
         type="text"
         defaultValue=""
         placeholder="使用'|'符分隔"
       />
-      <button onClick={addNewPhrase}>加句子</button>
-      <p>Use | to group characters.</p>
+      <button className="add" onClick={addNewPhrase}>
+        加句子
+      </button>
     </div>
   );
 }
