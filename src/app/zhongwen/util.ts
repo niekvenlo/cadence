@@ -13,5 +13,5 @@ export const getIsChinese = (chars: string = "") =>
 
 export const cleanChineseString = (chars: string = "") =>
   chars
-    .replace(/\W/g, "")
+    .replace(/\s/g, "")
     .replace(/./g, (char) => (getIsChinese(char) ? char : ""));

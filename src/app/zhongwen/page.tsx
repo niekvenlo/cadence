@@ -3,7 +3,7 @@
 import BasicLink from "../components/basic/BasicLink";
 import "./style.css";
 
-import { phrases } from "./phrase-util-sync";
+import { phrases, pinyin } from "./phrase-util-sync";
 import NoSSR from "../components/NoSSR";
 import { useRef } from "react";
 
@@ -45,15 +45,16 @@ function Chars({ part }) {
   const style = useRef({
     color: `hsl(${200 + Math.random() * 100}, 60%, 60%)`,
   });
-  const chars = getRandomIndex(part);
-  const data = part.filter((c) => c !== chars).join("―");
+  const kanji = getRandomIndex(part);
+  const data = part.filter((c) => c !== kanji).join("―");
   return (
     <button
       className="chars"
       style={style.current}
       data-part={data.length < 1 ? null : data}
     >
-      {chars}
+      <span className="kanji">{kanji}</span>
+      <span className="pinyin">{pinyin[kanji] || "*"}</span>
     </button>
   );
 }

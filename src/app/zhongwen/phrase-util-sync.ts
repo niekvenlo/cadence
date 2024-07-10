@@ -1,7 +1,9 @@
 import phrasesJson from "./phrases.json";
+import pinyinJson from "./pinyin.json";
 
 // I trust that the JSON is correctly formed.
 export const phrases = phrasesJson as Phrase[];
+export const pinyin = pinyinJson;
 
 export type Phrase = {
   label: string;

@@ -43,6 +43,9 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
             <span className="random">
               <span className="label">random</span>
             </span>
+            <span className="random">
+              <span className="label">random</span>
+            </span>
             <span className="options">
               <span className="label">options</span>
             </span>
