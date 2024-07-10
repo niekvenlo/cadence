@@ -8,12 +8,15 @@ import BasicPill from "./basic/BasicPill";
 import { cx } from "../utils";
 import useWeatherQuery from "../api/useWeatherQuery";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function AppHeader({
   initialShoppingList,
   initialTasks,
   initialWeather,
 }) {
+  const pathname = usePathname();
+  const isZhongwenSection = pathname?.startsWith("/zhongwen");
   const shoppingListQuery = useShoppingQuery(initialShoppingList);
   const tasksQuery = useTasksQuery(initialTasks);
   const weatherQuery = useWeatherQuery(initialWeather);
@@ -37,30 +40,34 @@ export default function AppHeader({
           <BasicLink href="/weather">Weather</BasicLink>
         </div>
       </header>
-      <div id="app-header-quick-section">
-        <Link className="tasks" href="/">
-          {todayTasks.map((i) => (
-            <BasicPill variant="to-do" key={i.title}>
-              {i.title}
-              {i.daysFromNow !== 0 && " ❗"}
-            </BasicPill>
-          ))}
-          {todayTasks.length < 1 && (
-            <span className="none">all done today</span>
-          )}
-        </Link>
-        <Link className="shopping" href="/shopping">
-          {selectedShopping.map((i) => (
-            <BasicPill variant="to-shop" key={i.label}>
-              {i.label}
-            </BasicPill>
-          ))}
-          {selectedShopping.length < 1 && (
-            <span className="none">all done today</span>
-          )}
-        </Link>
-      </div>
-      <AppHeaderWeatherSection weather={weatherQuery?.data} />
+      {!isZhongwenSection && (
+        <>
+          <div id="app-header-quick-section">
+            <Link className="tasks" href="/">
+              {todayTasks.map((i) => (
+                <BasicPill variant="to-do" key={i.title}>
+                  {i.title}
+                  {i.daysFromNow !== 0 && " ❗"}
+                </BasicPill>
+              ))}
+              {todayTasks.length < 1 && (
+                <span className="none">all done today</span>
+              )}
+            </Link>
+            <Link className="shopping" href="/shopping">
+              {selectedShopping.map((i) => (
+                <BasicPill variant="to-shop" key={i.label}>
+                  {i.label}
+                </BasicPill>
+              ))}
+              {selectedShopping.length < 1 && (
+                <span className="none">all done today</span>
+              )}
+            </Link>
+          </div>
+          <AppHeaderWeatherSection weather={weatherQuery?.data} />
+        </>
+      )}
     </>
   );
 }

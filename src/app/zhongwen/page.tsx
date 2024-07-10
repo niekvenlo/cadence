@@ -11,7 +11,7 @@ export default function Chinese() {
   const [selected, setSelected] = useState<{
     kanji: string;
     alternativeKanji: string[];
-  }>();
+  } | null>();
   const memoedPhrases = useMemo(
     () =>
       [...phrases, ...phrases]
@@ -32,7 +32,7 @@ export default function Chinese() {
         <div className="sdjhh">{memoedPhrases}</div>
         {selected && (
           <div className="selected">
-            <h2>{selected.kanji}</h2>
+            <h2 onClick={() => setSelected(null)}>{selected.kanji}</h2>
             <p>{pinyin[selected.kanji]}</p>
             <p className="alternative">
               {selected.alternativeKanji.map((a) => (

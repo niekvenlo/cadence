@@ -123,11 +123,11 @@ p {
       max-height: 1.5em;
       overflow: hidden;
       &:hover {
-        max-height: 10em;
+        max-height: 20em;
       }
       &:not(:hover)::before {
-        content: "🍔";
-        text-align: right;
+        content: "Cadence";
+        text-transform: uppercase;
       }
     }
   }
