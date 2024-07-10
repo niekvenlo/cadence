@@ -19,8 +19,8 @@ export default function Chinese() {
         {phrases.map(({ label }) => (
           <p key={label}>
             <span>{label}</span>
-            <BasicLink href={`/zhongwen/${label}`}>[Review]</BasicLink>
-            <BasicLink href={`/zhongwen/${label}/edit`}>[Edit]</BasicLink>
+            <BasicLink href={`/zhongwen/${label}`}>👀</BasicLink>
+            <BasicLink href={`/zhongwen/${label}/edit`}>✏️</BasicLink>
           </p>
         ))}
       </div>
@@ -33,11 +33,12 @@ function Add() {
   const ref = useRef<HTMLInputElement | null>(null);
   const addNewPhrase = () => {
     const messyLabel = ref.current?.value ?? Math.random().toString();
-    const label = cleanChineseString(messyLabel).replace("|", "");
+    const label = cleanChineseString(messyLabel);
     const parts = label.includes("|")
-      ? label.split(/|/g).map((f) => [f])
-      : label.split(/|/g).map((f) => [f]);
-    writePhrase({ label, parts });
+      ? label.split("|").map((f) => [f])
+      : label.split("").map((f) => [f]);
+    console.log(label, label.replace(/[|]/g, ""));
+    writePhrase({ label: label.replace(/[|]/g, ""), parts });
   };
   return (
     <div style={{ paddingTop: "3em" }}>

@@ -11,11 +11,11 @@ export default function Chinese() {
     ...new Set(phrases.map(({ parts }) => parts).flat(2)),
   ].sort();
   const partsPlus = allUniqueParts.map((p) => [p, pinyin[p]]);
-  const partsWithoutPinyin = partsPlus.filter(([_, v]) => v === undefined);
-  const partsWithPinyin = partsPlus.filter(([_, v]) => v !== undefined);
+  const partsWithoutPinyin = partsPlus.filter(([_, v]) => !v);
+  const partsWithPinyin = partsPlus.filter(([_, v]) => v);
 
   const update = (kanji, pinyin) => {
-    setPinyin(kanji, pinyin);
+    setPinyin(kanji, pinyin.toLowerCase().trim());
   };
   // const d = `yī kè , sān kè , líng jū , zuò shén me , cè suǒ , zhī māo , tóng shì , míng yī shēng , zài nǎ lǐ , jiā fàn guǎn , zhāng zhǐ , nín , ài rén , wán yóu xì , xiāng xìn , píng guǒ , shuō shén me`;
   // const f = d.split(",").map((f) => f.trim());
