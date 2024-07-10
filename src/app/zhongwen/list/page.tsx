@@ -12,8 +12,11 @@ export default function Chinese() {
   return (
     <main id="zhongwen">
       <div className="top">
-        <BasicLink href="/zhongwen">Back</BasicLink>
-        <h1>List of phrases</h1>
+        <h1>✏️</h1>
+        <div className="links">
+          <BasicLink href="/zhongwen">中文</BasicLink>
+          <BasicLink href="/zhongwen/pinyin">拼音</BasicLink>
+        </div>
       </div>
       <div className="sdjhh">
         {phrases.map(({ label }) => (

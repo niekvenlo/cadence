@@ -16,6 +16,10 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
   const [_, setX] = useState(0);
 
   const onChangePart = (i, part, append = false) => {
+    if (part === "hack") {
+      writePhrase({ label, parts: parts.toSpliced(i, 0) });
+      return;
+    }
     if (append) {
       parts[i] = [...(parts[i] || []), ...part];
     } else {
@@ -73,12 +77,13 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
 
 type ColumnProps = {
   part: string[];
-  onChangePart: (part: string[], append?: boolean) => void;
+  onChangePart: (part: string[] | "hack", append?: boolean) => void;
 };
 
 const Column = ({ part, onChangePart }: ColumnProps) => {
   const suggested = useMemo(() => getSuggested(part), [part]);
   const getRandom = () => part[Math.floor(Math.random() * part.length)];
+  const canBeDeleted = part.toString() === "。" && "dddd";
   return (
     <div className="column">
       <span className="init">{part?.[0]}</span>
@@ -86,6 +91,11 @@ const Column = ({ part, onChangePart }: ColumnProps) => {
       <span className="random">{getRandom()}</span>
       <span className="random">{getRandom()}</span>
       <TextArea part={part} onBlur={(part) => onChangePart(part)} />
+      {canBeDeleted && (
+        <button className="minus" onClick={() => onChangePart("hack")}>
+          -
+        </button>
+      )}
       <div className="suggested">
         {suggested?.map((s) => (
           <div key={s} onClick={() => onChangePart([s], true)}>

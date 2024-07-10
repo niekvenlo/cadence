@@ -13,6 +13,10 @@ main#zhongwen {
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
+    .links {
+      display: flex;
+      gap: 1em;
+    }
   }
 
   .sdjhh {
@@ -23,6 +27,12 @@ main#zhongwen {
       & > span {
         font-weight: 600;
       }
+    }
+    button.sparkle {
+      background: inherit;
+      border: none;
+      outline: none;
+      padding-inline-end: 1em;
     }
   }
   .selected {
@@ -60,7 +70,7 @@ main#zhongwen {
   .column {
     text-align: center;
     font-size: 1.5em;
-    width: 8ch;
+    width: 10ch;
     display: flex;
     flex-direction: column;
     gap: 0.5em;

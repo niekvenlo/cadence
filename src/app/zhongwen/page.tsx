@@ -5,31 +5,30 @@ import "./style.css";
 
 import { phrases, pinyin } from "./phrase-util-sync";
 import NoSSR from "../components/NoSSR";
-import { useMemo, useRef, useState } from "react";
+import { memo, useMemo, useRef, useState } from "react";
 
 export default function Chinese() {
+  const [key, setReload] = useState(0);
+  const reload = () => setReload((x) => x + 1);
   const [selected, setSelected] = useState<{
     kanji: string;
     alternativeKanji: string[];
   } | null>();
-  const memoedPhrases = useMemo(
-    () =>
-      [...phrases, ...phrases]
-        .toSorted(() => (Math.random() < 0.4 ? -1 : 1))
-        .map(({ label, parts }) => (
-          <Phrase key={label} parts={parts} setSelected={setSelected} />
-        )),
-    []
-  );
   return (
     <main id="zhongwen">
       <div className="top">
         <h1>中文</h1>
-        <BasicLink href="/zhongwen/list">短语列表</BasicLink>
-        <BasicLink href="/zhongwen/pinyin">拼音</BasicLink>
+        <div className="links">
+          <BasicLink href="/zhongwen/list">✏️</BasicLink>
+        </div>
       </div>
       <NoSSR>
-        <div className="sdjhh">{memoedPhrases}</div>
+        <div className="sdjhh">
+          <button className="sparkle" onClick={reload}>
+            ✨
+          </button>
+          <Phrases key={key} phrases={phrases} setSelected={setSelected} />
+        </div>
         {selected && (
           <div className="selected">
             <h2 onClick={() => setSelected(null)}>{selected.kanji}</h2>
@@ -45,6 +44,18 @@ export default function Chinese() {
     </main>
   );
 }
+
+type PProps = {
+  phrases: any[];
+  setSelected: (s: { kanji; alternativeKanji }) => void;
+};
+const Phrases = memo(function Phrases({ phrases, setSelected }: PProps) {
+  return [...phrases, ...phrases]
+    .toSorted(() => (Math.random() < 0.4 ? -1 : 1))
+    .map(({ label, parts }, i) => (
+      <Phrase key={label + i} parts={parts} setSelected={setSelected} />
+    ));
+});
 
 function Phrase({ parts, setSelected }) {
   return (
