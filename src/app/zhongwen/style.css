@@ -46,7 +46,7 @@ main#zhongwen {
       outline: none;
       border: none;
       text-align: center;
-      height: 10lh;
+      height: 15lh;
       --c: rgb(233, 232, 170);
       background: repeating-linear-gradient(
         180deg,

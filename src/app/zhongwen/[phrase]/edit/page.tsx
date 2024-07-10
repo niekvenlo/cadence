@@ -40,6 +40,9 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
             <span className="random">
               <span className="label">random</span>
             </span>
+            <span className="random">
+              <span className="label">random</span>
+            </span>
             <span className="options">
               <span className="label">options</span>
             </span>
@@ -67,34 +70,36 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
 
 type ColumnProps = {
   part: string[];
-  onChangePart: (value: string, append?: boolean) => void;
+  onChangePart: (part: string[], append?: boolean) => void;
 };
 
 const Column = ({ part, onChangePart }: ColumnProps) => {
   const value = part?.[0] || "";
-  const suggested = useMemo(() => {
-    return getSuggested(part);
-  }, [part]);
+  const suggested = useMemo(() => getSuggested(part), [part]);
   if (part.length < 2) {
     // Only one value.
     return (
       <div className="column constant">
         <span className="init">{value}</span>
         <span className="random">{value}</span>
-        <TextArea part={part} onBlur={(value) => onChangePart(value)} />
+        <span className="random">{value}</span>
+        <span className="random">{value}</span>
+        <TextArea part={part} onBlur={(part) => onChangePart(part)} />
       </div>
     );
   }
   // Multiple possible values.
-  const random = part[Math.floor(Math.random() * part.length)];
+  const getRandom = () => part[Math.floor(Math.random() * part.length)];
   return (
     <div className="column">
       <span className="init">{value}</span>
-      <span className="random">{random}</span>
-      <TextArea part={part} onBlur={(value) => onChangePart(value)} />
+      <span className="random">{getRandom()}</span>
+      <span className="random">{getRandom()}</span>
+      <span className="random">{getRandom()}</span>
+      <TextArea part={part} onBlur={(part) => onChangePart(part)} />
       <div className="suggested">
         {suggested?.map((s) => (
-          <div key={s} onClick={() => onChangePart(s, true)}>
+          <div key={s} onClick={() => onChangePart([s], true)}>
             {s}
           </div>
         ))}
@@ -107,6 +112,7 @@ const TextArea = ({ part, onBlur }) => {
   const cleanValues = (string) => {
     const foundValues = string
       .split("\n")
+      .filter((c) => c)
       .filter(getIsChinese)
       .map((f) => f.trim());
     const unique = [...new Set(foundValues)];
@@ -115,7 +121,12 @@ const TextArea = ({ part, onBlur }) => {
   return (
     <textarea
       className="options"
-      defaultValue={part.join("\n") + "\n"}
+      defaultValue={
+        part
+          .toSorted()
+          .filter((c) => c)
+          .join("\n") + "\n"
+      }
       onBlur={(e) => onBlur(cleanValues(e.target.value))}
     />
   );
