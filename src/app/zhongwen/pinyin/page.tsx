@@ -5,6 +5,7 @@ import "../style.css";
 
 import { phrases, pinyin } from "../phrase-util-sync";
 import { setPinyin } from "../phrase-actions-async";
+import { useEffect } from "react";
 
 export default function Chinese() {
   const allUniqueParts = [
@@ -17,12 +18,25 @@ export default function Chinese() {
   const update = (kanji, pinyin) => {
     setPinyin(kanji, pinyin.toLowerCase().trim());
   };
-  // const d = `yī kè , sān kè , líng jū , zuò shén me , cè suǒ , zhī māo , tóng shì , míng yī shēng , zài nǎ lǐ , jiā fàn guǎn , zhāng zhǐ , nín , ài rén , wán yóu xì , xiāng xìn , píng guǒ , shuō shén me`;
-  // const f = d.split(",").map((f) => f.trim());
-  // return partsWithoutPinyin.map((p, i) => {
-  //   setTimeout(() => update(p, f[i]), i * 100);
-  //   return [p, f[i]];
-  // });
+
+  // return partsWithoutPinyin.map((p) => p[0]).join(", ");
+  const d = `shēng qì , bǐ jì běn , lán sè de , dū , qián `;
+  const f = d.split(/,\s?/).map((f) => f.trim());
+  useEffect(() => {
+    const f = d.split(/,\s?/).map((f) => f.trim());
+    partsWithoutPinyin.forEach((p, i) => {
+      const pp = p.toString().replace(",", "");
+      const ff = f[i];
+      setTimeout(() => update(pp, ff), i * 100);
+    });
+  }, []);
+  // return partsWithoutPinyin
+  //   .map((p, i) => {
+  //     const pp = p.toString().replace(",", "");
+  //     const ff = f[i];
+  //     return [pp, ff].join(" = ");
+  //   })
+  //   .join(" | ");
   return (
     <main id="zhongwen">
       <div className="top">
