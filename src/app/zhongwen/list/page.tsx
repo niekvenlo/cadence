@@ -16,6 +16,7 @@ export default function Chinese() {
         <div className="links">
           <BasicLink href="/zhongwen">中文</BasicLink>
           <BasicLink href="/zhongwen/pinyin">拼音</BasicLink>
+          <BasicLink href="/zhongwen/chars">字符</BasicLink>
         </div>
       </div>
       <div className="sdjhh">
