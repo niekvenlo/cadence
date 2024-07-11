@@ -19,7 +19,7 @@ export default function Chinese() {
           <BasicLink href="/zhongwen/chars">字符</BasicLink>
         </div>
       </div>
-      <div className="sdjhh">
+      <div className="sdjhh sssdsv">
         {phrases.map(({ label }) => (
           <p key={label}>
             <span>{label}</span>

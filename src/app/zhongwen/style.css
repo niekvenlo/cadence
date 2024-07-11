@@ -15,8 +15,7 @@ main#zhongwen {
     }
   }
 
-  .sdjhh {
-    font-size: 1.1em;
+  .sssdsv {
     columns: 1;
     @media (min-width: 600px) {
       columns: 2;
@@ -24,6 +23,10 @@ main#zhongwen {
     @media (min-width: 1000px) {
       columns: 3;
     }
+  }
+
+  .sdjhh {
+    font-size: 1.1em;
     & > p {
       display: flex;
       gap: 1em;

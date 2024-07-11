@@ -27,7 +27,7 @@ export default function Chinese() {
     partsWithoutPinyin.forEach((p, i) => {
       const pp = p.toString().replace(",", "");
       const ff = f[i];
-      setTimeout(() => update(pp, ff), i * 100);
+      // setTimeout(() => update(pp, ff), i * 100);
     });
   }, []);
   // return partsWithoutPinyin
