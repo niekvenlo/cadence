@@ -108,7 +108,7 @@
         {
             "id": "58c36c00-58df-4130-907f-f7869b701312",
             "title": "Take pills",
-            "nextEpochDay": 19915,
+            "nextEpochDay": 19916,
             "cadenceInDays": 1
         },
         {
@@ -163,7 +163,7 @@
             "title": "Water the plants",
             "cadenceInDays": 3,
             "id": "2c3e317c-6c09-4116-a92f-569356dc3945",
-            "nextEpochDay": 19914
+            "nextEpochDay": 19917
         },
         {
             "title": "Vacuum bedroom",
@@ -191,8 +191,8 @@
         },
         {
             "title": "Take out the trash",
-            "cadenceInDays": 3,
-            "nextEpochDay": 19914,
+            "cadenceInDays": 4,
+            "nextEpochDay": 19919,
             "id": "eb9220be-02ba-4db3-988f-c0b119d4d053"
         },
         {
@@ -234,7 +234,7 @@
         {
             "title": "Clean out Eufy",
             "cadenceInDays": 1,
-            "nextEpochDay": 19915,
+            "nextEpochDay": 19916,
             "id": "ba96235d-7601-4d56-914e-484bc2904c30"
         },
         {
@@ -259,7 +259,13 @@
             "title": "Recycle paper ",
             "cadenceInDays": 10,
             "id": "926978d8-1248-4077-a8db-007271792fde",
-            "nextEpochDay": 19924
+            "nextEpochDay": 19925
+        },
+        {
+            "title": "Clean the water bottles",
+            "cadenceInDays": 20,
+            "id": "9e3dbdac-40ea-477c-93b5-2da7732c8aaa",
+            "nextEpochDay": 19934
         }
     ]
 }
