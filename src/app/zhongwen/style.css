@@ -17,6 +17,13 @@ main#zhongwen {
 
   .sdjhh {
     font-size: 1.1em;
+    columns: 1;
+    @media (min-width: 600px) {
+      columns: 2;
+    }
+    @media (min-width: 1000px) {
+      columns: 3;
+    }
     & > p {
       display: flex;
       gap: 1em;
@@ -67,7 +74,8 @@ main#zhongwen {
     background: var(--primary-color);
     color: var(--on-primary-color);
     font-size: 1rem;
-    &:hover {
+    padding-inline: 0.5em;
+    l &:hover {
       box-shadow: inset 0 0 0 2px var(--primary-color),
         inset 0 0 0 4px var(--on-primary-color);
     }
@@ -132,14 +140,14 @@ main#zhongwen {
 }
 
 .phrase-s {
-  display: inline;
-  margin: 0.5em;
+  display: contents;
   .chars {
     display: inline-flex;
     flex-direction: column;
     align-items: center;
     border: none;
     background: inherit;
+    margin-block: 1em;
     .kanji {
       font-size: 1.7rem;
       user-select: all;
@@ -148,13 +156,15 @@ main#zhongwen {
       font-size: 0.8rem;
       opacity: 0.15;
       user-select: none;
-      rotate: 180deg;
     }
     &:hover .pinyin,
     &:active .pinyin,
     &:focus .pinyin {
       opacity: 0.6;
     }
+  }
+  .full-stop {
+    margin-right: 1em;
   }
 }
 

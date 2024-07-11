@@ -50,11 +50,9 @@ type PProps = {
   setSelected: (s: { kanji; alternativeKanji }) => void;
 };
 const Phrases = memo(function Phrases({ phrases, setSelected }: PProps) {
-  return [...phrases, ...phrases]
-    .toSorted(() => (Math.random() < 0.4 ? -1 : 1))
-    .map(({ label, parts }, i) => (
-      <Phrase key={label + i} parts={parts} setSelected={setSelected} />
-    ));
+  return toShuffle(phrases).map(({ label, parts }, i) => (
+    <Phrase key={label + i} parts={parts} setSelected={setSelected} />
+  ));
 });
 
 function Phrase({ parts, setSelected }) {
@@ -63,9 +61,25 @@ function Phrase({ parts, setSelected }) {
       {parts.map((part, i) => (
         <Chars part={part} key={i} setSelected={setSelected} />
       ))}
-      。
+      <span className="full-stop">。</span>
     </div>
   );
+}
+
+function toShuffle(array) {
+  const copy = [...array];
+  let cIdx = array.length;
+
+  // While there remain elements to shuffle...
+  while (cIdx != 0) {
+    // Pick a remaining element...
+    let rIdx = Math.floor(Math.random() * cIdx);
+    cIdx--;
+
+    // And swap it with the current element.
+    [copy[cIdx], copy[rIdx]] = [copy[rIdx], copy[cIdx]];
+  }
+  return copy;
 }
 
 let random = Math.floor((Date.now() / 100) * 1000);

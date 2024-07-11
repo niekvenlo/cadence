@@ -16,13 +16,13 @@ export default function Chinese() {
       <div id="pin">
         <h2>In Both</h2>
         {getBloo(pinyin, phrases)[0].map((d) => (
-          <span key={d} style={{ paddingInline: "0.4em" }}>
+          <span key={d} style={{ margin: "0.7em" }}>
             {d}
           </span>
         ))}
         <h2>Only in old set</h2>
         {getBloo(pinyin, phrases)[1].map((d) => (
-          <span key={d} style={{ paddingInline: "0.4em" }}>
+          <span key={d} style={{ margin: "0.7em" }}>
             {d}
           </span>
         ))}
