@@ -20,11 +20,12 @@ export default function Chinese() {
         </div>
       </div>
       <div className="sdjhh sssdsv">
-        {phrases.map(({ label }) => (
+        {phrases.map(({ label, parts }) => (
           <p key={label}>
             <span>{label}</span>
             <BasicLink href={`/zhongwen/${label}`}>👀</BasicLink>
             <BasicLink href={`/zhongwen/${label}/edit`}>✏️</BasicLink>
+            <span className="complexity">{getComplexityFromParts(parts)}</span>
           </p>
         ))}
       </div>
@@ -56,4 +57,10 @@ function Add() {
       </button>
     </div>
   );
+}
+
+function getComplexityFromParts(parts) {
+  let complexity = 1;
+  parts.forEach((part) => (complexity *= part.length));
+  return complexity;
 }

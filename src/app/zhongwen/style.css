@@ -23,6 +23,13 @@ main#zhongwen {
     @media (min-width: 1000px) {
       columns: 3;
     }
+    .complexity {
+      font-weight: 100;
+      opacity: 0.6;
+      &::before {
+        content: "x";
+      }
+    }
   }
 
   .sdjhh {
