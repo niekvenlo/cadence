@@ -31,13 +31,13 @@ export default function AppHeader({
         <h1>Cadence</h1>
         <div className="links">
           <BasicLink href="/">Tasks</BasicLink>
-          <BasicLink href="/shopping">Shopping</BasicLink>
-          <BasicLink href="/chinese">Chinese</BasicLink>
+          {/* <BasicLink href="/shopping">Shopping</BasicLink> */}
+          {/* <BasicLink href="/chinese">Chinese</BasicLink> */}
           <BasicLink href="/zhongwen" matchSection>
             中文
           </BasicLink>
-          <BasicLink href="/ai">AI</BasicLink>
-          <BasicLink href="/weather">Weather</BasicLink>
+          {/* <BasicLink href="/ai">AI</BasicLink> */}
+          {/* <BasicLink href="/weather">Weather</BasicLink> */}
         </div>
       </header>
       {!isZhongwenSection && (
