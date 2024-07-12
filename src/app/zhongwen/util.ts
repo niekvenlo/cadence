@@ -15,3 +15,41 @@ export const cleanChineseString = (chars: string = "") =>
   chars
     .replace(/\s/g, "")
     .replace(/./g, (char) => (getIsChinese(char) ? char : ""));
+
+const accents = {
+  ǎ: "wiggle",
+  ě: "wiggle",
+  ǐ: "wiggle",
+  ǔ: "wiggle",
+  ǒ: "wiggle",
+
+  ā: "sing",
+  ē: "sing",
+  ī: "sing",
+  ō: "sing",
+  ū: "sing",
+
+  à: "state",
+  è: "state",
+  ì: "state",
+  ò: "state",
+  ù: "state",
+
+  á: "ask",
+  í: "ask",
+  é: "ask",
+  ó: "ask",
+  ú: "ask",
+
+  ǚ: "x",
+  ǜ: "y",
+
+  "": "none",
+};
+export const getTones = (string: string = "") => {
+  return string
+    .split(/['abcdfghjklmnpqrstvwxyz]|\s/)
+    .filter((d) => d)
+    .map((d) => d.replace(/\w/g, ""))
+    .map((d) => accents[d] || "");
+};

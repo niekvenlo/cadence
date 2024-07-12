@@ -19,24 +19,16 @@ export default function Chinese() {
     setPinyin(kanji, pinyin.toLowerCase().trim());
   };
 
-  // return partsWithoutPinyin.map((p) => p[0]).join(", ");
-  const d = `shēng qì , bǐ jì běn , lán sè de , dū , qián `;
-  const f = d.split(/,\s?/).map((f) => f.trim());
-  useEffect(() => {
-    const f = d.split(/,\s?/).map((f) => f.trim());
-    partsWithoutPinyin.forEach((p, i) => {
-      const pp = p.toString().replace(",", "");
-      const ff = f[i];
-      // setTimeout(() => update(pp, ff), i * 100);
-    });
-  }, []);
-  // return partsWithoutPinyin
-  //   .map((p, i) => {
+  // const d = `yī , yī qiān , yī bǎi , qī , sān , gè rén , jiǔ , liǎo , bā , liù , má , bā , gē gē , xǐ huān , sì , zài , nǎi nǎi , mā mā , mèi mèi , jiě jiě , jiā rén , mào zǐ , dì dì , shì , yǒu , bēi zǐ , cì , rè , ài , fù mǔ , bà bà , gǒu , láng , māo , kàn dào , dì , gěi , lǎo shī , lǎo bǎn , yào , xū yào , gāo`;
+  // const f = d.split(/,\s?/).map((f) => f.trim());
+  // useEffect(() => {
+  //   const f = d.split(/,\s?/).map((f) => f.trim());
+  //   partsWithoutPinyin.forEach((p, i) => {
   //     const pp = p.toString().replace(",", "");
   //     const ff = f[i];
-  //     return [pp, ff].join(" = ");
-  //   })
-  //   .join(" | ");
+  //     setTimeout(() => update(pp, ff), i * 100);
+  //   });
+  // }, []);
   return (
     <main id="zhongwen">
       <div className="top">
@@ -45,6 +37,7 @@ export default function Chinese() {
       </div>
       <div id="pin">
         <h2>Parts without Pinyin</h2>
+        {partsWithoutPinyin.map((p) => p[0]).join(", ")}
         {partsWithoutPinyin.map(([kanji, pinyin]) => (
           <div className="pin-k" key={kanji}>
             <span className="pin-kanji">{kanji}</span>

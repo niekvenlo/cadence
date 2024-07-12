@@ -5,11 +5,13 @@ import "./style.css";
 
 import { phrases, pinyin } from "./phrase-util-sync";
 import NoSSR from "../components/NoSSR";
-import { memo, useMemo, useRef, useState } from "react";
+import { memo, useRef, useState } from "react";
+import { Accents } from "./accents";
 
 export default function Chinese() {
   const [key, setReload] = useState(0);
   const reload = () => setReload((x) => x + 1);
+  const [showTones, setShowTones] = useState(false);
   const [selected, setSelected] = useState<{
     kanji: string;
     alternativeKanji: string[];
@@ -24,20 +26,29 @@ export default function Chinese() {
       </div>
       <NoSSR>
         <div className="sdjhh">
+          <button className="sparkle" onClick={() => setShowTones((t) => !t)}>
+            🐦‍🔥
+          </button>
           <button className="sparkle" onClick={reload}>
             ✨
           </button>
-          <Phrases key={key} phrases={phrases} setSelected={setSelected} />
+          <Phrases
+            showTones={showTones}
+            key={key}
+            phrases={phrases}
+            setSelected={setSelected}
+          />
         </div>
         {selected && (
-          <div className="selected">
-            <h2 onClick={() => setSelected(null)}>{selected.kanji}</h2>
-            <p>{pinyin[selected.kanji]}</p>
+          <div className="selected" onClick={() => setSelected(null)}>
             <p className="alternative">
               {selected.alternativeKanji.map((a) => (
                 <span key={a}>{a}</span>
               ))}
             </p>
+            <Accents pinyin={pinyin[selected.kanji]} />
+            <h2>{selected.kanji}</h2>
+            <p>{pinyin[selected.kanji]}</p>
           </div>
         )}
       </NoSSR>
@@ -46,20 +57,31 @@ export default function Chinese() {
 }
 
 type PProps = {
+  showTones: boolean;
   phrases: any[];
   setSelected: (s: { kanji; alternativeKanji }) => void;
 };
-const Phrases = memo(function Phrases({ phrases, setSelected }: PProps) {
+const Phrases = memo(function Phrases({
+  phrases,
+  showTones,
+  setSelected,
+}: PProps) {
   return toShuffle(phrases).map(({ label, parts }, i) => (
-    <Phrase key={label + i} parts={parts} setSelected={setSelected} />
+    <Phrase
+      showTones={showTones}
+      key={label + i}
+      parts={parts}
+      setSelected={setSelected}
+    />
   ));
 });
 
-function Phrase({ parts, setSelected }) {
+function Phrase({ parts, setSelected, showTones }) {
+  const Component = showTones ? CharsWithTones : Chars;
   return (
     <div className="phrase-s">
       {parts.map((part, i) => (
-        <Chars part={part} key={i} setSelected={setSelected} />
+        <Component part={part} key={i} setSelected={setSelected} />
       ))}
       <span className="full-stop">。</span>
     </div>
@@ -85,6 +107,23 @@ function toShuffle(array) {
 let random = Math.floor((Date.now() / 100) * 1000);
 const getRandomIndex = (arr) => arr[random++ % arr.length];
 
+function CharsWithTones({ part, setSelected }) {
+  const style = useRef({
+    color: `hsl(${200 + Math.random() * 100}, 60%, 60%)`,
+  });
+  const kanji = getRandomIndex(part);
+  const alternativeKanji = part.filter((c) => c !== kanji);
+  return (
+    <button
+      className="chars"
+      style={style.current}
+      onClick={() => setSelected({ kanji, alternativeKanji })}
+    >
+      <Accents pinyin={pinyin[kanji]} />
+      <span className="kanji">{kanji}</span>
+    </button>
+  );
+}
 function Chars({ part, setSelected }) {
   const style = useRef({
     color: `hsl(${200 + Math.random() * 100}, 60%, 60%)`,

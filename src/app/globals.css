@@ -8,6 +8,7 @@
   --primary-color-lighter: hsl(250 50% 60%);
   --accent-color: hsl(23, 95%, 52%);
   --background-color: hsl(100 20% 85%);
+  --background-color-darker: hsl(100 20% 75%);
   --on-primary-color: hsl(250 10% 90%);
   --card-color: hsl(100 20% 95%);
   --shadow-color: hsl(0deg 0% 0% / 0.075);

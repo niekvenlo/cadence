@@ -38,27 +38,35 @@ main#zhongwen {
       background: inherit;
       border: none;
       outline: none;
-      padding-inline-end: 1em;
+      padding-inline: 1em;
+      margin-inline-end: 1em;
     }
   }
   .selected {
-    background: var(--background-color);
+    rotate: 3deg;
+    background: var(--background-color-darker);
     box-shadow: var(--card-shadow-up);
     position: fixed;
     width: 100%;
-    bottom: 0;
+    bottom: -2em;
+    padding-top: 0.2em;
+    padding-bottom: 2em;
     left: 0;
     text-align: center;
     p:empty::after {
       filter: hue-rotate(200deg);
       content: "❌";
     }
+    .tone {
+      display: flex;
+      justify-content: center;
+    }
     .alternative {
       display: flex;
       justify-content: center;
       gap: 2ch;
       span {
-        background: white;
+        background: var(--background-color);
         border-radius: 0.3em;
         padding-inline: 0.4em;
       }
@@ -164,6 +172,24 @@ main#zhongwen {
     &:active .pinyin,
     &:focus .pinyin {
       opacity: 0.6;
+    }
+  }
+  .tone {
+    display: flex;
+    font-size: 1.5rem;
+    user-select: none;
+    font-family: monospace;
+    .ask {
+      filter: hue-rotate(0deg);
+    }
+    .sing {
+      filter: hue-rotate(10deg);
+    }
+    .state {
+      filter: hue-rotate(20deg);
+    }
+    .wiggle {
+      filter: hue-rotate(30deg);
     }
   }
   .full-stop {
