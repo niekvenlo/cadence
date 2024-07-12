@@ -11,13 +11,12 @@ import { Accents } from "./accents";
 export default function Chinese() {
   const [key, setReload] = useState(0);
   const reload = () => setReload((x) => x + 1);
-  const [showTones, setShowTones] = useState(false);
   const [selected, setSelected] = useState<{
     kanji: string;
     alternativeKanji: string[];
   } | null>();
   return (
-    <main id="zhongwen">
+    <main id="zhongwen" onDoubleClick={() => setSelected(null)}>
       <div className="top">
         <h1>中文</h1>
         <div className="links">
@@ -26,18 +25,10 @@ export default function Chinese() {
       </div>
       <NoSSR>
         <div className="sdjhh">
-          <button className="sparkle" onClick={() => setShowTones((t) => !t)}>
-            🐦‍🔥
-          </button>
           <button className="sparkle" onClick={reload}>
             ✨
           </button>
-          <Phrases
-            showTones={showTones}
-            key={key}
-            phrases={phrases}
-            setSelected={setSelected}
-          />
+          <Phrases key={key} phrases={phrases} setSelected={setSelected} />
         </div>
         {selected && (
           <div className="selected" onClick={() => setSelected(null)}>
@@ -57,31 +48,20 @@ export default function Chinese() {
 }
 
 type PProps = {
-  showTones: boolean;
   phrases: any[];
   setSelected: (s: { kanji; alternativeKanji }) => void;
 };
-const Phrases = memo(function Phrases({
-  phrases,
-  showTones,
-  setSelected,
-}: PProps) {
+const Phrases = memo(function Phrases({ phrases, setSelected }: PProps) {
   return toShuffle(phrases).map(({ label, parts }, i) => (
-    <Phrase
-      showTones={showTones}
-      key={label + i}
-      parts={parts}
-      setSelected={setSelected}
-    />
+    <Phrase key={label + i} parts={parts} setSelected={setSelected} />
   ));
 });
 
-function Phrase({ parts, setSelected, showTones }) {
-  const Component = showTones ? CharsWithTones : Chars;
+function Phrase({ parts, setSelected }) {
   return (
     <div className="phrase-s">
       {parts.map((part, i) => (
-        <Component part={part} key={i} setSelected={setSelected} />
+        <Chars part={part} key={i} setSelected={setSelected} />
       ))}
       <span className="full-stop">。</span>
     </div>
@@ -136,6 +116,7 @@ function Chars({ part, setSelected }) {
       style={style.current}
       onClick={() => setSelected({ kanji, alternativeKanji })}
     >
+      <Accents pinyin={pinyin[kanji]} />
       <span className="kanji">{kanji}</span>
       <span className="pinyin">{pinyin[kanji] || "*"}</span>
     </button>

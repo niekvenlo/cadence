@@ -179,6 +179,7 @@ main#zhongwen {
     font-size: 1.5rem;
     user-select: none;
     font-family: monospace;
+    opacity: 0.4;
     .ask {
       filter: hue-rotate(0deg);
     }
