@@ -41,8 +41,8 @@ const accents = {
   ó: "ask",
   ú: "ask",
 
-  ǚ: "x",
-  ǜ: "y",
+  ǚ: "wiggle",
+  ǜ: "state",
 
   "": "none",
 };
