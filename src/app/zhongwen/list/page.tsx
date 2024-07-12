@@ -41,7 +41,6 @@ function Add() {
     const parts = label.includes("|")
       ? label.split("|").map((f) => [f])
       : label.split("").map((f) => [f]);
-    console.log(label, label.replace(/[|]/g, ""));
     writePhrase({ label: label.replace(/[|]/g, ""), parts });
   };
   return (
