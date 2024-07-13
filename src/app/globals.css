@@ -353,7 +353,7 @@ main#cadence {
     }
     .card {
       align-items: center;
-      background: white;
+      background: var(--card-color);
 
       box-shadow: var(--card-shadow);
       border-radius: var(--medium-radius);
@@ -373,6 +373,7 @@ main#cadence {
         background: linear-gradient(
           90deg,
           var(--card-color) 0%,
+          var(--card-color) 30%,
           hsl(250, 55%, 90%) 100%
         );
         .title {
