@@ -33,11 +33,18 @@ function EditModal({
       daysFromNow,
     });
   };
+  const updateType = (type: string) => {
+    setSelectedTask({
+      ...selectedTask,
+      type,
+    });
+  };
 
   if (!selectedTask) return null;
 
   const isNewTask = selectedTask.id === undefined;
   const isValidTask = selectedTask.cadenceInDays > 0;
+  const isNudgeTask = selectedTask.type === "NUDGE";
 
   return (
     <div id="edit-modal">
@@ -86,6 +93,14 @@ function EditModal({
           </BasicButton>
         ))}
       </div>
+      <BasicSelect
+        options={["STANDARD", "NUDGE"]}
+        selectedOption={selectedTask.type}
+        onSelect={(c) => updateType(c)}
+        columnCount={5}
+      >
+        Is a {selectedTask.type.toLowerCase()} type
+      </BasicSelect>
 
       <div id="final-buttons">
         <BasicButton onClick={() => setSelectedTask(null)}>Cancel</BasicButton>
@@ -94,7 +109,9 @@ function EditModal({
             onClick={() => mutateCompleteTask(selectedTask)}
             isDisabled={!isValidTask}
           >
-            Mark task as complete
+            {isNudgeTask
+              ? "Mark nudge task as complete, and delete"
+              : "Mark as done"}
           </BasicButton>
         )}
         <BasicButton

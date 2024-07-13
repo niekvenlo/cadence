@@ -23,7 +23,7 @@
   --large-radius: 12px;
 }
 
-body:has(dialog[open]) {
+body:has(dialog.basic-modal[open]) {
   overflow: hidden;
   height: 1px;
 }
@@ -364,6 +364,9 @@ main#cadence {
       justify-content: space-between;
       padding: 1em;
       transition: all 0.5s ease-in-out;
+      &.isNudgeType {
+        background: hsl(191, 55%, 90%);
+      }
       &.isPending {
         background: lightgreen;
       }

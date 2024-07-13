@@ -266,6 +266,13 @@
             "cadenceInDays": 20,
             "id": "9e3dbdac-40ea-477c-93b5-2da7732c8aaa",
             "nextEpochDay": 19934
+        },
+        {
+            "title": "Nudge",
+            "cadenceInDays": 3,
+            "id": "4e3dbdac-40ea-477c-93b5-2da7732c8aaa",
+            "nextEpochDay": 19917,
+            "type": "NUDGE"
         }
     ]
 }

@@ -41,6 +41,7 @@ function TaskCardGroup({
               onEdit={() => setSelectedTask({ ...task })}
               onComplete={() => mutateCompleteTask(task)}
               isPending={completedIds.includes(task.id)}
+              isNudgeType={task.type === "NUDGE"}
             ></TaskCard>
           </Flipped>
         ))}

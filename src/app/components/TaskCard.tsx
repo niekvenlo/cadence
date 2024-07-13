@@ -7,6 +7,7 @@ type Props = {
   cadenceInDays: number;
   daysFromNow: number;
   isPending: boolean;
+  isNudgeType?: boolean;
   onComplete: () => void;
   onEdit: () => void;
   title: string;
@@ -16,6 +17,7 @@ function TaskCard({
   cadenceInDays,
   daysFromNow,
   isPending,
+  isNudgeType,
   onComplete,
   onEdit,
   title,
@@ -24,7 +26,7 @@ function TaskCard({
   const isRecentlyCompleted =
     daysFromNow / cadenceInDays > 0.7 && cadenceInDays > 4;
   return (
-    <div className={cx({ isPending }, "card")} {...flipperProps}>
+    <div className={cx({ isPending, isNudgeType }, "card")} {...flipperProps}>
       <div className="title">{title}</div>
       <BasicPill className="due">
         {daysFromNow > 0 && `in `}
@@ -40,15 +42,17 @@ function TaskCard({
         </BasicPill>
       )}
       <div className="buttons">
-        <ConfirmButton
-          onClick={(e) => {
-            e.stopPropagation();
-            onComplete();
-          }}
-          aria-label={`${title}: Mark as done`}
-        >
-          Mark as done
-        </ConfirmButton>
+        {!isNudgeType && (
+          <ConfirmButton
+            onClick={(e) => {
+              e.stopPropagation();
+              onComplete();
+            }}
+            aria-label={`${title}: Mark as done`}
+          >
+            Mark as done
+          </ConfirmButton>
+        )}
         <BasicButton
           onClick={(e) => {
             e.stopPropagation();

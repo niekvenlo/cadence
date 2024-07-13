@@ -4,6 +4,7 @@ export type Task = {
   id: string;
   nextEpochDay: number;
   title: string;
+  type?: "NUDGE" | "STANDARD";
 };
 export type NewTask = {
   cadenceInDays: number;

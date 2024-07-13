@@ -40,6 +40,7 @@ export default function BasicSelect({
   return (
     <div className={cx("basic-select", className)}>
       <dialog
+        className="basic-modal"
         style={{ "--basic-select-columns": columnCount } as React.CSSProperties}
         ref={dialogRef}
         onClick={({ target }) => {

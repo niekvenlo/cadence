@@ -18,10 +18,16 @@ export default function handler(
     return;
   }
   const task = tasks[idx];
-  tasks[idx] = {
-    ...task,
-    nextEpochDay: getEpochDayNow() + task?.cadenceInDays,
-  };
+  if (task.type == "NUDGE") {
+    // remove
+    tasks.splice(idx, 1);
+  } else {
+    // reschedule
+    tasks[idx] = {
+      ...task,
+      nextEpochDay: getEpochDayNow() + task?.cadenceInDays,
+    };
+  }
   setTasks(tasks);
   res.status(200).json(tasks);
 }

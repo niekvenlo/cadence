@@ -3,7 +3,7 @@ import { useQueryClient, useMutation } from "@tanstack/react-query";
 
 import { updateTask } from "./data-access";
 
-const useTaskRenameMutation = () => {
+const useTaskUpdateMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updateTask,
@@ -13,4 +13,4 @@ const useTaskRenameMutation = () => {
   });
 };
 
-export default useTaskRenameMutation;
+export default useTaskUpdateMutation;
