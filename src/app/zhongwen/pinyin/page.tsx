@@ -19,7 +19,7 @@ export default function Chinese() {
     setPinyin(kanji, pinyin.toLowerCase().trim());
   };
 
-  const d = `bù kè qì , gè xiǎo shí , nèi , nèi kù , fēn zhōng , hē bīng kě lè , yuán quān , tiān , duì bù qǐ , qiǎo kè lì , nián , zǎo ān , wǎn ān , yuè , chéng , huān yíng , huī , kàn mā mā , miǎo zhōng , lán zǐ , fěn hóng , chèn shān , xiè xiè , zǒu bā , zǒu lóu , xié zǐ , yán sè `;
+  const d = `bù xǐ huān de , xǐ huān de , zuì bù xǐ huān de , zuì xǐ huān de , mǎ lì , dì èr xǐ huān de , mǐ kè , yán sè shì hóng sè , shí wù shì qiǎo kè lì , shí wù shì zhū ròu , yǐn liào shì bīng kě lè , yǐn liào shì shuǐ `;
   const f = d.split(/,\s?/).map((f) => f.trim());
   useEffect(() => {
     const isLastPinyiInStringSet = Object.values(pinyin).includes(
