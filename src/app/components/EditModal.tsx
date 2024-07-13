@@ -95,11 +95,24 @@ function EditModal({
       </div>
       <BasicSelect
         options={["STANDARD", "NUDGE"]}
-        selectedOption={selectedTask.type}
+        selectedOption={selectedTask.type || "STANDARD"}
         onSelect={(c) => updateType(c)}
         columnCount={5}
+        context={
+          <ul style={{ paddingInline: "2em" }}>
+            <li>
+              Standard cadence tasks will be automatically rescheduled when you
+              mark them as done.
+            </li>
+            <li>
+              Nudge tasks will be automatically rescheduled when they become
+              overdue, but when you mark them as done, they are removed
+              permanently.
+            </li>
+          </ul>
+        }
       >
-        Is a {selectedTask.type.toLowerCase()} type
+        Is a {selectedTask.type?.toLowerCase() || "STANDARD"} type
       </BasicSelect>
 
       <div id="final-buttons">

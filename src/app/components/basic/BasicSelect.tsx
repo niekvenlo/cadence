@@ -1,10 +1,11 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { cx } from "../../utils";
 
 type Props = {
   children?: React.ReactNode;
+  context?: React.ReactNode;
   className?: string;
   closeOnBackdropClick?: boolean;
   columnCount?: 1 | 2 | 3 | 4 | 5;
@@ -20,6 +21,7 @@ export default function BasicSelect({
   columnCount = 1,
   options,
   selectedOption,
+  context,
   onSelect,
 }: Props) {
   const dialogRef = useRef(null);
@@ -73,6 +75,7 @@ export default function BasicSelect({
               {children || selectedOption}
             </button>
           </div>
+          {context}
           <div className="options">
             {options.map((o) => (
               <button

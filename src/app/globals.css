@@ -365,7 +365,12 @@ main#cadence {
       padding: 1em;
       transition: all 0.5s ease-in-out;
       &.isNudgeType {
-        background: hsl(191, 55%, 90%);
+        background: hsl(100, 55%, 90%);
+        background: linear-gradient(
+          90deg,
+          var(--card-color) 0%,
+          hsl(100, 55%, 90%) 100%
+        );
       }
       &.isPending {
         background: lightgreen;

@@ -42,17 +42,16 @@ function TaskCard({
         </BasicPill>
       )}
       <div className="buttons">
-        {!isNudgeType && (
-          <ConfirmButton
-            onClick={(e) => {
-              e.stopPropagation();
-              onComplete();
-            }}
-            aria-label={`${title}: Mark as done`}
-          >
-            Mark as done
-          </ConfirmButton>
-        )}
+        <ConfirmButton
+          onClick={(e) => {
+            e.stopPropagation();
+            onComplete();
+          }}
+          aria-label={`${title}: Mark as done`}
+        >
+          {isNudgeType ? "Delete" : "Mark as done"}
+        </ConfirmButton>
+
         <BasicButton
           onClick={(e) => {
             e.stopPropagation();
