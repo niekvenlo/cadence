@@ -83,9 +83,20 @@ main#zhongwen {
             opacity: 0;
           }
         }
+        &:focus {
+          background: linear-gradient(
+            180deg,
+            var(--primary-color) 0%,
+            var(--primary-color) 4%,
+            transparent 7%,
+            transparent 93%,
+            var(--primary-color) 96%,
+            var(--primary-color) 100%
+          );
+        }
         &:hover {
           background: linear-gradient(
-            0deg,
+            180deg,
             var(--accent-color) 0%,
             var(--accent-color) 4%,
             transparent 7%,
@@ -285,5 +296,30 @@ main#zhongwen {
   input {
     font-size: 1.4em;
     text-align: center;
+  }
+  h2 {
+    display: flex;
+    gap: 0.4em;
+    align-items: center;
+    span {
+      font-size: 0.5em;
+      font-weight: 100;
+    }
+  }
+  .ddfdx {
+    display: flex;
+    flex-wrap: wrap;
+    span {
+      padding: 0.5em;
+      border-radius: 2em;
+      aspect-ratio: 1/1;
+      height: 40px;
+      &:hover {
+        background: var(--accent-color);
+        box-shadow: 0 0 15px 15px var(--background-color);
+        color: white;
+        z-index: 1;
+      }
+    }
   }
 }

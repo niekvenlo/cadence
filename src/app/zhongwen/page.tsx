@@ -22,7 +22,7 @@ export default function Chinese() {
       </div>
       <NoSSR>
         <div className="sdjhh">
-          <button className="sparkle" onClick={reload}>
+          <button className="sparkle" onDoubleClick={reload}>
             ✨
           </button>
           {toShuffle(phrases).map(({ label, parts }, i) => (

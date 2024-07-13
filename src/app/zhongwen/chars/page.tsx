@@ -7,15 +7,21 @@ import "../style.css";
 import { phrases, pinyin } from "../phrase-util-sync";
 
 export default function Chinese() {
-  const kanjiSet = new Set(Object.keys(pinyin));
+  const kanjiSet = new Set(
+    Object.keys(pinyin)
+      .map((p) => p.split(""))
+      .flat()
+  );
   const phrasesCharSet = new Set(
     phrases
-      .map((phrase) => phrase.parts.map((part) => part.map((c) => c)))
-      .flat(3)
+      .map((phrase) => phrase.parts.map((part) => part.map((c) => c.split(""))))
+      .flat(4)
   );
-  const sheetSet = new Set(
-    sheetList.sort((a, b) => (a.length > b.length ? -1 : 1))
-  );
+  const sheetSet = new Set(sheetList.map((p) => p.split("")).flat());
+
+  const inMultiple = getInMultiple(kanjiSet, sheetSet, phrasesCharSet);
+  const inPrevious = getOnlyInPreviousApp(kanjiSet, phrasesCharSet);
+  const inSheet = getOnlyInGoogleSheet(sheetSet, phrasesCharSet);
   return (
     <main id="zhongwen">
       <div className="top">
@@ -23,28 +29,27 @@ export default function Chinese() {
         <h1>List of chars</h1>
       </div>
       <div id="pin">
-        <h2>In Multiple</h2>
-        {getInMultiple(kanjiSet, sheetSet, phrasesCharSet).map((d) => (
-          <span key={d} style={{ margin: "0.7em" }}>
-            {d}
-          </span>
-        ))}
-        <h2>Only in old set</h2>
-        {getOnlyInPreviousApp(kanjiSet, phrasesCharSet).map((d) => (
-          <span key={d} style={{ margin: "0.7em" }}>
-            {d}
-          </span>
-        ))}
-        <h2>Google sheet</h2>
-        {getOnlyInGoogleSheet(sheetSet, phrasesCharSet).map((d) => (
-          <span key={d} style={{ margin: "0.7em" }}>
-            {d}
-          </span>
-        ))}
+        <L list={inMultiple} title="In Multiple" />
+        <L list={inPrevious} title="In Previous App" />
+        <L list={inSheet} title="In Google Sheet" />
       </div>
     </main>
   );
 }
+
+const L = ({ title, list }) => (
+  <>
+    <h2>
+      {title}
+      <small>({list.length})</small>
+    </h2>
+    <div className="ddfdx">
+      {list.map((d) => (
+        <span key={d}>{d}</span>
+      ))}
+    </div>
+  </>
+);
 
 function getInMultiple(kanjiSet, sheetSet, phrasesCharSet) {
   return [...kanjiSet.union(sheetSet).intersection(phrasesCharSet)];

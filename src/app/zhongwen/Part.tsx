@@ -2,8 +2,6 @@ import { getPinyinSylables, getRandomElement, getTones } from "./util";
 import { useRef, useState } from "react";
 import { pinyin as pinyinJson } from "./phrase-util-sync";
 import { Accent, Accents } from "./Accents";
-import BasicModal from "../components/basic/BasicModal";
-import Modal from "./PersonaModal";
 import PersonaModal from "./PersonaModal";
 
 function Part({ part }) {
@@ -24,10 +22,10 @@ function Part({ part }) {
       <button
         className="part"
         style={style.current}
-        onClick={() => setIsSelected((t) => !t)}
+        onDoubleClick={() => setIsSelected((t) => !t)}
       >
         {chars.map(([char, pinyin, tone], i) => (
-          <span className="char" key={char + i}>
+          <span className="char" tabIndex={1} key={char + i}>
             <span className="pinyin">{pinyin}</span>
             <span className="tone">{<Accent type={tone} />}</span>
             <span className="kanji">{char}</span>
