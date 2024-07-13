@@ -8,14 +8,15 @@ import { writePhrase, updateLabel } from "../../phrase-actions-async";
 import "../../style.css";
 import { getIsChinese } from "../../util";
 import { cx } from "../../../utils";
+import { useRouter } from "next/navigation";
 
 const no_text = "。";
 
 export default function Chinese({ params }: { params: { phrase: string } }) {
+  const router = useRouter();
   const { label, parts } = findPhraseByLabel(decodeURI(params.phrase));
 
   const [_, setX] = useState(0);
-  const [modifiedLabel, setModifiedLabel] = useState<string | null>(null);
 
   const onChangePart = (i, part, append = false) => {
     if (part === "hack") {
@@ -33,7 +34,7 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
   };
   const changeLabel = async (newLabel: string) => {
     const finalLabel = await updateLabel(label, newLabel);
-    setModifiedLabel(finalLabel);
+    router.replace(`/zhongwen/${finalLabel}/edit`);
   };
   return (
     <NoSSR>
@@ -48,46 +49,41 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
           defaultValue={label}
           onBlur={(e) => changeLabel(e.target.value)}
         />
-        {modifiedLabel !== null ? (
-          <BasicLink href={`/zhongwen/${modifiedLabel}/edit`}>
-            Please go here to edit the renamed phrase
-          </BasicLink>
-        ) : (
-          <div className="phrase">
-            <div className="column">
-              <span className="init">
-                <span className="label">template</span>
-              </span>
-              <span className="random">
-                <span className="label">random</span>
-              </span>
-              <span className="random">
-                <span className="label">random</span>
-              </span>
-              <span className="random">
-                <span className="label">random</span>
-              </span>
-              <span className="options">
-                <span className="label">options</span>
-              </span>
-            </div>
-            {parts.map((part, i) => (
-              <Column
-                key={part?.join() + i}
-                part={part}
-                onChangePart={(part, append) => onChangePart(i, part, append)}
-              />
-            ))}
-            <div>
-              <button
-                className="plus"
-                onClick={() => onChangePart(parts.length, [no_text])}
-              >
-                加字
-              </button>
-            </div>
+
+        <div className="phrase">
+          <div className="column">
+            <span className="init">
+              <span className="label">template</span>
+            </span>
+            <span className="random">
+              <span className="label">random</span>
+            </span>
+            <span className="random">
+              <span className="label">random</span>
+            </span>
+            <span className="random">
+              <span className="label">random</span>
+            </span>
+            <span className="options">
+              <span className="label">options</span>
+            </span>
           </div>
-        )}
+          {parts.map((part, i) => (
+            <Column
+              key={part?.join() + i}
+              part={part}
+              onChangePart={(part, append) => onChangePart(i, part, append)}
+            />
+          ))}
+          <div>
+            <button
+              className="plus"
+              onClick={() => onChangePart(parts.length, [no_text])}
+            >
+              加字
+            </button>
+          </div>
+        </div>
       </main>
     </NoSSR>
   );

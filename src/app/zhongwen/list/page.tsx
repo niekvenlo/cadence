@@ -30,7 +30,7 @@ export default function Chinese() {
               variant="look-like-a-link"
               onClick={() => writePhrase({ label: `${label} 2️`, parts })}
             >
-              2️
+              🗳️
             </BasicButton>
             <span className="complexity">{getComplexityFromParts(parts)}</span>
           </p>
