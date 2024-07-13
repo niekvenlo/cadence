@@ -23,8 +23,8 @@ export const Accents = ({ pinyin = "" }) => {
   const tones = getTones(pinyin);
   return (
     <span className="tone">
-      {tones.map((tone) => (
-        <Accent type={tone} />
+      {tones.map((tone, i) => (
+        <Accent key={tone + i} type={tone} />
       ))}
     </span>
   );

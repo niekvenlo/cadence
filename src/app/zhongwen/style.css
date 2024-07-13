@@ -33,7 +33,10 @@ main#zhongwen {
   }
 
   .sdjhh {
+    display: flex;
+    flex-wrap: wrap;
     font-size: 1.1em;
+    margin-bottom: 10em;
     & > p {
       display: flex;
       gap: 1em;
@@ -48,17 +51,70 @@ main#zhongwen {
       padding-inline: 1em;
       margin-inline-end: 1em;
     }
+    .part {
+      display: contents;
+      .char {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        padding-block: 1.5em;
+        align-content: end;
+        .pinyin {
+          opacity: 0.3;
+          font-size: 0.4em;
+          height: 2em;
+          user-select: none;
+          &:empty::before {
+            content: "-";
+            opacity: 0;
+          }
+        }
+        &:hover {
+          .pinyin {
+            opacity: 1;
+            scale: 2;
+          }
+        }
+        .tone {
+          opacity: 0.6;
+          user-select: none;
+          .ask {
+            filter: hue-rotate(0deg);
+          }
+          .sing {
+            filter: hue-rotate(10deg);
+          }
+          .state {
+            filter: hue-rotate(20deg);
+          }
+          .wiggle {
+            filter: hue-rotate(30deg);
+          }
+        }
+        .kanji {
+          font-size: 1.7em;
+        }
+      }
+      .full-stop {
+        margin-inline-end: 0.5em;
+      }
+    }
+  }
+  .persona-modal {
+    border: none;
+    height: 100dvh;
+    max-height: 100%;
+    max-width: 103%;
+    padding: 0 2em;
+    transform: translate(0%, 80%);
+    width: 103vw;
   }
   .selected {
     rotate: 3deg;
     background: var(--background-color-darker);
     box-shadow: var(--card-shadow-up);
-    position: fixed;
-    width: 100%;
-    bottom: -2em;
     padding-top: 0.2em;
-    padding-bottom: 2em;
-    left: 0;
+    padding-bottom: 5em;
     text-align: center;
     p:empty::after {
       filter: hue-rotate(200deg);
@@ -159,50 +215,6 @@ main#zhongwen {
 
 .phrase-s {
   display: contents;
-  .chars {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    border: none;
-    background: inherit;
-    margin-block: 1em;
-    .kanji {
-      font-size: 1.7rem;
-      user-select: all;
-    }
-    .pinyin {
-      font-size: 0.8rem;
-      opacity: 0.15;
-      user-select: none;
-    }
-    &:hover .pinyin,
-    &:active .pinyin,
-    &:focus .pinyin {
-      opacity: 0.6;
-    }
-  }
-  .tone {
-    display: flex;
-    font-size: 1.5rem;
-    user-select: none;
-    font-family: monospace;
-    opacity: 0.4;
-    .ask {
-      filter: hue-rotate(0deg);
-    }
-    .sing {
-      filter: hue-rotate(10deg);
-    }
-    .state {
-      filter: hue-rotate(20deg);
-    }
-    .wiggle {
-      filter: hue-rotate(30deg);
-    }
-  }
-  .full-stop {
-    margin-right: 1em;
-  }
 }
 
 #pin {

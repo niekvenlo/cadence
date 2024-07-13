@@ -48,8 +48,30 @@ const accents = {
 };
 export const getTones = (string: string = "") => {
   return string
-    .split(/['abcdfghjklmnpqrstvwxyz]|\s/)
+    .split(/[-'abcdfghjklmnpqrstvwxyz]|\s/)
     .filter((d) => d)
     .map((d) => d.replace(/\w/g, ""))
     .map((d) => accents[d] || "");
 };
+export const getPinyinSylables = (string: string = "") => {
+  return string.split(/[-]|[']|\s/).filter((d) => d);
+};
+
+export function toShuffle(array) {
+  const copy = [...array];
+  let cIdx = array.length;
+
+  // While there remain elements to shuffle...
+  while (cIdx != 0) {
+    // Pick a remaining element...
+    let rIdx = Math.floor(Math.random() * cIdx);
+    cIdx--;
+
+    // And swap it with the current element.
+    [copy[cIdx], copy[rIdx]] = [copy[rIdx], copy[cIdx]];
+  }
+  return copy;
+}
+
+export const getRandomElement = (arr) =>
+  arr[Math.floor(Math.random() * arr.length)];
