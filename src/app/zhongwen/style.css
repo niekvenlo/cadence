@@ -108,6 +108,9 @@ main#zhongwen {
     padding: 0 2em;
     transform: translate(0%, 80%);
     width: 103vw;
+    .close-button {
+      display: none;
+    }
   }
   .selected {
     rotate: 3deg;

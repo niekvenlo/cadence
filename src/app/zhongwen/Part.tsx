@@ -18,7 +18,6 @@ function Part({ part }) {
     .split("")
     .map((char, i) => [char, pinyin[i], tones[i]]);
   const alternativeKanji = part.filter((c) => c !== kanji);
-  const selected = { kanji: "面条", alternativeKanji: ["d", "x"] };
 
   return (
     <>
@@ -48,9 +47,9 @@ function Part({ part }) {
               <span key={a}>{a}</span>
             ))}
           </p>
-          <Accents pinyin={pinyin[kanji.current]} />
+          <Accents pinyin={pinyinJson[kanji.current]} />
           <h2>{kanji.current}</h2>
-          <p>{pinyin[kanji.current]?.replace(/-/g, " ")}</p>
+          <p>{pinyinJson[kanji.current]?.replace(/-/g, " ")}</p>
         </PersonaModal>
       )}
     </>
