@@ -241,6 +241,10 @@ p {
   flex-direction: column;
   justify-content: space-between;
 
+  &.isNudgeTask {
+    filter: hue-rotate(-100deg);
+  }
+
   .flex {
     align-items: center;
     display: flex;
@@ -369,14 +373,25 @@ main#cadence {
         background: linear-gradient(
           90deg,
           var(--card-color) 0%,
-          hsl(100, 55%, 90%) 100%
+          hsl(250, 55%, 90%) 100%
         );
+        .title {
+          &::after {
+            content: " nudge";
+            font-size: 0.6em;
+            font-weight: 700;
+            color: var(--accent-color);
+          }
+        }
       }
       &.isPending {
         background: lightgreen;
       }
       .title {
         grid-area: title;
+        display: flex;
+        align-items: center;
+        gap: 1em;
       }
       .due {
         grid-area: due;

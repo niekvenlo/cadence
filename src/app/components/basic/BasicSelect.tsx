@@ -8,7 +8,7 @@ type Props = {
   context?: React.ReactNode;
   className?: string;
   closeOnBackdropClick?: boolean;
-  columnCount?: 1 | 2 | 3 | 4 | 5;
+  columnWidth?: string;
   options: string[];
   selectedOption: string;
   onSelect: (newSelectedOption: string) => void;
@@ -18,7 +18,7 @@ export default function BasicSelect({
   children,
   className,
   closeOnBackdropClick = true,
-  columnCount = 1,
+  columnWidth = "25ch",
   options,
   selectedOption,
   context,
@@ -43,7 +43,7 @@ export default function BasicSelect({
     <div className={cx("basic-select", className)}>
       <dialog
         className="basic-modal"
-        style={{ "--basic-select-columns": columnCount } as React.CSSProperties}
+        style={{ "--column-width": columnWidth } as React.CSSProperties}
         ref={dialogRef}
         onClick={({ target }) => {
           if (!closeOnBackdropClick) return;
@@ -70,12 +70,12 @@ export default function BasicSelect({
           </svg>
         </button>
         <section>
+          <div className="context">{context}</div>
           <div onClick={setClosed}>
             <button className="entrypoint internal">
               {children || selectedOption}
             </button>
           </div>
-          {context}
           <div className="options">
             {options.map((o) => (
               <button

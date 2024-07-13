@@ -24,7 +24,7 @@ function TaskCard({
   ...flipperProps
 }: Props) {
   const isRecentlyCompleted =
-    daysFromNow / cadenceInDays > 0.7 && cadenceInDays > 4;
+    !isNudgeType && daysFromNow / cadenceInDays > 0.7 && cadenceInDays > 4;
   return (
     <div className={cx({ isPending, isNudgeType }, "card")} {...flipperProps}>
       <div className="title">{title}</div>

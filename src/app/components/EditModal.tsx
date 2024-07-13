@@ -4,7 +4,8 @@ import { useEffect, useRef } from "react";
 import BasicButton from "./basic/BasicButton";
 import BasicSelect from "./basic/BasicSelect";
 
-import { getEpochDayNow } from "../utils";
+import { cx, getEpochDayNow } from "../utils";
+import BasicPill from "./basic/BasicPill";
 
 function EditModal({
   mutateCompleteTask,
@@ -47,7 +48,8 @@ function EditModal({
   const isNudgeTask = selectedTask.type === "NUDGE";
 
   return (
-    <div id="edit-modal">
+    <div id="edit-modal" className={cx({ isNudgeTask })}>
+      {isNudgeTask && <BasicPill>Nudge task</BasicPill>}
       <div className="flex">
         <input
           ref={inputRef}
@@ -61,43 +63,9 @@ function EditModal({
         ></input>
       </div>
       <BasicSelect
-        options={Array.from({ length: selectedTask.cadenceInDays + 1 }).map(
-          (_, i) => i.toString()
-        )}
-        selectedOption={selectedTask.daysFromNow}
-        onSelect={(c) => updateDaysFromNow(Number(c))}
-        columnCount={5}
-      >
-        {Math.abs(selectedTask.daysFromNow)} days{" "}
-        {selectedTask.daysFromNow > 0 ? "from now" : "overdue"}
-      </BasicSelect>
-
-      <BasicSelect
-        options={Array.from({ length: 400 }).map((_, i) => (i + 1).toString())}
-        selectedOption={selectedTask.cadenceInDays}
-        onSelect={(c) => updateCadence(Number(c))}
-        columnCount={5}
-      >
-        Repeats every {selectedTask.cadenceInDays}{" "}
-        {selectedTask.cadenceInDays === "1" ? "day" : "days"}
-      </BasicSelect>
-      <div className="flex">
-        Common cadences:
-        {[1, 10, 30, 60, 100, 200].map((cadence) => (
-          <BasicButton
-            variant="look-like-a-link"
-            onClick={() => updateCadence(cadence)}
-            key={cadence}
-          >
-            {cadence}
-          </BasicButton>
-        ))}
-      </div>
-      <BasicSelect
         options={["STANDARD", "NUDGE"]}
         selectedOption={selectedTask.type || "STANDARD"}
         onSelect={(c) => updateType(c)}
-        columnCount={5}
         context={
           <ul style={{ paddingInline: "2em" }}>
             <li>
@@ -114,6 +82,41 @@ function EditModal({
       >
         Is a {selectedTask.type?.toLowerCase() || "STANDARD"} type
       </BasicSelect>
+      <BasicSelect
+        options={Array.from({ length: selectedTask.cadenceInDays + 1 }).map(
+          (_, i) => i.toString()
+        )}
+        selectedOption={selectedTask.daysFromNow}
+        onSelect={(c) => updateDaysFromNow(Number(c))}
+        columnWidth="5ch"
+      >
+        {Math.abs(selectedTask.daysFromNow)} days{" "}
+        {selectedTask.daysFromNow > 0 ? "from now" : "overdue"}
+      </BasicSelect>
+
+      <BasicSelect
+        options={Array.from({ length: isNudgeTask ? 30 : 400 }).map((_, i) =>
+          (i + 1).toString()
+        )}
+        selectedOption={selectedTask.cadenceInDays}
+        onSelect={(c) => updateCadence(Number(c))}
+        columnWidth="5ch"
+      >
+        Repeats every {selectedTask.cadenceInDays}{" "}
+        {selectedTask.cadenceInDays === "1" ? "day" : "days"}
+      </BasicSelect>
+      <div className="flex">
+        Common cadences:
+        {[1, 10, 30, 60, 100, 200].map((cadence) => (
+          <BasicButton
+            variant="look-like-a-link"
+            onClick={() => updateCadence(cadence)}
+            key={cadence}
+          >
+            {cadence}
+          </BasicButton>
+        ))}
+      </div>
 
       <div id="final-buttons">
         <BasicButton onClick={() => setSelectedTask(null)}>Cancel</BasicButton>

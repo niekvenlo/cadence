@@ -18,7 +18,7 @@ export default function handler(
     tasks.push({
       ...taskToUpdate,
       id: crypto.randomUUID(),
-      nextEpochDay: getEpochDayNow() + taskToUpdate.cadenceInDays,
+      nextEpochDay: getEpochDayNow() + taskToUpdate.daysFromNow,
     });
   } else {
     // Otherwise we update the existing task
