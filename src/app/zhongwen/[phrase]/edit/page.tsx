@@ -39,12 +39,13 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
         <div className="top">
           <BasicLink href="/zhongwen/list">Back</BasicLink>
           <h1>Phrase editor</h1>
-          <input
-            type="text"
-            defaultValue={label}
-            onBlur={(e) => changeLabel(e.target.value)}
-          />
         </div>
+        <input
+          className="label-edit"
+          type="text"
+          defaultValue={label}
+          onBlur={(e) => changeLabel(e.target.value)}
+        />
         <div className="phrase">
           <div className="column">
             <span className="init">
