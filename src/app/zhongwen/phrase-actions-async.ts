@@ -31,6 +31,16 @@ export const writePhrase = async (phraseToWrite) => {
   return phrases;
 };
 
+export const updateLabel = async (oldLabel, newLabel) => {
+  const phrases = (await readPhrases()) as Phrase[];
+  const foundPhraseIdx = phrases.findIndex((p) => p.label === oldLabel);
+  if (foundPhraseIdx > -1) {
+    phrases[foundPhraseIdx].label = newLabel;
+    writePhrases(phrases);
+  }
+  return phrases;
+};
+
 export const setPinyin = async (kanji, pinyin) => {
   const allPinyin = (await readPinyin()) as { [kanji: string]: string }[];
   allPinyin[kanji] = pinyin;

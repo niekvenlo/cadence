@@ -4,9 +4,10 @@ import { useMemo, useState } from "react";
 import NoSSR from "../../../components/NoSSR";
 import BasicLink from "../../../components/basic/BasicLink";
 import { findPhraseByLabel, getSuggested } from "../../phrase-util-sync";
-import { writePhrase } from "../../phrase-actions-async";
+import { writePhrase, updateLabel } from "../../phrase-actions-async";
 import "../../style.css";
 import { getIsChinese } from "../../util";
+import { cx } from "../../../utils";
 
 const no_text = "。";
 
@@ -29,12 +30,20 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
     writePhrase({ label, parts });
     setX((x) => x + 1);
   };
+  const changeLabel = (newLabel: string) => {
+    updateLabel(label, newLabel);
+  };
   return (
     <NoSSR>
       <main id="zhongwen">
         <div className="top">
           <BasicLink href="/zhongwen/list">Back</BasicLink>
           <h1>Phrase editor</h1>
+          <input
+            type="text"
+            defaultValue={label}
+            onBlur={(e) => changeLabel(e.target.value)}
+          />
         </div>
         <div className="phrase">
           <div className="column">
@@ -83,9 +92,10 @@ type ColumnProps = {
 const Column = ({ part, onChangePart }: ColumnProps) => {
   const suggested = useMemo(() => getSuggested(part), [part]);
   const getRandom = () => part[Math.floor(Math.random() * part.length)];
-  const canBeDeleted = part.toString() === "。" && "dddd";
+  const canBeDeleted = part.toString() === "。";
+  const longestStringInColumn = Math.max(...part.map((chars) => chars.length));
   return (
-    <div className="column">
+    <div className={cx("column", `width-${longestStringInColumn}`)}>
       <span className="init">{part?.[0]}</span>
       <span className="random">{getRandom()}</span>
       <span className="random">{getRandom()}</span>

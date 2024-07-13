@@ -7,6 +7,7 @@ import { phrases } from "../phrase-util-sync";
 import { useRef } from "react";
 import { writePhrase } from "../phrase-actions-async";
 import { cleanChineseString } from "../util";
+import BasicButton from "../../components/basic/BasicButton";
 
 export default function Chinese() {
   return (
@@ -25,6 +26,12 @@ export default function Chinese() {
             <span>{label}</span>
             <BasicLink href={`/zhongwen/${label}`}>👀</BasicLink>
             <BasicLink href={`/zhongwen/${label}/edit`}>✏️</BasicLink>
+            <BasicButton
+              variant="look-like-a-link"
+              onClick={() => writePhrase({ label: `${label} 2️`, parts })}
+            >
+              2️
+            </BasicButton>
             <span className="complexity">{getComplexityFromParts(parts)}</span>
           </p>
         ))}
