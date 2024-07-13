@@ -34,11 +34,16 @@ export const writePhrase = async (phraseToWrite) => {
 export const updateLabel = async (oldLabel, newLabel) => {
   const phrases = (await readPhrases()) as Phrase[];
   const foundPhraseIdx = phrases.findIndex((p) => p.label === oldLabel);
+  const isNameClash = phrases.some((p) => p.label === newLabel);
+  const uniqueLabel = isNameClash
+    ? `${newLabel} ${Math.random().toString().slice(14)}`
+    : newLabel;
+
   if (foundPhraseIdx > -1) {
-    phrases[foundPhraseIdx].label = newLabel;
+    phrases[foundPhraseIdx].label = uniqueLabel;
     writePhrases(phrases);
   }
-  return phrases;
+  return uniqueLabel;
 };
 
 export const setPinyin = async (kanji, pinyin) => {
