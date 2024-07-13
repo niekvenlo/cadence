@@ -73,19 +73,29 @@ main#zhongwen {
         padding-block: 1.5em;
         align-content: end;
         .pinyin {
-          opacity: 0.3;
-          font-size: 0.4em;
+          opacity: 0.4;
+          font-size: 0.3em;
           height: 2em;
           user-select: none;
+          transition: all 0.1s ease-in-out;
           &:empty::before {
             content: "-";
             opacity: 0;
           }
         }
         &:hover {
+          background: linear-gradient(
+            0deg,
+            var(--accent-color) 0%,
+            var(--accent-color) 4%,
+            transparent 7%,
+            transparent 93%,
+            var(--accent-color) 96%,
+            var(--accent-color) 100%
+          );
           .pinyin {
             opacity: 1;
-            scale: 2;
+            scale: 3;
           }
         }
         .tone {
