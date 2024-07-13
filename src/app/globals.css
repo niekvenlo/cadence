@@ -369,12 +369,12 @@ main#cadence {
       padding: 1em;
       transition: all 0.5s ease-in-out;
       &.isNudgeType {
-        background: hsl(100, 55%, 90%);
+        background: yellow;
         background: linear-gradient(
-          90deg,
+          -90deg,
           var(--card-color) 0%,
           var(--card-color) 30%,
-          hsl(250, 55%, 90%) 100%
+          hsl(250, 55%, 92%) 100%
         );
         .title {
           &::after {

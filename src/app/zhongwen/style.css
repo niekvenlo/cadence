@@ -16,6 +16,7 @@ main#zhongwen {
   }
 
   .sssdsv {
+    display: block !important;
     columns: 1;
     @media (min-width: 600px) {
       columns: 2;
@@ -105,13 +106,19 @@ main#zhongwen {
     height: 100dvh;
     max-height: 100%;
     max-width: 103%;
+    outline: none;
     padding: 0 2em;
     transform: translate(0%, calc(100vh - 12em));
     width: 103vw;
     .close-button {
       display: none;
     }
+    &::backdrop {
+      background: var(--background-color);
+      opacity: 0.5;
+    }
   }
+
   .selected {
     rotate: 3deg;
     background: var(--background-color-darker);

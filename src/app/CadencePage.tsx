@@ -54,14 +54,14 @@ export default function CadencePage({ initialTasks }: Props) {
   const forLessThanAWeek = tasksQuery.data?.filter(
     (t) =>
       t.daysFromNow >= 1 &&
-      t.daysFromNow <= 7 &&
-      (t.cadenceInDays > 7 || !isFilterActive)
+      t.daysFromNow <= 4 &&
+      (t.cadenceInDays > 4 || !isFilterActive)
   );
   const forLessThanAMonth = tasksQuery.data?.filter(
     (t) =>
       t.daysFromNow > 7 &&
-      t.daysFromNow <= 31 &&
-      (t.cadenceInDays > 31 || !isFilterActive)
+      t.daysFromNow <= 21 &&
+      (t.cadenceInDays >= 21 || !isFilterActive)
   );
   const forInACoupleOfMonths = tasksQuery.data?.filter(
     (t) => t.daysFromNow > 31 && t.daysFromNow <= 365

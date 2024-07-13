@@ -52,8 +52,8 @@ function TaskCardGroup({
 const headers = {
   overdue: "Overdue",
   today: "Today",
-  "less than a week": "In less than a week",
-  "less than a month": "In less than a month",
+  "less than a week": "In a few days",
+  "less than a month": "In a few weeks",
   "in a couple of months": "In a couple of months",
 };
 

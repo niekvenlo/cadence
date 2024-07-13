@@ -19,7 +19,7 @@ export default function Chinese() {
     setPinyin(kanji, pinyin.toLowerCase().trim());
   };
 
-  // const d = `yī , yī qiān , yī bǎi , qī , sān , gè rén , jiǔ , liǎo , bā , liù , má , bā , gē gē , xǐ huān , sì , zài , nǎi nǎi , mā mā , mèi mèi , jiě jiě , jiā rén , mào zǐ , dì dì , shì , yǒu , bēi zǐ , cì , rè , ài , fù mǔ , bà bà , gǒu , láng , māo , kàn dào , dì , gěi , lǎo shī , lǎo bǎn , yào , xū yào , gāo`;
+  // const d = `xià bān , zhī qián , zhī hòu , dǎo xiē , qián , hòu , fàng xué , zuì hòu , yóu , xǐ zǎo , yán , shuì jué , wǎn , chuān , mǐ fàn , táng , yī fú , kù zǐ , lǐ , lǐ miàn , guō , shǒu xiān `;
   // const f = d.split(/,\s?/).map((f) => f.trim());
   // useEffect(() => {
   //   const f = d.split(/,\s?/).map((f) => f.trim());

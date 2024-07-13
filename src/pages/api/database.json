@@ -169,7 +169,7 @@
             "title": "Vacuum bedroom",
             "cadenceInDays": 16,
             "id": "bd70bc8b-114c-45dc-95e8-2a1af71776fb",
-            "nextEpochDay": 19917
+            "nextEpochDay": 19933
         },
         {
             "title": "Clean the whole fridge",
@@ -278,6 +278,13 @@
             "cadenceInDays": 30,
             "type": "NUDGE",
             "id": "1f1a82c7-42f1-455b-bd9e-f00b3e851a9f",
+            "nextEpochDay": 19920
+        },
+        {
+            "title": "401k",
+            "cadenceInDays": 30,
+            "type": "NUDGE",
+            "id": "e270a7fe-964e-4f52-a045-687fe79abcc8",
             "nextEpochDay": 19920
         }
     ]

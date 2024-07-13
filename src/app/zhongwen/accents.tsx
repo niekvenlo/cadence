@@ -17,7 +17,8 @@ const toneImages = {
   none: <Image className="none" height={20} src={none} alt="no-accent" />,
 };
 
-export const Accent = ({ type = "none" }) => toneImages[type];
+export const Accent = ({ type = "none" }) =>
+  toneImages[type] || toneImages["none"];
 
 export const Accents = ({ pinyin = "" }) => {
   const tones = getTones(pinyin);
