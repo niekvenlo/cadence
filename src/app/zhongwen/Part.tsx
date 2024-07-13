@@ -41,6 +41,7 @@ function Part({ part }) {
           closeOnBackdropClick
           className="selected"
           requestClose={() => setIsSelected(false)}
+          onClick={() => setIsSelected(false)}
         >
           <p className="alternative">
             {alternativeKanji.map((a) => (

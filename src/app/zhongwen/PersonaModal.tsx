@@ -9,6 +9,7 @@ type Props = {
   isOpen?: boolean;
   closeOnBackdropClick?: boolean;
   requestClose: () => void;
+  onClick: () => void;
 };
 
 export default function PersonaModal({
@@ -16,6 +17,7 @@ export default function PersonaModal({
   className,
   isOpen,
   closeOnBackdropClick,
+  onClick,
   requestClose,
 }: Props) {
   const dialogRef = useRef(null);
@@ -58,7 +60,7 @@ export default function PersonaModal({
           <path d="M39.55 0.549988L43.45 4.44999L4.44999 43.45L0.549988 39.55L39.55 0.549988Z" />
         </svg>
       </button>
-      <section>{children}</section>
+      <section onClick={onClick}>{children}</section>
     </dialog>
   );
 }
