@@ -19,16 +19,21 @@ export default function Chinese() {
     setPinyin(kanji, pinyin.toLowerCase().trim());
   };
 
-  // const d = `xià bān , zhī qián , zhī hòu , dǎo xiē , qián , hòu , fàng xué , zuì hòu , yóu , xǐ zǎo , yán , shuì jué , wǎn , chuān , mǐ fàn , táng , yī fú , kù zǐ , lǐ , lǐ miàn , guō , shǒu xiān `;
-  // const f = d.split(/,\s?/).map((f) => f.trim());
-  // useEffect(() => {
-  //   const f = d.split(/,\s?/).map((f) => f.trim());
-  //   partsWithoutPinyin.forEach((p, i) => {
-  //     const pp = p.toString().replace(",", "");
-  //     const ff = f[i];
-  //     setTimeout(() => update(pp, ff), i * 100);
-  //   });
-  // }, []);
+  const d = `bù kè qì , gè xiǎo shí , nèi , nèi kù , fēn zhōng , hē bīng kě lè , yuán quān , tiān , duì bù qǐ , qiǎo kè lì , nián , zǎo ān , wǎn ān , yuè , chéng , huān yíng , huī , kàn mā mā , miǎo zhōng , lán zǐ , fěn hóng , chèn shān , xiè xiè , zǒu bā , zǒu lóu , xié zǐ , yán sè `;
+  const f = d.split(/,\s?/).map((f) => f.trim());
+  useEffect(() => {
+    const isLastPinyiInStringSet = Object.values(pinyin).includes(
+      f.at(-1) || "never"
+    );
+    if (isLastPinyiInStringSet) {
+      return;
+    }
+    partsWithoutPinyin.forEach((p, i) => {
+      const pp = p.toString().replace(",", "");
+      const ff = f[i];
+      setTimeout(() => update(pp, ff), i * 100);
+    });
+  }, []);
   return (
     <main id="zhongwen">
       <div className="top">
