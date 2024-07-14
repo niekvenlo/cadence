@@ -19,7 +19,7 @@ export default function Chinese() {
     setPinyin(kanji, pinyin.toLowerCase().trim());
   };
 
-  const d = `guān , bāng wǒ , kāi , dēng , chuāng , ràng wǒ , qǐng nǐ , mén`;
+  const d = `tù zǐ , dāo , bāo , yìn dù , chā , jiào shén me ? jiào , dà wèi , shān shàng , dé guó , shǒu , méi wèn tí , fǎ guó , tài guó , dù zǐ , yīng guó , zhè shì , nà shì , yú`;
   const f = d.split(/,\s?/).map((f) => f.trim());
   useEffect(() => {
     const isFirstPinyinInStringSet = Object.values(pinyin).includes(
