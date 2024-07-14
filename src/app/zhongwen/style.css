@@ -16,11 +16,12 @@ main#zhongwen {
   }
   .label-edit {
     font-size: 1.5em;
-    text-align: center;
+    text-align: right;
+    align-self: flex-end;
     border: none;
     background: inherit;
     color: var(--accent-color);
-    width: 100%;
+    width: 20ch;
     &:hover {
       background: var(--background-color-darker);
       cursor: pointer;
@@ -186,7 +187,8 @@ main#zhongwen {
   }
   button.add,
   button.plus,
-  button.minus {
+  button.minus,
+  button.shift {
     height: 1.5lh;
     border: 1px solid var(--on-primary-color);
     border-radius: var(--medium-radius);
@@ -202,6 +204,10 @@ main#zhongwen {
       box-shadow: inset 0 0 0 2px var(--primary-color),
         inset 0 0 0 4px var(--on-primary-color);
     }
+  }
+  button.shift {
+    max-width: 9ch;
+    align-self: center;
   }
   button.plus {
     margin-left: 1em;
@@ -234,7 +240,7 @@ main#zhongwen {
     }
     display: flex;
     flex-direction: column;
-    gap: 0.5em;
+    gap: 0.2em;
     textarea {
       resize: none;
       outline: none;

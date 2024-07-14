@@ -18,9 +18,22 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
 
   const [_, setX] = useState(0);
 
+  const [shiftColumnIdx, setShiftColumnIdx] = useState<number | null>(null);
+
   const onChangePart = (i, part, append = false) => {
-    if (part === "hack") {
+    if (part === "rem-col-hack") {
       writePhrase({ label, parts: parts.toSpliced(i, 1) });
+      return;
+    }
+    if (part === "shift-col-hack") {
+      if (shiftColumnIdx !== null) {
+        // move
+        [parts[shiftColumnIdx], parts[i]] = [parts[i], parts[shiftColumnIdx]];
+        setShiftColumnIdx(null);
+      } else {
+        console.log(i);
+        setShiftColumnIdx(i);
+      }
       return;
     }
     if (append) {
@@ -47,7 +60,11 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
           className="label-edit"
           type="text"
           defaultValue={label}
-          onBlur={(e) => changeLabel(e.target.value)}
+          onBlur={(e) => {
+            if (e.target.value !== label) {
+              changeLabel(e.target.value);
+            }
+          }}
         />
 
         <div className="phrase">
@@ -72,6 +89,7 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
             <Column
               key={part?.join() + i}
               part={part}
+              shiftColumnIdx={shiftColumnIdx}
               onChangePart={(part, append) => onChangePart(i, part, append)}
             />
           ))}
@@ -91,10 +109,14 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
 
 type ColumnProps = {
   part: string[];
-  onChangePart: (part: string[] | "hack", append?: boolean) => void;
+  shiftColumnIdx: number | null;
+  onChangePart: (
+    part: string[] | "rem-col-hack" | "shift-col-hack",
+    append?: boolean
+  ) => void;
 };
 
-const Column = ({ part, onChangePart }: ColumnProps) => {
+const Column = ({ part, shiftColumnIdx, onChangePart }: ColumnProps) => {
   const suggested = useMemo(() => getSuggested(part), [part]);
   const getRandom = () => part[Math.floor(Math.random() * part.length)];
   const canBeDeleted = part.toString() === "。";
@@ -105,9 +127,12 @@ const Column = ({ part, onChangePart }: ColumnProps) => {
       <span className="random">{getRandom()}</span>
       <span className="random">{getRandom()}</span>
       <span className="random">{getRandom()}</span>
+      <button className="shift" onClick={() => onChangePart("shift-col-hack")}>
+        {shiftColumnIdx !== null ? "搬来这" : "移动"}
+      </button>
       <TextArea part={part} onBlur={(part) => onChangePart(part)} />
       {canBeDeleted && (
-        <button className="minus" onClick={() => onChangePart("hack")}>
+        <button className="minus" onClick={() => onChangePart("rem-col-hack")}>
           除字
         </button>
       )}
@@ -142,6 +167,10 @@ const TextArea = ({ part, onBlur }) => {
           .join("\n") + "\n"
       }
       onBlur={(e) => onBlur(cleanValues(e.target.value))}
+      onPaste={(e) => {
+        const textarea = e.target as HTMLTextAreaElement;
+        setTimeout(() => onBlur(cleanValues(textarea.value)), 100);
+      }}
     />
   );
 };
