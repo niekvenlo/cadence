@@ -19,13 +19,13 @@ export default function Chinese() {
     setPinyin(kanji, pinyin.toLowerCase().trim());
   };
 
-  const d = `tù zì , huò zhě , gēng duō , gēng dà , gēng shǎo , gēng piāo liàng , huán shì , mǎ`;
+  const d = `guān , bāng wǒ , kāi , dēng , chuāng , ràng wǒ , qǐng nǐ , mén`;
   const f = d.split(/,\s?/).map((f) => f.trim());
   useEffect(() => {
-    const isLastPinyiInStringSet = Object.values(pinyin).includes(
-      f.at(-1) || "never"
+    const isFirstPinyinInStringSet = Object.values(pinyin).includes(
+      f[0] || "never"
     );
-    if (isLastPinyiInStringSet) {
+    if (isFirstPinyinInStringSet) {
       return;
     }
     partsWithoutPinyin.forEach((p, i) => {

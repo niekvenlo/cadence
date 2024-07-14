@@ -12,10 +12,13 @@ import { Accent } from "./Accents";
 
 export default function Chinese() {
   const [reload] = useReload();
+  const MAX_NUM = 20;
   return (
     <main id="zhongwen">
       <div className="top">
-        <h4>{phrases.length} phrases</h4>
+        <h4>
+          {MAX_NUM} of {phrases.length} phrases
+        </h4>
         <div className="links">
           <BasicLink href="/zhongwen/list">✏️</BasicLink>
         </div>
@@ -25,20 +28,22 @@ export default function Chinese() {
           <button className="sparkle" onDoubleClick={reload}>
             ✨
           </button>
-          {toShuffle(phrases).map(({ label, parts }, i) => (
-            <span className="phrase-s" key={label + i}>
-              {parts.map((part, i) => (
-                <Part key={part[0] + i} part={part} />
-              ))}
-              <span className="part">
-                <span className="full-stop char">
-                  <span className="pinyin"></span>
-                  <span className="tone">{<Accent />}</span>
-                  <span className="kanji">。</span>
+          {toShuffle(phrases)
+            .slice(0, MAX_NUM)
+            .map(({ label, parts }, i) => (
+              <span className="phrase-s" key={label + i}>
+                {parts.map((part, i) => (
+                  <Part key={part[0] + i} part={part} />
+                ))}
+                <span className="part">
+                  <span className="full-stop char">
+                    <span className="pinyin"></span>
+                    <span className="tone">{<Accent />}</span>
+                    <span className="kanji">。</span>
+                  </span>
                 </span>
               </span>
-            </span>
-          ))}
+            ))}
         </div>
       </NoSSR>
     </main>
