@@ -127,7 +127,10 @@ const Column = ({ part, shiftColumnIdx, onChangePart }: ColumnProps) => {
       <span className="random">{getRandom()}</span>
       <span className="random">{getRandom()}</span>
       <span className="random">{getRandom()}</span>
-      <button className="shift" onClick={() => onChangePart("shift-col-hack")}>
+      <button
+        className={cx("shift", { isActive: shiftColumnIdx !== null })}
+        onClick={() => onChangePart("shift-col-hack")}
+      >
         {shiftColumnIdx !== null ? "搬来这" : "移动"}
       </button>
       <TextArea part={part} onBlur={(part) => onChangePart(part)} />

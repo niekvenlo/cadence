@@ -208,6 +208,9 @@ main#zhongwen {
   button.shift {
     max-width: 9ch;
     align-self: center;
+    &.isActive {
+      background: var(--accent-color);
+    }
   }
   button.plus {
     margin-left: 1em;
@@ -219,10 +222,7 @@ main#zhongwen {
   .column {
     text-align: center;
     font-size: 1.5em;
-    width: 4ch;
-    &.width-2 {
-      width: 6ch;
-    }
+    width: 6ch;
     &.width-3 {
       width: 8ch;
     }
