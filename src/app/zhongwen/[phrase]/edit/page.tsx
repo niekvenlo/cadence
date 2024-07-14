@@ -131,7 +131,7 @@ const Column = ({ part, shiftColumnIdx, onChangePart }: ColumnProps) => {
         className={cx("shift", { isActive: shiftColumnIdx !== null })}
         onClick={() => onChangePart("shift-col-hack")}
       >
-        {shiftColumnIdx !== null ? "搬来这" : "移动"}
+        {shiftColumnIdx !== null ? "挑选" : "移动"}
       </button>
       <TextArea part={part} onBlur={(part) => onChangePart(part)} />
       {canBeDeleted && (

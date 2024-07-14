@@ -21,9 +21,16 @@ main#zhongwen {
     border: none;
     background: inherit;
     color: var(--accent-color);
-    width: 20ch;
+    width: 30ch;
     &:hover {
       background: var(--background-color-darker);
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        transparent 30%,
+        var(--background-color-darker) 70%,
+        var(--background-color-darker) 100%
+      );
       cursor: pointer;
     }
   }
@@ -52,6 +59,7 @@ main#zhongwen {
     font-size: 1.1em;
     & > p {
       display: flex;
+      align-items: flex-start;
       gap: 1em;
       & > span {
         font-weight: 600;
@@ -76,6 +84,7 @@ main#zhongwen {
           opacity: 0.4;
           font-size: 0.3em;
           height: 2em;
+          pointer-events: none;
           user-select: none;
           /* transition: all 0.1s ease-in-out; */
           &:empty::before {
@@ -115,6 +124,7 @@ main#zhongwen {
         .tone {
           opacity: 0.6;
           user-select: none;
+          pointer-events: none;
           .ask {
             filter: hue-rotate(0deg);
           }
@@ -222,7 +232,10 @@ main#zhongwen {
   .column {
     text-align: center;
     font-size: 1.5em;
-    width: 6ch;
+    width: 4ch;
+    &.width-2 {
+      width: 6ch;
+    }
     &.width-3 {
       width: 8ch;
     }
