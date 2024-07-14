@@ -49,7 +49,6 @@ main#zhongwen {
     display: flex;
     flex-wrap: wrap;
     font-size: 1.1em;
-    margin-bottom: 10em;
     & > p {
       display: flex;
       gap: 1em;
@@ -77,10 +76,17 @@ main#zhongwen {
           font-size: 0.3em;
           height: 2em;
           user-select: none;
-          transition: all 0.1s ease-in-out;
+          /* transition: all 0.1s ease-in-out; */
           &:empty::before {
             content: "-";
             opacity: 0;
+          }
+        }
+        &:focus,
+        &:hover {
+          .pinyin {
+            opacity: 1;
+            scale: 3;
           }
         }
         &:focus {
@@ -104,10 +110,6 @@ main#zhongwen {
             var(--accent-color) 96%,
             var(--accent-color) 100%
           );
-          .pinyin {
-            opacity: 1;
-            scale: 3;
-          }
         }
         .tone {
           opacity: 0.6;

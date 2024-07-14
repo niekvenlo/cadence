@@ -46,13 +46,16 @@ function Add() {
   const addNewPhrase = () => {
     const messyLabel = ref.current?.value ?? Math.random().toString();
     const label = cleanChineseString(messyLabel);
+    if (!label) {
+      return;
+    }
     const parts = label.includes("|")
       ? label.split("|").map((f) => [f])
       : label.split("").map((f) => [f]);
     writePhrase({ label: label.replace(/[|]/g, ""), parts });
   };
   return (
-    <div style={{ paddingTop: "3em", display: "flex", gap: "0.1em" }}>
+    <div style={{ paddingBlock: "3em", display: "flex", gap: "0.1em" }}>
       <input
         ref={ref}
         type="text"
