@@ -22,9 +22,12 @@ const fillSuggestedMap = () => {
         return;
       }
       part.forEach((chars) => {
-        const suggestionSet = suggestionMap.get(chars) ?? new Set();
-        part.forEach((option) => suggestionSet.add(option));
-        suggestionMap.set(chars, suggestionSet);
+        const innerMap = suggestionMap.get(chars) ?? new Map();
+        part.forEach((option) => {
+          const count = innerMap.get(option) || 0;
+          innerMap.set(option, count + 1);
+        });
+        suggestionMap.set(chars, innerMap);
       });
     });
   });
@@ -35,9 +38,19 @@ export const getSuggested = (options: string[]) => {
     fillSuggestedMap();
   }
 
-  const suggestions = options
-    .map((chars) => [...(suggestionMap.get(chars) ?? [])])
-    .flat()
-    .filter((s) => !options.includes(s));
-  return [...new Set(suggestions)];
+  const combinedMap = new Map();
+  options.forEach((option) => {
+    const optionMap = suggestionMap.get(option) || new Map();
+    [...optionMap.entries()].forEach(([k, v]) => {
+      const countSoFar = combinedMap.get(k) ?? 0;
+      combinedMap.set(k, countSoFar + v);
+    });
+  });
+
+  const sortedSuggestions = [...combinedMap]
+    .sort((a, b) => (a[1] > b[1] ? -1 : 1))
+    .filter((s) => !options.includes(s[0]))
+    .map((s) => s[0]);
+
+  return sortedSuggestions;
 };

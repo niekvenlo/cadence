@@ -21,8 +21,8 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
             fontSize: "1.5em",
           }}
         >
-          {Array.from({ length: 10 }).map((_) => (
-            <li style={{ paddingBlock: "0.5em" }}>
+          {Array.from({ length: 10 }).map((_, i) => (
+            <li key={i} style={{ paddingBlock: "0.5em" }}>
               {parts.map((part) => getRandomElement(part))}
             </li>
           ))}
