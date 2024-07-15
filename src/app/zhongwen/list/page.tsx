@@ -17,11 +17,11 @@ export default function Chinese() {
     if (!searchString) {
       return true;
     }
-    console.log(allChars, searchString.split(""));
     return searchString
       .split("")
       .every((searchChar) => allChars.includes(searchChar));
   });
+  const x = useRef(false);
   return (
     <main id="zhongwen">
       <div className="top">
@@ -33,6 +33,20 @@ export default function Chinese() {
         </div>
       </div>
       <div className="search">
+        <input
+          hidden
+          onCompositionStart={(e) => console.log("onCompositionStart")}
+          onCompositionUpdate={(e) => console.log("onCompositionUpdate")}
+          onCompositionEnd={(e) => console.log("onCompositionEnd")}
+          // onChange={() => {
+          //   console.log(x.current);
+          //   if (x.current) {
+          //     x.current = false;
+          //     return;
+          //   }
+          // }}
+        />
+
         <input
           data-value={searchString}
           type="text"
