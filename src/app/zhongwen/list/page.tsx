@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import BasicLink from "../../components/basic/BasicLink";
 import BasicButton from "../../components/basic/BasicButton";
@@ -11,6 +11,17 @@ import { writePhrase } from "../phrase-actions-async";
 import { cleanChineseString } from "../util";
 
 export default function Chinese() {
+  const [searchString, setSearchString] = useState("");
+  const matchingPhrases = phrases.filter((phrase) => {
+    const allChars = phrase.parts.flat().join();
+    if (!searchString) {
+      return true;
+    }
+    console.log(allChars, searchString.split(""));
+    return searchString
+      .split("")
+      .every((searchChar) => allChars.includes(searchChar));
+  });
   return (
     <main id="zhongwen">
       <div className="top">
@@ -21,8 +32,17 @@ export default function Chinese() {
           <BasicLink href="/zhongwen/chars">字符</BasicLink>
         </div>
       </div>
+      <div className="search">
+        <input
+          data-value={searchString}
+          type="text"
+          defaultValue=""
+          onChange={(e) => setSearchString(cleanChineseString(e.target.value))}
+          placeholder="找"
+        />
+      </div>
       <div className="sdjhh sssdsv">
-        {phrases.map(({ label, parts }) => (
+        {matchingPhrases.map(({ label, parts }) => (
           <p key={label}>
             <span>{label}</span>
             <BasicLink href={`/zhongwen/${label}`}>👀</BasicLink>

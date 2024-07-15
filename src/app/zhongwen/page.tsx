@@ -19,7 +19,6 @@ export default function Chinese() {
         <h4>
           {Math.min(MAX_NUM, phrases.length)} of {phrases.length} phrases
         </h4>
-
         <div className="links">
           <BasicLink href="/zhongwen/list">✏️</BasicLink>
         </div>
