@@ -5,9 +5,11 @@ import "../style.css";
 
 import { phrases, pinyin } from "../phrase-util-sync";
 import { setPinyin } from "../phrase-actions-async";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Chinese() {
+  const [newPinyin, setNewPinyin] = useState("");
+
   const allUniqueParts = [
     ...new Set(phrases.map(({ parts }) => parts).flat(2)),
   ].sort();
@@ -19,21 +21,28 @@ export default function Chinese() {
     setPinyin(kanji, pinyin.toLowerCase().trim());
   };
 
-  const d = `bù kāi xīn , shì jiè , zhōng wén , èr shí wǔ , wǔ shí , rén , huì bù , huì shuō , shāng xīn , gōng sī , bīng chá , bié wàng liǎo , mài shū , qù cè suǒ , shū shū , chī wǔ fàn , míng , chàng gē , guó jiā , zài zhè gè , zài nà gè , xiǎo māo , shuài , nián qīng , hěn máng , hěn gāo xīng , hěn gāo xīng rèn shí nǐ , bì xū , wàng liǎo , wàng jì liǎo , yì dà lì , dǎ diàn huà , dǎ lán qiú , dǎ zú qiú , rì běn , rì yǔ , shì dú shū , shì è liǎo , yǒu qián , hàn yǔ , fǎ yǔ , tài yǔ , ào dà lì yà , rè shuǐ , yé yé , niú ròu , bǎi shí , ǎi , xiào liǎo , cōng míng , féi , pàng , yīng yǔ , suī rán , jì dé , gǎn jǐn `;
-  const f = d.split(/,\s?/).map((f) => f.trim());
   useEffect(() => {
+    const pinyinArray = newPinyin.split(/,\s?/).map((f) => f.trim());
     const isFirstPinyinInStringSet = Object.values(pinyin).includes(
-      f[0] || "never"
+      pinyinArray[0] || "never"
     );
     if (isFirstPinyinInStringSet) {
+      console.log("already processed.");
       return;
     }
-    partsWithoutPinyin.forEach((p, i) => {
-      const pp = p.toString().replace(",", "");
-      const ff = f[i];
-      setTimeout(() => update(pp, ff), i * 100);
+    if (pinyinArray.length !== partsWithoutPinyin.length) {
+      console.log("length mismatch");
+      return;
+    }
+    partsWithoutPinyin.forEach((part, i) => {
+      setTimeout(() => {
+        update(part.toString().replace(",", ""), pinyinArray[i]);
+      }, i * 100);
+      setTimeout(() => {
+        setNewPinyin("");
+      }, partsWithoutPinyin.length * 100 + 1000);
     });
-  }, []);
+  }, [newPinyin]);
   return (
     <main id="zhongwen">
       <div className="top">
@@ -41,8 +50,28 @@ export default function Chinese() {
         <h1>List of pinyin</h1>
       </div>
       <div id="pin">
-        <h2>Parts without Pinyin</h2>
-        {partsWithoutPinyin.map((p) => p[0]).join(", ")}
+        {partsWithoutPinyin.length > 0 && (
+          <>
+            <h2>Parts without Pinyin</h2>
+            {partsWithoutPinyin.map((p) => p[0]).join(", ")}
+            <br />
+            {newPinyin}
+            <br />
+            <input
+              type="text"
+              defaultValue=""
+              onPaste={(e) => {
+                const target = e.target as HTMLInputElement;
+                setTimeout(() => {
+                  setNewPinyin(target.value);
+                  target.select();
+                  target.value = "";
+                }, 100);
+              }}
+              placeholder="粘贴"
+            />
+          </>
+        )}
         {partsWithoutPinyin.map(([kanji, pinyin]) => (
           <div className="pin-k" key={kanji}>
             <span className="pin-kanji">{kanji}</span>
