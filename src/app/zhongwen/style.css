@@ -67,11 +67,20 @@ main#zhongwen {
       }
     }
     button.sparkle {
-      background: inherit;
+      background: var(--background-color-darker);
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--background-color-darker) 40%,
+        var(--background-color-darker) 60%,
+        transparent 100%
+      );
       border: none;
       outline: none;
-      padding-inline: 1em;
-      margin-inline-end: 1em;
+      padding: 1em;
+      margin: 1em;
+      display: block;
+      width: 100%;
     }
     .part {
       display: contents;

@@ -12,22 +12,20 @@ import { Accent } from "./Accents";
 
 export default function Chinese() {
   const [reload] = useReload();
-  const MAX_NUM = 20;
+  const MAX_NUM = 25;
   return (
     <main id="zhongwen">
       <div className="top">
         <h4>
           {Math.min(MAX_NUM, phrases.length)} of {phrases.length} phrases
         </h4>
+
         <div className="links">
           <BasicLink href="/zhongwen/list">✏️</BasicLink>
         </div>
       </div>
       <NoSSR>
         <div className="sdjhh">
-          <button className="sparkle" onDoubleClick={reload}>
-            ✨
-          </button>
           {toShuffle(phrases)
             .slice(0, MAX_NUM)
             .map(({ label, parts }, i) => (
@@ -44,6 +42,12 @@ export default function Chinese() {
                 </span>
               </span>
             ))}
+
+          <button className="sparkle" onDoubleClick={reload}>
+            ✨
+            <br />
+            <small>{new Date().toLocaleTimeString()}</small>
+          </button>
         </div>
       </NoSSR>
     </main>
