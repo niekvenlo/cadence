@@ -19,7 +19,7 @@ export default function Chinese() {
     setPinyin(kanji, pinyin.toLowerCase().trim());
   };
 
-  const d = `tù zǐ , dāo , bāo , yìn dù , chā , jiào shén me ? jiào , dà wèi , shān shàng , dé guó , shǒu , méi wèn tí , fǎ guó , tài guó , dù zǐ , yīng guó , zhè shì , nà shì , yú`;
+  const d = `bù kāi xīn , shì jiè , zhōng wén , èr shí wǔ , wǔ shí , rén , huì bù , huì shuō , shāng xīn , gōng sī , bīng chá , bié wàng liǎo , mài shū , qù cè suǒ , shū shū , chī wǔ fàn , míng , chàng gē , guó jiā , zài zhè gè , zài nà gè , xiǎo māo , shuài , nián qīng , hěn máng , hěn gāo xīng , hěn gāo xīng rèn shí nǐ , bì xū , wàng liǎo , wàng jì liǎo , yì dà lì , dǎ diàn huà , dǎ lán qiú , dǎ zú qiú , rì běn , rì yǔ , shì dú shū , shì è liǎo , yǒu qián , hàn yǔ , fǎ yǔ , tài yǔ , ào dà lì yà , rè shuǐ , yé yé , niú ròu , bǎi shí , ǎi , xiào liǎo , cōng míng , féi , pàng , yīng yǔ , suī rán , jì dé , gǎn jǐn `;
   const f = d.split(/,\s?/).map((f) => f.trim());
   useEffect(() => {
     const isFirstPinyinInStringSet = Object.values(pinyin).includes(
