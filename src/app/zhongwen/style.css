@@ -3,6 +3,7 @@ main#zhongwen {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 10em;
 
   .top {
     display: flex;

@@ -17,8 +17,8 @@
         },
         {
             "label": "🧻 Paper",
-            "timestamp": 1719820010755,
-            "isSelected": false
+            "timestamp": 1720993344360,
+            "isSelected": true
         },
         {
             "label": "🍋 Fruits",
@@ -57,8 +57,8 @@
         },
         {
             "label": "🚪 Misc. Pantry",
-            "timestamp": 1720384496038,
-            "isSelected": false
+            "timestamp": 1720993349621,
+            "isSelected": true
         }
     ],
     "tasks": [
@@ -108,7 +108,7 @@
         {
             "id": "58c36c00-58df-4130-907f-f7869b701312",
             "title": "Take pills",
-            "nextEpochDay": 19919,
+            "nextEpochDay": 19920,
             "cadenceInDays": 1
         },
         {
@@ -163,7 +163,7 @@
             "title": "Water the plants",
             "cadenceInDays": 3,
             "id": "2c3e317c-6c09-4116-a92f-569356dc3945",
-            "nextEpochDay": 19917
+            "nextEpochDay": 19922
         },
         {
             "title": "Vacuum bedroom",
@@ -234,13 +234,13 @@
         {
             "title": "Clean out Eufy",
             "cadenceInDays": 1,
-            "nextEpochDay": 19919,
+            "nextEpochDay": 19920,
             "id": "ba96235d-7601-4d56-914e-484bc2904c30"
         },
         {
             "title": "Feed the plants",
-            "cadenceInDays": 8,
-            "nextEpochDay": 19919,
+            "cadenceInDays": 9,
+            "nextEpochDay": 19922,
             "id": "bccccd80-4466-4a6e-a05a-17e4e6f66ce5"
         },
         {
