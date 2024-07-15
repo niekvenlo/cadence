@@ -1,13 +1,14 @@
 "use client";
 
+import { useRef } from "react";
+import { useRouter } from "next/navigation";
 import BasicLink from "../../components/basic/BasicLink";
+import BasicButton from "../../components/basic/BasicButton";
 import "../style.css";
 
 import { phrases } from "../phrase-util-sync";
-import { useRef } from "react";
 import { writePhrase } from "../phrase-actions-async";
 import { cleanChineseString } from "../util";
-import BasicButton from "../../components/basic/BasicButton";
 
 export default function Chinese() {
   return (
@@ -42,6 +43,7 @@ export default function Chinese() {
 }
 
 function Add() {
+  const router = useRouter();
   const ref = useRef<HTMLInputElement | null>(null);
   const addNewPhrase = () => {
     const messyLabel = ref.current?.value ?? Math.random().toString();
@@ -52,7 +54,9 @@ function Add() {
     const parts = label.includes("|")
       ? label.split("|").map((f) => [f])
       : label.split("").map((f) => [f]);
-    writePhrase({ label: label.replace(/[|]/g, ""), parts });
+    const labelWithoutPipes = label.replace(/[|]/g, "");
+    router.push(`/zhongwen/${labelWithoutPipes}/edit`);
+    writePhrase({ label: labelWithoutPipes, parts });
   };
   return (
     <div style={{ paddingBlock: "3em", display: "flex", gap: "0.1em" }}>
