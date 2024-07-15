@@ -9,6 +9,10 @@ import { useEffect, useState } from "react";
 
 export default function Chinese() {
   const [newPinyin, setNewPinyin] = useState("");
+  const pinyinArray = newPinyin
+    .split(/,\s?/)
+    .map((f) => f.trim())
+    .filter((f) => f);
 
   const allUniqueParts = [
     ...new Set(phrases.map(({ parts }) => parts).flat(2)),
@@ -22,7 +26,15 @@ export default function Chinese() {
   };
 
   useEffect(() => {
-    const pinyinArray = newPinyin.split(/,\s?/).map((f) => f.trim());
+    const pinyinArray = newPinyin
+      .split(/,\s?/)
+      .map((f) => f.trim())
+      .filter((f) => f);
+    if (pinyinArray.length === 0) {
+      console.log("No new pinyin given");
+      return;
+    }
+    console.log({ pinyinArray });
     const isFirstPinyinInStringSet = Object.values(pinyin).includes(
       pinyinArray[0] || "never"
     );
@@ -36,6 +48,7 @@ export default function Chinese() {
     }
     partsWithoutPinyin.forEach((part, i) => {
       setTimeout(() => {
+        console.log(part.toString().replace(",", ""), pinyinArray[i]);
         update(part.toString().replace(",", ""), pinyinArray[i]);
       }, i * 100);
       setTimeout(() => {
@@ -53,37 +66,40 @@ export default function Chinese() {
         {partsWithoutPinyin.length > 0 && (
           <>
             <h2>Parts without Pinyin</h2>
-            {partsWithoutPinyin.map((p) => p[0]).join(", ")}
-            <br />
-            {newPinyin}
-            <br />
-            <input
-              type="text"
-              defaultValue=""
-              onPaste={(e) => {
-                const target = e.target as HTMLInputElement;
-                setTimeout(() => {
-                  setNewPinyin(target.value);
-                  target.select();
-                  target.value = "";
-                }, 100);
-              }}
-              placeholder="粘贴"
-            />
+            <div className="pin-k">
+              <span className="pin-kanji">
+                {partsWithoutPinyin.map((p) => (
+                  <p key={p[0]}>{p[0]},</p>
+                ))}
+              </span>
+              <input
+                type="text"
+                defaultValue=""
+                onPaste={(e) => {
+                  const target = e.target as HTMLInputElement;
+                  setTimeout(() => {
+                    setNewPinyin(target.value);
+                    target.select();
+                    target.value = "";
+                  }, 100);
+                }}
+                placeholder="粘贴"
+              />
+            </div>
+            或者
+            {partsWithoutPinyin.map(([kanji, pinyin], i) => (
+              <div className="pin-k" key={kanji}>
+                <span className="pin-kanji">{kanji}</span>
+                <input
+                  type="text"
+                  defaultValue={pinyin || pinyinArray[i]}
+                  placeholder="❌"
+                  onBlur={(e) => update(kanji, e.target.value)}
+                />
+              </div>
+            ))}
           </>
         )}
-        {partsWithoutPinyin.map(([kanji, pinyin]) => (
-          <div className="pin-k" key={kanji}>
-            <span className="pin-kanji">{kanji}</span>
-            <input
-              type="text"
-              defaultValue={pinyin}
-              placeholder="❌"
-              onBlur={(e) => update(kanji, e.target.value)}
-            />
-          </div>
-        ))}
-        <br />
         <h2>Parts with Pinyin</h2>
         {partsWithPinyin.map(([kanji, pinyin]) => (
           <div className="pin-k" key={kanji}>
