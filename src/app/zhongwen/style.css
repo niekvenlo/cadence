@@ -87,20 +87,13 @@ main#zhongwen {
       }
     }
     button.sparkle {
-      background: var(--background-color-darker);
-      background: linear-gradient(
-        90deg,
-        transparent 0%,
-        var(--background-color-darker) 40%,
-        var(--background-color-darker) 60%,
-        transparent 100%
-      );
+      background: inherit;
       border: none;
       outline: none;
-      padding: 1em;
       margin: 1em;
       display: block;
       width: 100%;
+      text-align: right;
     }
     .part {
       display: contents;
@@ -328,6 +321,9 @@ main#zhongwen {
     }
     select {
       font-size: 1rem;
+    }
+    .suggested {
+      user-select: none;
     }
   }
 }

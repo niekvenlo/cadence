@@ -12,20 +12,25 @@ import { Accent } from "./Accents";
 
 export default function Chinese() {
   const [reload] = useReload();
-  const ITEM_PER_CHUNK = 20;
-  const phraseChunks = toChunk(toShuffle(phrases), ITEM_PER_CHUNK);
+  // bullshit logic
+  const itemsPerChunk = Math.ceil(
+    phrases.length > 150
+      ? phrases.length > 100
+        ? phrases.length / 5
+        : phrases.length / 4
+      : phrases.length / 3
+  );
+  const phraseChunks = toChunk(toShuffle(phrases), itemsPerChunk);
   const sparkle = (
     <button className="sparkle" onDoubleClick={reload}>
-      ✨
-      <br />
-      <small>{new Date().toLocaleTimeString()}</small>
+      ✨<small>{new Date().toLocaleTimeString()}</small>
     </button>
   );
   return (
     <main id="zhongwen">
       <div className="top">
         <h4>
-          {Math.min(ITEM_PER_CHUNK, phrases.length)} of {phrases.length} phrases
+          {Math.min(itemsPerChunk, phrases.length)} of {phrases.length} phrases
         </h4>
         <div className="links">
           <BasicLink href="/zhongwen/list">✏️</BasicLink>
