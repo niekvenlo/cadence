@@ -6,6 +6,7 @@ import sing from "../../../public/sing.png";
 import wiggle from "../../../public/wiggle.png";
 import none from "../../../public/none.png";
 import { getTones } from "./util";
+import { ReactElement } from "react";
 
 const toneImages = {
   ask: <Image className="ask" height={20} src={ask} alt="ask-accent" />,
@@ -17,7 +18,10 @@ const toneImages = {
   none: <Image className="none" height={20} src={none} alt="no-accent" />,
 };
 
-export const Accent = ({ type = "none" }) =>
+type AccentProps = {
+  type?: "ask" | "none" | "sing" | "state" | "wiggle";
+};
+export const Accent = ({ type = "none" }: AccentProps): ReactElement =>
   toneImages[type] || toneImages["none"];
 
 export const Accents = ({ pinyin = "" }) => {

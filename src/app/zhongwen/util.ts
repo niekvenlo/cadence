@@ -53,19 +53,19 @@ export const getTones = (string: string = "") => {
     .map((d) => d.replace(/\w/g, ""))
     .map((d) => accents[d] || "");
 };
-export const getPinyinSylables = (string: string = "") => {
+export const breakPinyinIntoSylables = (string: string = "") => {
   return string.split(/[-]|[']|\s/).filter((d) => d);
 };
 
-export function toChunk(array, size) {
-  const chunks: (typeof array)[number] = [];
+export function toChunk<T>(array: T[], size: number): T[][] {
+  const chunks: any[] = [];
   for (let i = 0; i < array.length; i = i + size) {
     chunks.push(array.slice(i, i + size));
   }
   return chunks;
 }
 
-export function toShuffle(array) {
+export function toShuffle<T>(array: T[]): T[] {
   const copy = [...array];
   let cIdx = array.length;
 

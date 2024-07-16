@@ -1,6 +1,6 @@
-import { getPinyinSylables, getRandomElement, getTones } from "./util";
+import { breakPinyinIntoSylables, getRandomElement, getTones } from "./util";
 import { useRef, useState } from "react";
-import { pinyin as pinyinJson } from "./phrase-util-sync";
+import { pinyin as pinyinJson, getPinyin } from "./phrase-util-sync";
 import { Accent, Accents } from "./Accents";
 import PersonaModal from "./PersonaModal";
 
@@ -10,7 +10,7 @@ function Part({ part }) {
     color: `hsl(${230 + Math.random() * 50}, 60%, 60%)`,
   });
   const kanji = useRef(getRandomElement(part));
-  const pinyin = getPinyinSylables(pinyinJson[kanji.current] || "");
+  const pinyin = breakPinyinIntoSylables(getPinyin(kanji.current) || "");
   const tones = getTones(pinyinJson[kanji.current] || "");
   const chars = kanji.current
     .split("")

@@ -3,9 +3,11 @@
 import BasicLink from "../components/basic/BasicLink";
 import "./style.css";
 
+import type { Phrase } from "./phrase-util-sync";
+
 import { phrases } from "./phrase-util-sync";
 import NoSSR from "../components/NoSSR";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { toChunk, toShuffle } from "./util";
 import Part from "./Part";
 import { Accent } from "./Accents";
@@ -47,7 +49,11 @@ export default function Chinese() {
   );
 }
 
-function Chunk({ chunk, sparkle }) {
+type ChunkProps = {
+  chunk: Phrase[];
+  sparkle: ReactNode;
+};
+function Chunk({ chunk, sparkle }: ChunkProps) {
   return (
     <>
       {sparkle}

@@ -54,3 +54,13 @@ export const getSuggested = (options: string[]) => {
 
   return sortedSuggestions;
 };
+
+export const getPinyin = (kanji) => {
+  const naive = pinyin[kanji];
+  if (naive) {
+    return naive;
+  }
+  const kanjiChars = kanji.split("");
+  console.log({ kanjiChars });
+  return kanjiChars.map((char) => pinyin[char] ?? "*").join(" ");
+};
