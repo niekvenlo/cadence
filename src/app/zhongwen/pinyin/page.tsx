@@ -3,7 +3,7 @@
 import BasicLink from "../../components/basic/BasicLink";
 import "../style.css";
 
-import { phrases, pinyin } from "../phrase-util-sync";
+import { getPinyin, phrases, pinyin } from "../phrase-util-sync";
 import { setPinyin } from "../phrase-actions-async";
 import { useEffect, useState } from "react";
 
@@ -17,7 +17,7 @@ export default function Chinese() {
   const allUniqueParts = [
     ...new Set(phrases.map(({ parts }) => parts).flat(2)),
   ].sort();
-  const partsPlus = allUniqueParts.map((p) => [p, pinyin[p]]);
+  const partsPlus = allUniqueParts.map((p) => [p, getPinyin(p)]);
   const partsWithoutPinyin = partsPlus.filter(([_, v]) => !v);
   const partsWithPinyin = partsPlus.filter(([_, v]) => v);
 

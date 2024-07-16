@@ -55,12 +55,19 @@ export const getSuggested = (options: string[]) => {
   return sortedSuggestions;
 };
 
-export const getPinyin = (kanji) => {
-  const naive = pinyin[kanji];
-  if (naive) {
-    return naive;
+export const getPinyin = (kanji: string) => {
+  const explicit = pinyin[kanji] as string | undefined;
+  if (explicit) {
+    return explicit;
   }
+
+  // TODO: Partial matches with explicit pinyin.
   const kanjiChars = kanji.split("");
-  console.log({ kanjiChars });
-  return kanjiChars.map((char) => pinyin[char] ?? "*").join(" ");
+  if (kanjiChars.some((char) => pinyin[char] === undefined)) {
+    return "";
+  }
+  return kanjiChars
+    .map((char) => pinyin[char])
+    .filter((f) => f)
+    .join(" ");
 };
