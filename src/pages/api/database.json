@@ -83,7 +83,7 @@
         {
             "id": "aec808ac-b2dd-4b97-9673-adad313cdd0f",
             "title": "Clean the sink with soda crystals",
-            "nextEpochDay": 19920,
+            "nextEpochDay": 19927,
             "cadenceInDays": 7
         },
         {
@@ -108,7 +108,7 @@
         {
             "id": "58c36c00-58df-4130-907f-f7869b701312",
             "title": "Take pills",
-            "nextEpochDay": 19920,
+            "nextEpochDay": 19921,
             "cadenceInDays": 1
         },
         {
@@ -234,7 +234,7 @@
         {
             "title": "Clean out Eufy",
             "cadenceInDays": 1,
-            "nextEpochDay": 19920,
+            "nextEpochDay": 19921,
             "id": "ba96235d-7601-4d56-914e-484bc2904c30"
         },
         {
