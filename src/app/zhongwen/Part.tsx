@@ -10,8 +10,9 @@ function Part({ part }) {
     color: `hsl(${230 + Math.random() * 50}, 60%, 60%)`,
   });
   const kanji = useRef(getRandomElement(part));
-  const pinyin = breakPinyinIntoSylables(getPinyin(kanji.current) || "");
-  const tones = getTones(pinyinJson[kanji.current] || "");
+  const p = getPinyin(kanji.current) || "";
+  const pinyin = breakPinyinIntoSylables(p);
+  const tones = getTones(p);
   const chars = kanji.current
     .split("")
     .map((char, i) => [char, pinyin[i], tones[i]]);
