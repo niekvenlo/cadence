@@ -57,6 +57,14 @@ export const getPinyinSylables = (string: string = "") => {
   return string.split(/[-]|[']|\s/).filter((d) => d);
 };
 
+export function toChunk(array, size) {
+  const chunks: (typeof array)[number] = [];
+  for (let i = 0; i < array.length; i = i + size) {
+    chunks.push(array.slice(i, i + size));
+  }
+  return chunks;
+}
+
 export function toShuffle(array) {
   const copy = [...array];
   let cIdx = array.length;

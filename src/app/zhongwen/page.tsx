@@ -6,18 +6,26 @@ import "./style.css";
 import { phrases } from "./phrase-util-sync";
 import NoSSR from "../components/NoSSR";
 import { useState } from "react";
-import { toShuffle } from "./util";
+import { toChunk, toShuffle } from "./util";
 import Part from "./Part";
 import { Accent } from "./Accents";
 
 export default function Chinese() {
   const [reload] = useReload();
-  const MAX_NUM = 25;
+  const ITEM_PER_CHUNK = 20;
+  const phraseChunks = toChunk(toShuffle(phrases), ITEM_PER_CHUNK);
+  const sparkle = (
+    <button className="sparkle" onDoubleClick={reload}>
+      ✨
+      <br />
+      <small>{new Date().toLocaleTimeString()}</small>
+    </button>
+  );
   return (
     <main id="zhongwen">
       <div className="top">
         <h4>
-          {Math.min(MAX_NUM, phrases.length)} of {phrases.length} phrases
+          {Math.min(ITEM_PER_CHUNK, phrases.length)} of {phrases.length} phrases
         </h4>
         <div className="links">
           <BasicLink href="/zhongwen/list">✏️</BasicLink>
@@ -25,48 +33,34 @@ export default function Chinese() {
       </div>
       <NoSSR>
         <div className="sdjhh">
-          {toShuffle(phrases)
-            .slice(0, MAX_NUM)
-            .map(({ label, parts }, i) => (
-              <span className="phrase-s" key={label + i}>
-                {parts.map((part, i) => (
-                  <Part key={part[0] + i} part={part} />
-                ))}
-                <span className="part">
-                  <span className="full-stop char">
-                    <span className="pinyin"></span>
-                    <span className="tone">{<Accent />}</span>
-                    <span className="kanji">。</span>
-                  </span>
-                </span>
-              </span>
-            ))}
-
-          <button className="sparkle" onDoubleClick={reload}>
-            ✨
-            <br />
-            <small>{new Date().toLocaleTimeString()}</small>
-          </button>
-
-          {toShuffle(phrases)
-            .slice(MAX_NUM)
-            .map(({ label, parts }, i) => (
-              <span className="phrase-s" key={label + i}>
-                {parts.map((part, i) => (
-                  <Part key={part[0] + i} part={part} />
-                ))}
-                <span className="part">
-                  <span className="full-stop char">
-                    <span className="pinyin"></span>
-                    <span className="tone">{<Accent />}</span>
-                    <span className="kanji">。</span>
-                  </span>
-                </span>
-              </span>
-            ))}
+          {phraseChunks.map((chunk) => (
+            <Chunk chunk={chunk} sparkle={sparkle} />
+          ))}
         </div>
       </NoSSR>
     </main>
+  );
+}
+
+function Chunk({ chunk, sparkle }) {
+  return (
+    <>
+      {sparkle}
+      {chunk.map(({ label, parts }, i) => (
+        <span className="phrase-s" key={label + i}>
+          {parts.map((part, i) => (
+            <Part key={part[0] + i} part={part} />
+          ))}
+          <span className="part">
+            <span className="full-stop char">
+              <span className="pinyin"></span>
+              <span className="tone">{<Accent />}</span>
+              <span className="kanji">。</span>
+            </span>
+          </span>
+        </span>
+      ))}
+    </>
   );
 }
 
