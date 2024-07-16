@@ -47,6 +47,23 @@ export default function Chinese() {
             <br />
             <small>{new Date().toLocaleTimeString()}</small>
           </button>
+
+          {toShuffle(phrases)
+            .slice(MAX_NUM)
+            .map(({ label, parts }, i) => (
+              <span className="phrase-s" key={label + i}>
+                {parts.map((part, i) => (
+                  <Part key={part[0] + i} part={part} />
+                ))}
+                <span className="part">
+                  <span className="full-stop char">
+                    <span className="pinyin"></span>
+                    <span className="tone">{<Accent />}</span>
+                    <span className="kanji">。</span>
+                  </span>
+                </span>
+              </span>
+            ))}
         </div>
       </NoSSR>
     </main>
