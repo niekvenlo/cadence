@@ -68,23 +68,6 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
         />
 
         <div className="phrase">
-          <div className="column">
-            <span className="init">
-              <span className="label">template</span>
-            </span>
-            <span className="random">
-              <span className="label">random</span>
-            </span>
-            <span className="random">
-              <span className="label">random</span>
-            </span>
-            <span className="random">
-              <span className="label">random</span>
-            </span>
-            <span className="options">
-              <span className="label">options</span>
-            </span>
-          </div>
           {parts.map((part, i) => (
             <Column
               key={part?.join() + i}

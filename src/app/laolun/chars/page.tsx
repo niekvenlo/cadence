@@ -7,11 +7,6 @@ import "../style.css";
 import { phrases, pinyin } from "../phrase-util-sync";
 
 export default function Chinese() {
-  const kanjiSet = new Set(
-    Object.keys(pinyin)
-      .map((p) => p.split(""))
-      .flat()
-  );
   const phrasesCharSet = new Set(
     phrases
       .map((phrase) => phrase.parts.map((part) => part.map((c) => c.split(""))))
@@ -19,8 +14,7 @@ export default function Chinese() {
   );
   const sheetSet = new Set(sheetList.map((p) => p.split("")).flat());
 
-  const inMultiple = getInMultiple(kanjiSet, sheetSet, phrasesCharSet);
-  const inPrevious = getOnlyInPreviousApp(kanjiSet, phrasesCharSet);
+  const inLaolun = getInLaoLun(phrasesCharSet);
   const inSheet = getOnlyInGoogleSheet(sheetSet, phrasesCharSet);
   return (
     <main id="zhongwen">
@@ -29,9 +23,8 @@ export default function Chinese() {
         <h1>List of chars</h1>
       </div>
       <div id="pin">
-        <L list={inMultiple} title="In Multiple" />
-        <L list={inPrevious} title="In Previous App" />
-        <L list={inSheet} title="In Google Sheet" />
+        <L list={inLaolun} title="In Laolun" />
+        <L list={inSheet} title="Only in Google Sheet" />
       </div>
     </main>
   );
@@ -51,12 +44,8 @@ const L = ({ title, list }) => (
   </>
 );
 
-function getInMultiple(kanjiSet, sheetSet, phrasesCharSet) {
-  return [...kanjiSet.union(sheetSet).intersection(phrasesCharSet)];
-}
-
-function getOnlyInPreviousApp(kanjiSet, phrasesCharSet) {
-  return [...kanjiSet.difference(phrasesCharSet)];
+function getInLaoLun(phrasesCharSet) {
+  return [...phrasesCharSet];
 }
 
 function getOnlyInGoogleSheet(sheetSet, phrasesCharSet) {

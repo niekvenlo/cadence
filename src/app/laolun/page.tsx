@@ -23,6 +23,7 @@ export default function Chinese() {
       : phrases.length / 3
   );
   const phraseChunks = toChunk(toShuffle(phrases), itemsPerChunk);
+  phraseChunks[0].unshift({ label: "捞论", parts: [["捞论"]] });
   const sparkle = (
     <button className="sparkle" onDoubleClick={reload}>
       ✨<small>{new Date().toLocaleTimeString()}</small>
@@ -41,8 +42,12 @@ export default function Chinese() {
       <h1>捞论</h1>
       <NoSSR>
         <div className="sdjhh">
-          {phraseChunks.map((chunk) => (
-            <Chunk chunk={chunk} sparkle={sparkle} />
+          {phraseChunks.map((chunk, idx) => (
+            <Chunk
+              key={idx + (chunk[0][0] || idx)}
+              chunk={chunk}
+              sparkle={sparkle}
+            />
           ))}
         </div>
       </NoSSR>
