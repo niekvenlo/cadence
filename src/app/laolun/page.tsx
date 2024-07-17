@@ -35,9 +35,10 @@ export default function Chinese() {
           {Math.min(itemsPerChunk, phrases.length)} of {phrases.length} phrases
         </h4>
         <div className="links">
-          <BasicLink href="/zhongwen/list">✏️</BasicLink>
+          <BasicLink href="/laolun/list">✏️</BasicLink>
         </div>
       </div>
+      <h1>捞论</h1>
       <NoSSR>
         <div className="sdjhh">
           {phraseChunks.map((chunk) => (

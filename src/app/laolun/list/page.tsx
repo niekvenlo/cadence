@@ -27,9 +27,9 @@ export default function Chinese() {
       <div className="top">
         <h1>✏️</h1>
         <div className="links">
-          <BasicLink href="/zhongwen">中文</BasicLink>
-          <BasicLink href="/zhongwen/pinyin">拼音</BasicLink>
-          <BasicLink href="/zhongwen/chars">字符</BasicLink>
+          <BasicLink href="/laolun">中文</BasicLink>
+          <BasicLink href="/laolun/pinyin">拼音</BasicLink>
+          <BasicLink href="/laolun/chars">字符</BasicLink>
         </div>
       </div>
       <div className="search">
@@ -59,8 +59,8 @@ export default function Chinese() {
         {matchingPhrases.map(({ label, parts }) => (
           <p key={label}>
             <span>{label}</span>
-            <BasicLink href={`/zhongwen/${label}`}>👀</BasicLink>
-            <BasicLink href={`/zhongwen/${label}/edit`}>✏️</BasicLink>
+            <BasicLink href={`/laolun/${label}`}>👀</BasicLink>
+            <BasicLink href={`/laolun/${label}/edit`}>✏️</BasicLink>
             <BasicButton
               variant="look-like-a-link"
               onClick={() => writePhrase({ label: `${label} 2️`, parts })}
@@ -89,7 +89,7 @@ function Add() {
       ? label.split("|").map((f) => [f])
       : label.split("").map((f) => [f]);
     const labelWithoutPipes = label.replace(/[|]/g, "");
-    router.push(`/zhongwen/${labelWithoutPipes}/edit`);
+    router.push(`/laolun/${labelWithoutPipes}/edit`);
     writePhrase({ label: labelWithoutPipes, parts });
   };
   return (

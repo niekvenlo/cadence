@@ -12,7 +12,7 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
     <NoSSR>
       <main id="zhongwen">
         <div className="top">
-          <BasicLink href="/zhongwen/list">Back</BasicLink>
+          <BasicLink href="/laolun/list">Back</BasicLink>
           <h1>Phrase review</h1>
         </div>
         <ol

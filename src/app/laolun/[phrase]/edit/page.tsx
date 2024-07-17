@@ -47,13 +47,13 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
   };
   const changeLabel = async (newLabel: string) => {
     const finalLabel = await updateLabel(label, newLabel);
-    router.replace(`/zhongwen/${finalLabel}/edit`);
+    router.replace(`/laolun/${finalLabel}/edit`);
   };
   return (
     <NoSSR>
       <main id="zhongwen">
         <div className="top">
-          <BasicLink href="/zhongwen/list">Back</BasicLink>
+          <BasicLink href="/laolun/list">Back</BasicLink>
           <h1>Phrase editor</h1>
         </div>
         <input

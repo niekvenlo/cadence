@@ -16,7 +16,7 @@ export default function AppHeader({
   initialWeather,
 }) {
   const pathname = usePathname();
-  const isZhongwenSection = pathname?.startsWith("/zhongwen");
+  const isZhongwenSection = pathname?.startsWith("/laolun");
   const shoppingListQuery = useShoppingQuery(initialShoppingList);
   const tasksQuery = useTasksQuery(initialTasks);
   const weatherQuery = useWeatherQuery(initialWeather);
@@ -33,8 +33,8 @@ export default function AppHeader({
           <BasicLink href="/">Tasks</BasicLink>
           {/* <BasicLink href="/shopping">Shopping</BasicLink> */}
           {/* <BasicLink href="/chinese">Chinese</BasicLink> */}
-          <BasicLink href="/zhongwen" matchSection>
-            中文
+          <BasicLink href="/laolun" matchSection>
+            捞论
           </BasicLink>
           {/* <BasicLink href="/ai">AI</BasicLink> */}
           {/* <BasicLink href="/weather">Weather</BasicLink> */}

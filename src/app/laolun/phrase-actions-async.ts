@@ -4,8 +4,8 @@ import fs from "fs/promises";
 
 import type { Phrase } from "./phrase-util-sync";
 
-const phrasesJsonFilePath = "src/app/zhongwen/phrases.json";
-const pinyinJsonFilePath = "src/app/zhongwen/pinyin.json";
+const phrasesJsonFilePath = "src/app/laolun/phrases.json";
+const pinyinJsonFilePath = "src/app/laolun/pinyin.json";
 
 const readPhrases = async () =>
   JSON.parse(await fs.readFile(phrasesJsonFilePath, "utf-8"));

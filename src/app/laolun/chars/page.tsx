@@ -25,7 +25,7 @@ export default function Chinese() {
   return (
     <main id="zhongwen">
       <div className="top">
-        <BasicLink href="/zhongwen/list">Back</BasicLink>
+        <BasicLink href="/laolun/list">Back</BasicLink>
         <h1>List of chars</h1>
       </div>
       <div id="pin">
