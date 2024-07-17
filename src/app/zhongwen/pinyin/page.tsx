@@ -42,10 +42,6 @@ export default function Chinese() {
       console.log("already processed.");
       return;
     }
-    if (pinyinArray.length !== partsWithoutPinyin.length) {
-      console.log("length mismatch");
-      return;
-    }
     partsWithoutPinyin.forEach((part, i) => {
       setTimeout(() => {
         console.log(part.toString().replace(",", ""), pinyinArray[i]);
