@@ -55,10 +55,19 @@ export const getSuggested = (options: string[]) => {
   return sortedSuggestions;
 };
 
-export const getPinyin = (kanji: string) => {
+export const getPinyin = (
+  kanji: string,
+  options: {
+    requireExplicit?: boolean;
+  } = {}
+) => {
   const explicit = pinyin[kanji] as string | undefined;
   if (explicit) {
     return explicit;
+  }
+
+  if (options.requireExplicit) {
+    return;
   }
 
   // TODO: Partial matches with explicit pinyin.

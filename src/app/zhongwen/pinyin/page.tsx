@@ -17,7 +17,10 @@ export default function Chinese() {
   const allUniqueParts = [
     ...new Set(phrases.map(({ parts }) => parts).flat(2)),
   ].sort();
-  const partsPlus = allUniqueParts.map((p) => [p, getPinyin(p)]);
+  const partsPlus = allUniqueParts.map((p) => [
+    p,
+    getPinyin(p, { requireExplicit: true }),
+  ]);
   const partsWithoutPinyin = partsPlus.filter(([_, v]) => !v);
   const partsWithPinyin = partsPlus.filter(([_, v]) => v);
 
