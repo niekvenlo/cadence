@@ -52,10 +52,6 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
   return (
     <NoSSR>
       <main id="zhongwen">
-        <div className="top">
-          <BasicLink href="/laolun/list">Back</BasicLink>
-          <h1>Phrase editor</h1>
-        </div>
         <input
           className="label-edit"
           type="text"
