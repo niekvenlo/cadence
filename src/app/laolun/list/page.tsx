@@ -109,7 +109,6 @@ function InputChinese({ className = undefined, value, onChange, placeholder }) {
         }
       }}
       onCompositionEnd={(e) => {
-        const target = e.target as HTMLInputElement;
         preventOnChange.current = false;
         setIsCompositionMode(false);
         onChange(e);
