@@ -18,10 +18,6 @@ export default function Chinese() {
   const inSheet = getOnlyInGoogleSheet(sheetSet, phrasesCharSet);
   return (
     <main id="zhongwen">
-      <div className="top">
-        <BasicLink href="/laolun/list">Back</BasicLink>
-        <h1>List of chars</h1>
-      </div>
       <div id="pin">
         <L list={inLaolun} title="In Laolun" />
         <L list={inSheet} title="Only in Google Sheet" />

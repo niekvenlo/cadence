@@ -145,6 +145,32 @@ p {
   }
 }
 
+#app-header-laolun-nav {
+  background: var(--primary-color-lighter);
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  div {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    height: 1lh;
+    a {
+      color: var(--on-primary-color);
+      padding-inline: 1em;
+      transition: font-size 0.1s;
+      /* translate: 0 -1lh; */
+      &.isActive {
+        background: var(--primary-color-lighter);
+        border-radius: var(--medium-radius);
+        color: var(--accent-color);
+        font-weight: 300;
+        font-size: 2em;
+      }
+    }
+  }
+}
+
 #app-header-quick-section {
   align-items: center;
   background: var(--primary-color-lighter);

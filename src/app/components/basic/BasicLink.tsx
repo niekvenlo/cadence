@@ -23,7 +23,7 @@ export default function BasicLink({
   const isMatch = matchSection ? isActiveSection : isActive;
   return (
     <Link
-      className={cx("basic-a", className)}
+      className={cx("basic-a", className, { isActive, isActiveSection })}
       data-active={isMatch || null}
       href={href}
     >

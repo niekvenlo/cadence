@@ -28,13 +28,6 @@ export default function Chinese() {
   );
   return (
     <main id="zhongwen">
-      <div className="top">
-        <h4></h4>
-        <div className="links">
-          <BasicLink href="/laolun/list">✏️</BasicLink>
-        </div>
-      </div>
-      <h1>捞论</h1>
       <NoSSR>
         <div className="sdjhh">
           {phraseChunks.map((chunk, idx) => (

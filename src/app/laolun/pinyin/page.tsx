@@ -60,10 +60,6 @@ export default function Chinese() {
   }, [newPinyin]);
   return (
     <main id="zhongwen">
-      <div className="top">
-        <BasicLink href="/laolun/list">Back</BasicLink>
-        <h1>List of pinyin</h1>
-      </div>
       <div id="pin">
         {partsWithoutPinyin.length > 0 && (
           <>

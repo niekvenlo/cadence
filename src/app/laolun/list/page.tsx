@@ -24,27 +24,12 @@ export default function Chinese() {
   const x = useRef(false);
   return (
     <main id="zhongwen">
-      <div className="top">
-        <h1>✏️</h1>
-        <div className="links">
-          <BasicLink href="/laolun">中文</BasicLink>
-          <BasicLink href="/laolun/pinyin">拼音</BasicLink>
-          <BasicLink href="/laolun/chars">字符</BasicLink>
-        </div>
-      </div>
       <div className="search">
         <input
           hidden
           onCompositionStart={(e) => console.log("onCompositionStart")}
           onCompositionUpdate={(e) => console.log("onCompositionUpdate")}
           onCompositionEnd={(e) => console.log("onCompositionEnd")}
-          // onChange={() => {
-          //   console.log(x.current);
-          //   if (x.current) {
-          //     x.current = false;
-          //     return;
-          //   }
-          // }}
         />
 
         <input

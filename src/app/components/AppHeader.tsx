@@ -40,7 +40,7 @@ export default function AppHeader({
           {/* <BasicLink href="/weather">Weather</BasicLink> */}
         </div>
       </header>
-      {!isZhongwenSection && (
+      {!isZhongwenSection ? (
         <>
           <div id="app-header-quick-section">
             <Link className="tasks" href="/">
@@ -67,6 +67,15 @@ export default function AppHeader({
           </div>
           <AppHeaderWeatherSection weather={weatherQuery?.data} />
         </>
+      ) : (
+        <div id="app-header-laolun-nav">
+          <div>
+            <BasicLink href="/laolun">捞论</BasicLink>
+            <BasicLink href="/laolun/list">编辑</BasicLink>
+            <BasicLink href="/laolun/pinyin">拼音</BasicLink>
+            <BasicLink href="/laolun/chars">字符</BasicLink>
+          </div>
+        </div>
       )}
     </>
   );
