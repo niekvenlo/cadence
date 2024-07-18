@@ -7,7 +7,7 @@ import type { Phrase } from "./phrase-util-sync";
 
 import { phrases } from "./phrase-util-sync";
 import NoSSR from "../components/NoSSR";
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import { toChunk, toShuffle } from "./util";
 import Part from "./Part";
 import { Accent } from "./Accents";
@@ -15,15 +15,12 @@ import { Accent } from "./Accents";
 export default function Chinese() {
   const [reload] = useReload();
   // bullshit logic
-  const itemsPerChunk = Math.ceil(
-    phrases.length > 150
-      ? phrases.length > 100
-        ? phrases.length / 5
-        : phrases.length / 4
-      : phrases.length / 3
+  const itemsPerChunk = 15;
+  const phraseChunks = toChunk(
+    [...toShuffle(phrases), ...toShuffle(phrases)],
+    itemsPerChunk
   );
-  const phraseChunks = toChunk(toShuffle(phrases), itemsPerChunk);
-  phraseChunks[0].unshift({ label: "捞论", parts: [["捞论"]] });
+  phraseChunks[0].unshift({ label: "捞论一片肃穆", parts: [["捞论一片肃穆"]] });
   const sparkle = (
     <button className="sparkle" onDoubleClick={reload}>
       ✨<small>{new Date().toLocaleTimeString()}</small>
@@ -32,9 +29,7 @@ export default function Chinese() {
   return (
     <main id="zhongwen">
       <div className="top">
-        <h4>
-          {Math.min(itemsPerChunk, phrases.length)} of {phrases.length} phrases
-        </h4>
+        <h4></h4>
         <div className="links">
           <BasicLink href="/laolun/list">✏️</BasicLink>
         </div>
@@ -45,11 +40,15 @@ export default function Chinese() {
           {phraseChunks.map((chunk, idx) => (
             <Chunk
               key={idx + (chunk[0][0] || idx)}
+              idx={idx}
+              reload={reload}
               chunk={chunk}
-              sparkle={sparkle}
             />
           ))}
         </div>
+        <small>
+          Based on {phrases.length} phrases | {new Date().toLocaleTimeString()}
+        </small>
       </NoSSR>
     </main>
   );
@@ -57,12 +56,15 @@ export default function Chinese() {
 
 type ChunkProps = {
   chunk: Phrase[];
-  sparkle: ReactNode;
+  idx: number;
+  reload: () => void;
 };
-function Chunk({ chunk, sparkle }: ChunkProps) {
+function Chunk({ chunk, idx, reload }: ChunkProps) {
   return (
     <>
-      {sparkle}
+      <button className="sparkle" onDoubleClick={reload}>
+        Page {idx + 1}✨
+      </button>
       {chunk.map(({ label, parts }, i) => (
         <span className="phrase-s" key={label + i}>
           {parts.map((part, i) => (
