@@ -155,11 +155,20 @@ p {
     justify-content: space-between;
     align-items: end;
     height: 1lh;
+    &:hover .isActive {
+      color: var(--on-primary-color);
+      &:hover {
+        color: var(--accent-color);
+      }
+    }
     a {
       color: var(--on-primary-color);
       padding-inline: 1em;
       transition: font-size 0.1s;
-      /* translate: 0 -1lh; */
+      &:hover,
+      &:focus {
+        color: var(--accent-color);
+      }
       &.isActive {
         background: var(--primary-color-lighter);
         border-radius: var(--medium-radius);
