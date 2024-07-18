@@ -9,6 +9,7 @@ import "../style.css";
 import { phrases } from "../phrase-util-sync";
 import { writePhrase } from "../phrase-actions-async";
 import { cleanChineseString } from "../util";
+import { cx } from "../../utils";
 
 export default function Chinese() {
   const [searchString, setSearchString] = useState("");
@@ -25,18 +26,9 @@ export default function Chinese() {
   return (
     <main id="zhongwen">
       <div className="search">
-        <input
-          hidden
-          onCompositionStart={(e) => console.log("onCompositionStart")}
-          onCompositionUpdate={(e) => console.log("onCompositionUpdate")}
-          onCompositionEnd={(e) => console.log("onCompositionEnd")}
-        />
-
-        <input
-          data-value={searchString}
-          type="text"
-          defaultValue=""
-          onChange={(e) => setSearchString(cleanChineseString(e.target.value))}
+        <InputChinese
+          value={searchString}
+          onChange={(e) => setSearchString(e.target.value)}
           placeholder="找"
         />
       </div>
@@ -96,4 +88,32 @@ function getComplexityFromParts(parts) {
   let complexity = 1;
   parts.forEach((part) => (complexity *= part.length));
   return complexity;
+}
+
+function InputChinese({ className = undefined, value, onChange, placeholder }) {
+  const preventOnChange = useRef(false);
+  const [isCompositionMode, setIsCompositionMode] = useState(false);
+
+  return (
+    <input
+      defaultValue={value}
+      placeholder={placeholder}
+      className={cx("input-chinese", className, { isCompositionMode })}
+      onCompositionStart={() => {
+        preventOnChange.current = true;
+        setIsCompositionMode(true);
+      }}
+      onChange={(e) => {
+        if (!preventOnChange.current) {
+          onChange(e);
+        }
+      }}
+      onCompositionEnd={(e) => {
+        const target = e.target as HTMLInputElement;
+        preventOnChange.current = false;
+        setIsCompositionMode(false);
+        onChange(e);
+      }}
+    />
+  );
 }

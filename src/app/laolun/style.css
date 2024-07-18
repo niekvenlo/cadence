@@ -20,20 +20,6 @@ main#zhongwen {
     flex-direction: column;
     align-items: flex-end;
     width: 100%;
-    input {
-      width: 12ch;
-      font-family: monospace;
-      letter-spacing: 1.5ch;
-      border: none;
-      outline: none;
-      background: repeating-linear-gradient(
-        90deg,
-        white,
-        white 2ch,
-        var(--background-color) 2ch,
-        var(--background-color) 3.2ch
-      );
-    }
   }
   .label-edit {
     font-size: 1.5em;
