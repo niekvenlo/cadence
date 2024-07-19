@@ -7,15 +7,15 @@ import type { Phrase } from "./phrase-util-sync";
 
 import { phrases } from "./phrase-util-sync";
 import NoSSR from "../components/NoSSR";
-import { useState } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 import { toChunk, toShuffle } from "./util";
 import Part from "./Part";
 import { Accent } from "./Accents";
 
 export default function Chinese() {
+  const [fontSize, setFontSize] = useState(12);
   const [reload] = useReload();
-  // bullshit logic
-  const itemsPerChunk = 15;
+  const itemsPerChunk = 16;
   const phraseChunks = toChunk(
     [...toShuffle(phrases), ...toShuffle(phrases)],
     itemsPerChunk
@@ -27,7 +27,7 @@ export default function Chinese() {
     </button>
   );
   return (
-    <main id="zhongwen">
+    <main id="zhongwen" style={{ fontSize: `${fontSize}px` }}>
       <NoSSR>
         <div className="sdjhh">
           {phraseChunks.map((chunk, idx) => (
@@ -39,6 +39,14 @@ export default function Chinese() {
             />
           ))}
         </div>
+        <input
+          type="range"
+          id="font-size"
+          min="8"
+          max="30"
+          value={fontSize}
+          onChange={(e) => setFontSize(Number(e.target.value))}
+        />
         <small>
           Based on {phrases.length} phrases | {new Date().toLocaleTimeString()}
         </small>
@@ -54,7 +62,7 @@ type ChunkProps = {
 };
 function Chunk({ chunk, idx, reload }: ChunkProps) {
   return (
-    <>
+    <div className="chunk">
       <button className="sparkle" onDoubleClick={reload}>
         Page {idx + 1}✨
       </button>
@@ -72,7 +80,7 @@ function Chunk({ chunk, idx, reload }: ChunkProps) {
           </span>
         </span>
       ))}
-    </>
+    </div>
   );
 }
 

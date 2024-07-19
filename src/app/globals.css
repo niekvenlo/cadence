@@ -571,6 +571,7 @@ main#ai {
     var(--background-color) 3.2ch
   );
   &.isCompositionMode {
+    letter-spacing: 1px;
     background: white;
     color: grey;
   }

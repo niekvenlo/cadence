@@ -8,14 +8,22 @@ import none from "../../../public/none.png";
 import { getTones } from "./util";
 import { ReactElement } from "react";
 
+const height = 12;
 const toneImages = {
-  ask: <Image className="ask" height={20} src={ask} alt="ask-accent" />,
-  state: <Image className="state" height={20} src={state} alt="state-accent" />,
-  sing: <Image className="sing" height={20} src={sing} alt="sing-accent" />,
-  wiggle: (
-    <Image className="wiggle" height={20} src={wiggle} alt="wiggle-accent" />
+  ask: <Image className="ask" height={height} src={ask} alt="ask-accent" />,
+  state: (
+    <Image className="state" height={height} src={state} alt="state-accent" />
   ),
-  none: <Image className="none" height={20} src={none} alt="no-accent" />,
+  sing: <Image className="sing" height={height} src={sing} alt="sing-accent" />,
+  wiggle: (
+    <Image
+      className="wiggle"
+      height={height}
+      src={wiggle}
+      alt="wiggle-accent"
+    />
+  ),
+  none: <Image className="none" height={height} src={none} alt="no-accent" />,
 };
 
 type AccentProps = {

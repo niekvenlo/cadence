@@ -1,20 +1,25 @@
 main#zhongwen {
   width: 100%;
+  max-width: 1000px;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 10em;
-
-  .top {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    .links {
-      display: flex;
-      gap: 1em;
+  background: white;
+  .chunk {
+    border-bottom: 0.5px dotted black;
+  }
+  @media (min-width: 1000px) {
+    background: var(--background-color);
+    margin-top: 1em;
+    .chunk {
+      background: white;
+      border-radius: var(--medium-radius);
+      padding-inline: 2em;
+      margin: 0.2em;
     }
   }
+
   .search {
     display: flex;
     flex-direction: column;
@@ -87,7 +92,7 @@ main#zhongwen {
         display: inline-flex;
         flex-direction: column;
         align-items: center;
-        padding-block: 1.5em;
+        padding-block: 1.1em;
         align-content: end;
         .pinyin {
           opacity: 0.4;
@@ -104,6 +109,7 @@ main#zhongwen {
         &:focus,
         &:hover {
           .pinyin {
+            background: white;
             opacity: 1;
             scale: 3;
           }
@@ -206,6 +212,7 @@ main#zhongwen {
 
   .phrase {
     display: flex;
+    font-size: 0.9em;
   }
   button.add,
   button.plus,

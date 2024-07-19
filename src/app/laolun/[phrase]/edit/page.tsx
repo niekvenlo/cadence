@@ -79,6 +79,12 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
             >
               加字
             </button>
+            <button
+              className="plus"
+              onClick={() => writePhrase({ label: `${label} 2️`, parts })}
+            >
+              🗳️
+            </button>
           </div>
         </div>
       </main>
