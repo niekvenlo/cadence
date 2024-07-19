@@ -35,15 +35,7 @@ export default function Chinese() {
       <div className="sdjhh sssdsv">
         {matchingPhrases.map(({ label, parts }) => (
           <p key={label}>
-            <span>{label}</span>
-            {/* <BasicLink href={`/laolun/${label}`}>👀</BasicLink> */}
-            <BasicLink href={`/laolun/${label}/edit`}>✏️</BasicLink>
-            {/* <BasicButton
-              variant="look-like-a-link"
-              onClick={() => writePhrase({ label: `${label} 2️`, parts })}
-            >
-              🗳️
-            </BasicButton> */}
+            <a href={`/laolun/${label}/edit`}>{label}</a>
             <span className="complexity">{getComplexityFromParts(parts)}</span>
           </p>
         ))}

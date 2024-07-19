@@ -215,9 +215,10 @@ main#zhongwen {
     font-size: 0.9em;
   }
   button.add,
-  button.plus,
+  button.duplicate,
   button.minus,
-  button.shift {
+  button.shift,
+  button.insert {
     height: 1.5lh;
     border: 1px solid var(--on-primary-color);
     border-radius: var(--medium-radius);
@@ -234,19 +235,23 @@ main#zhongwen {
         inset 0 0 0 4px var(--on-primary-color);
     }
   }
-  button.shift {
+  button.shift,
+  button.insert {
     max-width: 9ch;
     align-self: center;
     &.isActive {
       background: var(--accent-color);
     }
   }
-  button.plus {
+  button.duplicate {
     margin-left: 1em;
     padding-inline: 1em;
+    align-self: flex-end;
   }
-  button.minus {
+  button.minus,
+  button.duplicate {
     padding-inline: 1em;
+    background: var(--accent-color);
   }
   .column {
     text-align: center;

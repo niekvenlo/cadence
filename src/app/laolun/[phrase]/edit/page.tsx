@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react";
 import NoSSR from "../../../components/NoSSR";
-import BasicLink from "../../../components/basic/BasicLink";
 import { findPhraseByLabel, getSuggested } from "../../phrase-util-sync";
 import { writePhrase, updateLabel } from "../../phrase-actions-async";
 import "../../style.css";
@@ -23,6 +22,10 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
   const onChangePart = (i, part, append = false) => {
     if (part === "rem-col-hack") {
       writePhrase({ label, parts: parts.toSpliced(i, 1) });
+      return;
+    }
+    if (part === "insert-col-hack") {
+      writePhrase({ label, parts: parts.toSpliced(i + 1, 0, [no_text]) });
       return;
     }
     if (part === "shift-col-hack") {
@@ -49,6 +52,11 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
     const finalLabel = await updateLabel(label, newLabel);
     router.replace(`/laolun/${finalLabel}/edit`);
   };
+  const duplicatePhrase = async () => {
+    const dupeLabel = `${label} 🗳️`;
+    router.push(`/laolun/${dupeLabel}/edit`);
+    writePhrase({ label: dupeLabel, parts });
+  };
   return (
     <NoSSR>
       <main id="zhongwen">
@@ -63,6 +71,10 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
           }}
         />
 
+        <button className="duplicate" onClick={duplicatePhrase}>
+          🗳️
+        </button>
+
         <div className="phrase">
           {parts.map((part, i) => (
             <Column
@@ -72,20 +84,6 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
               onChangePart={(part, append) => onChangePart(i, part, append)}
             />
           ))}
-          <div>
-            <button
-              className="plus"
-              onClick={() => onChangePart(parts.length, [no_text])}
-            >
-              加字
-            </button>
-            <button
-              className="plus"
-              onClick={() => writePhrase({ label: `${label} 2️`, parts })}
-            >
-              🗳️
-            </button>
-          </div>
         </div>
       </main>
     </NoSSR>
@@ -96,7 +94,7 @@ type ColumnProps = {
   part: string[];
   shiftColumnIdx: number | null;
   onChangePart: (
-    part: string[] | "rem-col-hack" | "shift-col-hack",
+    part: string[] | "rem-col-hack" | "shift-col-hack" | "insert-col-hack",
     append?: boolean
   ) => void;
 };
@@ -119,9 +117,17 @@ const Column = ({ part, shiftColumnIdx, onChangePart }: ColumnProps) => {
         {shiftColumnIdx !== null ? "挑选" : "移动"}
       </button>
       <TextArea part={part} onBlur={(part) => onChangePart(part)} />
-      {canBeDeleted && (
+
+      {canBeDeleted ? (
         <button className="minus" onClick={() => onChangePart("rem-col-hack")}>
           除字
+        </button>
+      ) : (
+        <button
+          className="insert"
+          onClick={() => onChangePart("insert-col-hack")}
+        >
+          右加
         </button>
       )}
       <div className="suggested">
