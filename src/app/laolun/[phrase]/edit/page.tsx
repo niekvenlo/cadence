@@ -60,20 +60,22 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
   return (
     <NoSSR>
       <main id="zhongwen">
-        <input
-          className="label-edit"
-          type="text"
-          defaultValue={label}
-          onBlur={(e) => {
-            if (e.target.value !== label) {
-              changeLabel(e.target.value);
-            }
-          }}
-        />
+        <div id="label-edit-box">
+          <input
+            className="label-edit"
+            type="text"
+            defaultValue={label}
+            onBlur={(e) => {
+              if (e.target.value !== label) {
+                changeLabel(e.target.value);
+              }
+            }}
+          />
 
-        <button className="duplicate" onClick={duplicatePhrase}>
-          🗳️
-        </button>
+          <button className="duplicate" onClick={duplicatePhrase}>
+            🗳️
+          </button>
+        </div>
 
         <div className="phrase">
           {parts.map((part, i) => (

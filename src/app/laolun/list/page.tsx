@@ -1,9 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { useRouter } from "next/navigation";
-import BasicLink from "../../components/basic/BasicLink";
-import BasicButton from "../../components/basic/BasicButton";
+import { useEffect, useRef, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import "../style.css";
 
 import { phrases } from "../phrase-util-sync";
@@ -12,7 +10,14 @@ import { cleanChineseString } from "../util";
 import { cx } from "../../utils";
 
 export default function Chinese() {
-  const [searchString, setSearchString] = useState("");
+  const searchString = decodeURI(
+    useSearchParams()?.toString().slice(0, -1) || ""
+  );
+  const router = useRouter();
+  const pathname = usePathname();
+  const setSearchString = (string: string) =>
+    router.push(pathname + "?" + string);
+
   const matchingPhrases = phrases.filter((phrase) => {
     const allChars = phrase.parts.flat().join();
     if (!searchString) {
@@ -22,7 +27,7 @@ export default function Chinese() {
       .split("")
       .every((searchChar) => allChars.includes(searchChar));
   });
-  const x = useRef(false);
+
   return (
     <main id="zhongwen">
       <div className="search">
@@ -88,7 +93,7 @@ function InputChinese({ className = undefined, value, onChange, placeholder }) {
 
   return (
     <input
-      defaultValue={value}
+      defaultValue={value.split("").join(" + ")}
       placeholder={placeholder}
       className={cx("input-chinese", className, { isCompositionMode })}
       onCompositionStart={() => {

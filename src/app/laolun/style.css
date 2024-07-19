@@ -25,15 +25,20 @@ main#zhongwen {
     flex-direction: column;
     align-items: flex-end;
     width: 100%;
+    input {
+      height: 32px;
+    }
+  }
+  #label-edit-box {
+    align-self: flex-end;
   }
   .label-edit {
     font-size: 1.5em;
     text-align: right;
-    align-self: flex-end;
     border: none;
     background: inherit;
     color: var(--accent-color);
-    width: 30ch;
+    width: min(30ch, calc(100vw - 10em));
     &:hover {
       background: var(--background-color-darker);
       background: linear-gradient(
@@ -246,7 +251,6 @@ main#zhongwen {
   button.duplicate {
     margin-left: 1em;
     padding-inline: 1em;
-    align-self: flex-end;
   }
   button.minus,
   button.duplicate {

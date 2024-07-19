@@ -557,19 +557,6 @@ main#ai {
 
 .input-chinese {
   color: inherit;
-
-  width: 12ch;
-  font-family: monospace;
-  letter-spacing: 1.5ch;
-  border: none;
-  outline: none;
-  background: repeating-linear-gradient(
-    90deg,
-    white,
-    white 2ch,
-    var(--background-color) 2ch,
-    var(--background-color) 3.2ch
-  );
   &.isCompositionMode {
     letter-spacing: 1px;
     background: white;
