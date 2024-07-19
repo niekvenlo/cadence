@@ -93,7 +93,7 @@ function InputChinese({ className = undefined, value, onChange, placeholder }) {
 
   return (
     <input
-      defaultValue={value.split("").join(" + ")}
+      defaultValue={value}
       placeholder={placeholder}
       className={cx("input-chinese", className, { isCompositionMode })}
       onCompositionStart={() => {

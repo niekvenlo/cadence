@@ -26,7 +26,7 @@ main#zhongwen {
     align-items: flex-end;
     width: 100%;
     input {
-      height: 32px;
+      height: 36px;
     }
   }
   #label-edit-box {
