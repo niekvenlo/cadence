@@ -61,6 +61,7 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
     <NoSSR>
       <main id="zhongwen">
         <div id="label-edit-box">
+          <a href="/laolun/list">后退</a>
           <input
             className="label-edit"
             type="text"

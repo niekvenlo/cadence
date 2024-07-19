@@ -46,6 +46,7 @@ export default function Chinese() {
         ))}
       </div>
       <Add />
+      <small>{phrases.length} phrases</small>
     </main>
   );
 }

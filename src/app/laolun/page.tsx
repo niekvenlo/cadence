@@ -21,11 +21,6 @@ export default function Chinese() {
     itemsPerChunk
   );
   phraseChunks[0].unshift({ label: "捞论一片肃穆", parts: [["捞论一片肃穆"]] });
-  const sparkle = (
-    <button className="sparkle" onDoubleClick={reload}>
-      ✨<small>{new Date().toLocaleTimeString()}</small>
-    </button>
-  );
   return (
     <main id="zhongwen" style={{ fontSize: `${fontSize}px` }}>
       <NoSSR>
