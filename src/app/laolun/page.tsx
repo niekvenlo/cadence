@@ -15,7 +15,7 @@ import { Accent } from "./Accents";
 export default function Chinese() {
   const [fontSize, setFontSize] = useState(12);
   const [reload] = useReload();
-  const itemsPerChunk = 16;
+  const itemsPerChunk = 25;
   const phraseChunks = toChunk(
     [...toShuffle(phrases), ...toShuffle(phrases)],
     itemsPerChunk
