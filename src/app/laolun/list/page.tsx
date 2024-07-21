@@ -72,7 +72,7 @@ function Add() {
     const parts = label.includes("|")
       ? label.split("|").map((f) => [f])
       : label.split("").map((f) => [f]);
-    const labelWithoutPipes = label.replace(/[|]/g, "");
+    const labelWithoutPipes = label.replace(/[|]/g, "").replace(/[,]/g, "，");
     router.push(`/laolun/${labelWithoutPipes}/edit`);
     writePhrase({ label: labelWithoutPipes, parts });
   };
