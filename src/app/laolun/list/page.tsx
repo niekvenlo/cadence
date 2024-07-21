@@ -5,7 +5,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import "../style.css";
 
 import { getMissingPinyin, phrases } from "../phrase-util-sync";
-import { writePhrase } from "../phrase-actions-async";
+import { getSafePhraseLabel, writePhrase } from "../phrase-actions-async";
 import { cleanChineseString } from "../util";
 import { cx } from "../../utils";
 
@@ -71,10 +71,9 @@ function Add() {
     }
     const parts = label.includes("|")
       ? label.split("|").map((f) => [f])
-      : label.split("").map((f) => [f]);
-    const labelWithoutPipes = label.replace(/[|]/g, "").replace(/[,]/g, "，");
-    router.push(`/laolun/${labelWithoutPipes}/edit`);
-    writePhrase({ label: labelWithoutPipes, parts });
+      : [label];
+    router.push(`/laolun/${getSafePhraseLabel(label)}/edit`);
+    writePhrase({ label, parts });
   };
   return (
     <div style={{ paddingBlock: "3em", display: "flex", gap: "0.1em" }}>

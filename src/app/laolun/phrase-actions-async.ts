@@ -20,7 +20,7 @@ const writePinyin = (data) =>
 export const writePhrase = async (phraseToWrite) => {
   const phrases = (await readPhrases()) as Phrase[];
   const foundPhraseIdx = phrases.findIndex(
-    (p) => p.label === phraseToWrite.label
+    (p) => p.label === getSafePhraseLabel(phraseToWrite.label)
   );
   if (foundPhraseIdx === -1) {
     phrases.push(phraseToWrite);
@@ -38,12 +38,13 @@ export const updateLabel = async (oldLabel, newLabel) => {
   const uniqueLabel = isNameClash
     ? `${newLabel} ${Math.random().toString().slice(14)}`
     : newLabel;
+  const safeLabel = getSafePhraseLabel(uniqueLabel);
 
   if (foundPhraseIdx > -1) {
-    phrases[foundPhraseIdx].label = uniqueLabel;
+    phrases[foundPhraseIdx].label = safeLabel;
     writePhrases(phrases);
   }
-  return uniqueLabel;
+  return safeLabel;
 };
 
 export const setPinyin = async (kanji, pinyin) => {
@@ -51,3 +52,6 @@ export const setPinyin = async (kanji, pinyin) => {
   allPinyin[kanji] = pinyin;
   writePinyin({ ...allPinyin });
 };
+
+export const getSafePhraseLabel = (label: string) =>
+  label.replace(/[|]/g, "").replace(/[,]/g, "，").replace(/[?]/g, "？");
