@@ -1,19 +1,20 @@
 "use client";
 
-import BasicLink from "../components/basic/BasicLink";
 import "./style.css";
 
 import type { Phrase } from "./phrase-util-sync";
 
 import { phrases } from "./phrase-util-sync";
 import NoSSR from "../components/NoSSR";
-import { CSSProperties, useEffect, useState } from "react";
+import { CSSProperties, useState } from "react";
 import { toChunk, toShuffle } from "./util";
 import Part from "./Part";
 import { Accent } from "./Accents";
+import { useRouter } from "next/navigation";
 
 export default function Chinese() {
   const [fontSize, setFontSize] = useState(12);
+  const [serifFont, setSerifFont] = useState(true);
   const [reload] = useReload();
   const itemsPerChunk = 25;
   const phraseChunks = toChunk(
@@ -21,8 +22,19 @@ export default function Chinese() {
     itemsPerChunk
   );
   phraseChunks[0].unshift({ label: "捞论一片肃穆", parts: [["捞论一片肃穆"]] });
+
   return (
-    <main id="zhongwen" style={{ fontSize: `${fontSize}px` }}>
+    <main
+      id="zhongwen"
+      style={
+        {
+          fontSize: `${fontSize}px`,
+          "--chinese-font-source": serifFont
+            ? "var(--chinese-font-source)"
+            : undefined,
+        } as CSSProperties
+      }
+    >
       <NoSSR>
         <div className="sdjhh">
           {phraseChunks.map((chunk, idx) => (
@@ -34,14 +46,23 @@ export default function Chinese() {
             />
           ))}
         </div>
-        <input
-          type="range"
-          id="font-size"
-          min="8"
-          max="30"
-          value={fontSize}
-          onChange={(e) => setFontSize(Number(e.target.value))}
-        />
+        <label>
+          <input
+            type="checkbox"
+            id="font-size"
+            value={fontSize}
+            onChange={() => setFontSize((x) => (x === 12 ? 16 : 12))}
+          />
+          Font size
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            value={fontSize}
+            onChange={() => setSerifFont((x) => !x)}
+          />
+          Serif font
+        </label>
         <small>
           Based on {phrases.length} phrases | {new Date().toLocaleTimeString()}
         </small>
@@ -64,7 +85,7 @@ function Chunk({ chunk, idx, reload }: ChunkProps) {
       {chunk.map(({ label, parts }, i) => (
         <span className="phrase-s" key={label + i}>
           {parts.map((part, i) => (
-            <Part key={part[0] + i} part={part} />
+            <Part key={part[0] + i} part={part} label={label} />
           ))}
           <span className="part">
             <span className="full-stop char">

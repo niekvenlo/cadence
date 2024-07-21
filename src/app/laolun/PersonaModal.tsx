@@ -9,7 +9,7 @@ type Props = {
   isOpen?: boolean;
   closeOnBackdropClick?: boolean;
   requestClose: () => void;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 export default function PersonaModal({

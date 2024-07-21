@@ -1,5 +1,6 @@
 import phrasesJson from "./phrases.json";
 import pinyinJson from "./pinyin.json";
+import { breakPinyinIntoSylables } from "./util";
 
 // I trust that the JSON is correctly formed.
 export const phrases = phrasesJson as Phrase[];
@@ -8,6 +9,38 @@ export const pinyin = pinyinJson;
 export type Phrase = {
   label: string;
   parts: string[][];
+};
+
+export const getMissingPinyin = () => {
+  const missing: string[] = [];
+  phrases.forEach(({ parts }) => {
+    parts.forEach((part) => {
+      part.forEach((variant) => {
+        const isThere = getPinyin(variant, { requireExplicit: true });
+        if (!isThere) {
+          missing.push(variant);
+        }
+      });
+    });
+  });
+  return missing;
+};
+
+export const getDangerousKanji = () => {
+  const kanjiMap = new Map();
+  const dangerousKanji = new Map();
+  Object.entries(pinyin).forEach(([kanji, pinyin]) => {
+    const kan = kanji.split("");
+    const pin = breakPinyinIntoSylables(pinyin);
+    kan.forEach((k, i) => {
+      const p = pin[i];
+      if (kanjiMap.get(k) && kanjiMap.get(k) !== p) {
+        dangerousKanji.set(k, [kanjiMap.get(k), p]);
+      }
+      kanjiMap.set(k, p);
+    });
+  });
+  return [...dangerousKanji];
 };
 
 export const findPhraseByLabel = (label: string): Phrase =>

@@ -163,7 +163,7 @@
             "title": "Water the plants",
             "cadenceInDays": 3,
             "id": "2c3e317c-6c09-4116-a92f-569356dc3945",
-            "nextEpochDay": 19925
+            "nextEpochDay": 19928
         },
         {
             "title": "Vacuum bedroom",
@@ -259,7 +259,7 @@
             "title": "Recycle paper ",
             "cadenceInDays": 10,
             "id": "926978d8-1248-4077-a8db-007271792fde",
-            "nextEpochDay": 19925
+            "nextEpochDay": 19935
         },
         {
             "title": "Clean the water bottles",

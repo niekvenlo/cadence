@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import "../style.css";
 
-import { phrases } from "../phrase-util-sync";
+import { getMissingPinyin, phrases } from "../phrase-util-sync";
 import { writePhrase } from "../phrase-actions-async";
 import { cleanChineseString } from "../util";
 import { cx } from "../../utils";
@@ -28,8 +28,17 @@ export default function Chinese() {
       .every((searchChar) => allChars.includes(searchChar));
   });
 
+  const missingPinyin = getMissingPinyin();
+
   return (
     <main id="zhongwen">
+      {missingPinyin && (
+        <a href="/laolun/pinyin">
+          Missing pinyin for {missingPinyin.length} phrase part variants:{" "}
+          {missingPinyin.slice(0, 2).join(", ")}
+          {missingPinyin.length > 2 && " and more"}
+        </a>
+      )}
       <div className="search">
         <InputChinese
           value={searchString}

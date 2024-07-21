@@ -4,7 +4,7 @@ import { pinyin as pinyinJson, getPinyin } from "./phrase-util-sync";
 import { Accent, Accents } from "./Accents";
 import PersonaModal from "./PersonaModal";
 
-function Part({ part }) {
+function Part({ label, part }) {
   const [isSelected, setIsSelected] = useState(false);
   const style = useRef({
     color: `hsl(${230 + Math.random() * 50}, 60%, 60%)`,
@@ -39,7 +39,6 @@ function Part({ part }) {
           closeOnBackdropClick
           className="selected"
           requestClose={() => setIsSelected(false)}
-          onClick={() => setIsSelected(false)}
         >
           <p className="alternative">
             {alternativeKanji.map((a) => (
@@ -49,6 +48,7 @@ function Part({ part }) {
           <Accents pinyin={pinyinJson[kanji.current]} />
           <h2>{kanji.current}</h2>
           <p>{pinyinJson[kanji.current]?.replace(/-/g, " ")}</p>
+          <a href={`/laolun/${label}/edit`}>Go to edit page</a>
         </PersonaModal>
       )}
     </>

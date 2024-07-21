@@ -2,7 +2,11 @@
 
 import { useMemo, useState } from "react";
 import NoSSR from "../../../components/NoSSR";
-import { findPhraseByLabel, getSuggested } from "../../phrase-util-sync";
+import {
+  findPhraseByLabel,
+  getDangerousKanji,
+  getSuggested,
+} from "../../phrase-util-sync";
 import { writePhrase, updateLabel } from "../../phrase-actions-async";
 import "../../style.css";
 import { getIsChinese } from "../../util";
@@ -34,7 +38,6 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
         [parts[shiftColumnIdx], parts[i]] = [parts[i], parts[shiftColumnIdx]];
         setShiftColumnIdx(null);
       } else {
-        console.log(i);
         setShiftColumnIdx(i);
       }
       return;
@@ -57,6 +60,13 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
     router.push(`/laolun/${dupeLabel}/edit`);
     writePhrase({ label: dupeLabel, parts });
   };
+  const kanjiUsed = parts.map((p) => p.map((c) => c.split(""))).flat(4);
+  console.log(
+    kanjiUsed,
+    getDangerousKanji().map((f) => f[0])
+  );
+  const getDangerousKanjiUsed = () =>
+    getDangerousKanji().filter((k) => kanjiUsed.includes(k[0]));
   return (
     <NoSSR>
       <main id="zhongwen">
@@ -75,6 +85,15 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
           <button className="duplicate" onClick={duplicatePhrase}>
             🗳️
           </button>
+          <div className="dangerous-kanji-warning">
+            <div>
+              {getDangerousKanjiUsed().map((k) => (
+                <span key={k[0]} title={k[1]}>
+                  {k[0]}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="phrase">
