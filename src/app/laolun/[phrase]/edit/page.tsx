@@ -17,7 +17,9 @@ const no_text = "。";
 
 export default function Chinese({ params }: { params: { phrase: string } }) {
   const router = useRouter();
-  const { label, parts } = findPhraseByLabel(decodeURI(params.phrase));
+  const { label, parts, isValidateGrammar } = findPhraseByLabel(
+    decodeURI(params.phrase)
+  );
 
   const [_, setX] = useState(0);
 
@@ -60,6 +62,10 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
     router.push(`/laolun/${dupeLabel}/edit`);
     writePhrase({ label: dupeLabel, parts });
   };
+  const toggleIsValidateGrammar = () => {
+    writePhrase({ label, parts, isValidateGrammar: !isValidateGrammar });
+  };
+
   const kanjiUsed = parts.map((p) => p.map((c) => c.split(""))).flat(4);
   console.log(
     kanjiUsed,
@@ -84,6 +90,13 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
 
           <button className="duplicate" onClick={duplicatePhrase}>
             🗳️
+          </button>
+
+          <button
+            className={cx("witch", { isValidateGrammar })}
+            onClick={toggleIsValidateGrammar}
+          >
+            🧙‍♀️
           </button>
           <div className="dangerous-kanji-warning">
             <div>

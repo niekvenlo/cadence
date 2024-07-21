@@ -9,6 +9,8 @@ export const pinyin = pinyinJson;
 export type Phrase = {
   label: string;
   parts: string[][];
+  isFocusedLearing?: boolean;
+  isValidateGrammar?: boolean;
 };
 
 export const getMissingPinyin = () => {

@@ -32,7 +32,7 @@ export default function Chinese() {
 
   return (
     <main id="zhongwen">
-      {missingPinyin && (
+      {missingPinyin.length > 0 && (
         <a href="/laolun/pinyin">
           Missing pinyin for {missingPinyin.length} phrase part variants:{" "}
           {missingPinyin.slice(0, 2).join(", ")}
@@ -47,8 +47,8 @@ export default function Chinese() {
         />
       </div>
       <div className="sdjhh sssdsv">
-        {matchingPhrases.map(({ label, parts }) => (
-          <p key={label}>
+        {matchingPhrases.map(({ label, parts, isValidateGrammar }) => (
+          <p key={label} className={cx({ isValidateGrammar })}>
             <a href={`/laolun/${label}/edit`}>{label}</a>
             <span className="complexity">{getComplexityFromParts(parts)}</span>
           </p>

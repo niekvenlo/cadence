@@ -22,7 +22,9 @@
         "他",
         "她"
       ]
-    ]
+    ],
+    "isValidateGrammar": true,
+    "isFocusedLearning": true
   },
   {
     "label": "我给你水",

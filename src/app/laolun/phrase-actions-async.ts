@@ -18,14 +18,16 @@ const writePinyin = (data) =>
   fs.writeFile(pinyinJsonFilePath, JSON.stringify(data, null, 2), "utf-8");
 
 export const writePhrase = async (phraseToWrite) => {
+  phraseToWrite.label = await getSafePhraseLabel(phraseToWrite.label);
   const phrases = (await readPhrases()) as Phrase[];
   const foundPhraseIdx = phrases.findIndex(
-    (p) => p.label === getSafePhraseLabel(phraseToWrite.label)
+    (p) => p.label === phraseToWrite.label
   );
   if (foundPhraseIdx === -1) {
     phrases.push(phraseToWrite);
   } else {
-    phrases[foundPhraseIdx] = phraseToWrite;
+    const oldPhrase = phrases[foundPhraseIdx];
+    phrases[foundPhraseIdx] = { ...oldPhrase, ...phraseToWrite };
   }
   writePhrases(phrases);
   return phrases;

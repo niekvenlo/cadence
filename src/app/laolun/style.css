@@ -61,6 +61,34 @@ main#zhongwen {
     @media (min-width: 1000px) {
       columns: 3;
     }
+    a {
+      color: var(--primary-color-lighter);
+    }
+    .isValidateGrammar {
+      a {
+        color: var(--accent-color);
+        position: relative;
+        &:before {
+          content: "🧙‍♀️ ";
+        }
+        &:hover::after {
+          content: '女巫说:\A"请检查语法"';
+          white-space: pre;
+          position: absolute;
+          top: 2em;
+          left: 0;
+          width: 10em;
+          aspect-ratio: 1/1;
+          border-radius: 6em;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: var(--accent-color);
+          color: var(--on-primary-color);
+          z-index: 2;
+        }
+      }
+    }
     .complexity {
       font-weight: 100;
       opacity: 0.6;
@@ -234,7 +262,8 @@ main#zhongwen {
   button.duplicate,
   button.minus,
   button.shift,
-  button.insert {
+  button.insert,
+  button.witch {
     height: 1.5lh;
     border: 1px solid var(--on-primary-color);
     border-radius: var(--medium-radius);
@@ -267,6 +296,35 @@ main#zhongwen {
   button.duplicate {
     padding-inline: 1em;
     background: var(--accent-color);
+  }
+  button.witch {
+    margin-left: 1em;
+    padding-inline: 1em;
+    background: var(--primary-color);
+    position: relative;
+    &:hover::after {
+      content: '女巫说:\A"都好"';
+      white-space: pre;
+      position: absolute;
+      top: 2em;
+      left: 0;
+      width: 10em;
+      aspect-ratio: 1/1;
+      border-radius: 6em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary-color);
+      color: var(--on-primary-color);
+      z-index: 2;
+    }
+    &.isValidateGrammar {
+      background: var(--accent-color);
+      &:hover::after {
+        content: '女巫说:\A"请检查语法"';
+        background: var(--accent-color);
+      }
+    }
   }
   .column {
     text-align: center;
