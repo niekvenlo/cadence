@@ -160,7 +160,7 @@ main#zhongwen {
         }
         .kanji {
           font-size: 1.4em;
-          font-family: STKaiti, AR PL Ukai CN, AR PL Ukai HK, UKai;
+          /* font-family: var(--chinese-font-source); */
           @media (max-width: 800px) {
             font-size: 1.5em;
           }
