@@ -47,12 +47,19 @@ export default function Chinese() {
         />
       </div>
       <div className="sdjhh sssdsv">
-        {matchingPhrases.map(({ label, parts, isValidateGrammar }) => (
-          <p key={label} className={cx({ isValidateGrammar })}>
-            <a href={`/laolun/${label}/edit`}>{label}</a>
-            <span className="complexity">{getComplexityFromParts(parts)}</span>
-          </p>
-        ))}
+        {matchingPhrases.map(
+          ({ label, parts, isValidateGrammar, isFocusedLearning }) => (
+            <p
+              key={label}
+              className={cx({ isValidateGrammar, isFocusedLearning })}
+            >
+              <a href={`/laolun/${label}/edit`}>{label}</a>
+              <span className="complexity">
+                {getComplexityFromParts(parts)}
+              </span>
+            </p>
+          )
+        )}
       </div>
       <Add />
       <small>{phrases.length} phrases</small>

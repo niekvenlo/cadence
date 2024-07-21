@@ -17,9 +17,8 @@ const no_text = "。";
 
 export default function Chinese({ params }: { params: { phrase: string } }) {
   const router = useRouter();
-  const { label, parts, isValidateGrammar } = findPhraseByLabel(
-    decodeURI(params.phrase)
-  );
+  const { label, parts, isValidateGrammar, isFocusedLearning } =
+    findPhraseByLabel(decodeURI(params.phrase));
 
   const [_, setX] = useState(0);
 
@@ -65,6 +64,9 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
   const toggleIsValidateGrammar = () => {
     writePhrase({ label, parts, isValidateGrammar: !isValidateGrammar });
   };
+  const toggleIsFocusedLearning = () => {
+    writePhrase({ label, parts, isFocusedLearning: !isFocusedLearning });
+  };
 
   const kanjiUsed = parts.map((p) => p.map((c) => c.split(""))).flat(4);
   console.log(
@@ -97,6 +99,12 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
             onClick={toggleIsValidateGrammar}
           >
             🧙‍♀️
+          </button>
+          <button
+            className={cx("pin", { isFocusedLearning })}
+            onClick={toggleIsFocusedLearning}
+          >
+            📌
           </button>
           <div className="dangerous-kanji-warning">
             <div>

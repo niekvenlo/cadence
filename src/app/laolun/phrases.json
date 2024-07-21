@@ -23,8 +23,8 @@
         "她"
       ]
     ],
-    "isValidateGrammar": true,
-    "isFocusedLearning": true
+    "isValidateGrammar": false,
+    "isFocusedLearning": false
   },
   {
     "label": "我给你水",
@@ -1266,7 +1266,8 @@
         "抱歉",
         "不好意思"
       ]
-    ]
+    ],
+    "isFocusedLearning": true
   },
   {
     "label": "你要不要玩游戏",

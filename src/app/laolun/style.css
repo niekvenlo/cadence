@@ -89,6 +89,31 @@ main#zhongwen {
         }
       }
     }
+    .isFocusedLearning {
+      a {
+        color: var(--primary-color-darker);
+        position: relative;
+        &:before {
+          content: "📌 ";
+        }
+        &:hover::after {
+          content: '女巫说:\A"请检查语法"';
+          white-space: pre;
+          position: absolute;
+          top: 2em;
+          left: 0;
+          width: 10em;
+          aspect-ratio: 1/1;
+          border-radius: 6em;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: var(--accent-color);
+          color: var(--on-primary-color);
+          z-index: 2;
+        }
+      }
+    }
     .complexity {
       font-weight: 100;
       opacity: 0.6;
@@ -263,7 +288,8 @@ main#zhongwen {
   button.minus,
   button.shift,
   button.insert,
-  button.witch {
+  button.witch,
+  button.pin {
     height: 1.5lh;
     border: 1px solid var(--on-primary-color);
     border-radius: var(--medium-radius);
@@ -297,13 +323,14 @@ main#zhongwen {
     padding-inline: 1em;
     background: var(--accent-color);
   }
+  button.pin,
   button.witch {
     margin-left: 1em;
     padding-inline: 1em;
     background: var(--primary-color);
     position: relative;
     &:hover::after {
-      content: '女巫说:\A"都好"';
+      content: '女巫说:\A"检查完毕！"';
       white-space: pre;
       position: absolute;
       top: 2em;
@@ -323,6 +350,18 @@ main#zhongwen {
       &:hover::after {
         content: '女巫说:\A"请检查语法"';
         background: var(--accent-color);
+      }
+    }
+  }
+
+  button.pin {
+    &:hover::after {
+      content: '📌说:\A"无聊的"';
+    }
+    &.isFocusedLearning {
+      background: var(--accent-color);
+      &:hover::after {
+        content: '📌说:\A"重点"';
       }
     }
   }

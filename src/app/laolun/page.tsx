@@ -10,15 +10,21 @@ import { CSSProperties, useState } from "react";
 import { toChunk, toShuffle } from "./util";
 import Part from "./Part";
 import { Accent } from "./Accents";
-import { useRouter } from "next/navigation";
 
 export default function Chinese() {
   const [fontSize, setFontSize] = useState(12);
   const [serifFont, setSerifFont] = useState(true);
   const [reload] = useReload();
   const itemsPerChunk = 25;
+  const phrasesWithFocusedLearning = [
+    ...phrases,
+    ...phrases.filter((p) => p.isFocusedLearning),
+  ];
   const phraseChunks = toChunk(
-    [...toShuffle(phrases), ...toShuffle(phrases)],
+    [
+      ...toShuffle(phrasesWithFocusedLearning),
+      ...toShuffle(phrasesWithFocusedLearning),
+    ],
     itemsPerChunk
   );
   phraseChunks[0].unshift({ label: "捞论一片肃穆", parts: [["捞论一片肃穆"]] });
