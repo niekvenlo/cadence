@@ -115,3 +115,6 @@ export const getPinyin = (
     .filter((f) => f)
     .join(" ");
 };
+
+export const getSafePhraseLabel = (label: string) =>
+  label.replace(/[|]/g, "").replace(/[,]/g, "，").replace(/[?]/g, "？");

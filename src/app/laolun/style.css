@@ -52,15 +52,25 @@ main#zhongwen {
     }
   }
 
+  .phrase-list-table {
+    border-collapse: collapse;
+    td {
+      padding: 0.1em;
+    }
+    thead td {
+      background: var(--background-color-darker);
+      border-bottom: 1px solid black;
+    }
+    tbody tr:nth-of-type(2n) {
+      background: #eee;
+    }
+    a {
+      color: var(--primary-color-lighter);
+    }
+  }
+
   .sssdsv {
     display: block !important;
-    columns: 1;
-    @media (min-width: 600px) {
-      columns: 2;
-    }
-    @media (min-width: 1000px) {
-      columns: 3;
-    }
     a {
       color: var(--primary-color-lighter);
     }
@@ -71,22 +81,6 @@ main#zhongwen {
         &:before {
           content: "🧙‍♀️ ";
         }
-        /* &:hover::after {
-          content: '女巫说:\A"请检查语法"';
-          white-space: pre;
-          position: absolute;
-          top: 2em;
-          left: 0;
-          width: 10em;
-          aspect-ratio: 1/1;
-          border-radius: 6em;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: var(--accent-color);
-          color: var(--on-primary-color);
-          z-index: 2;
-        } */
       }
     }
     .isFocusedLearning {

@@ -2,7 +2,7 @@
 
 import fs from "fs/promises";
 
-import type { Phrase } from "./phrase-util-sync";
+import { getSafePhraseLabel, type Phrase } from "./phrase-util-sync";
 
 const phrasesJsonFilePath = "src/app/laolun/phrases.json";
 const pinyinJsonFilePath = "src/app/laolun/pinyin.json";
@@ -54,6 +54,3 @@ export const setPinyin = async (kanji, pinyin) => {
   allPinyin[kanji] = pinyin;
   writePinyin({ ...allPinyin });
 };
-
-export const getSafePhraseLabel = (label: string) =>
-  label.replace(/[|]/g, "").replace(/[,]/g, "，").replace(/[?]/g, "？");

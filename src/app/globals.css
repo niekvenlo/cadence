@@ -554,12 +554,3 @@ main#ai {
     box-shadow: var(--card-shadow-up);
   }
 }
-
-.input-chinese {
-  color: inherit;
-  &.isCompositionMode {
-    letter-spacing: 1px;
-    background: white;
-    color: grey;
-  }
-}

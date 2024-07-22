@@ -1,32 +1,22 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import "../style.css";
 
-import { getMissingPinyin, phrases } from "../phrase-util-sync";
-import { getSafePhraseLabel, writePhrase } from "../phrase-actions-async";
+import {
+  getSafePhraseLabel,
+  getMissingPinyin,
+  phrases,
+} from "../phrase-util-sync";
+import { writePhrase } from "../phrase-actions-async";
 import { cleanChineseString } from "../util";
 import { cx } from "../../utils";
+import { useSearch } from "../hooks";
+import { useRouter } from "next/navigation";
+import { InputChinese } from "../components/InputChinese";
 
 export default function Chinese() {
-  const searchString = decodeURI(
-    useSearchParams()?.toString().slice(0, -1) || ""
-  );
-  const router = useRouter();
-  const pathname = usePathname();
-  const setSearchString = (string: string) =>
-    router.push(pathname + "?" + string);
-
-  const matchingPhrases = phrases.filter((phrase) => {
-    const allChars = phrase.parts.flat().join();
-    if (!searchString) {
-      return true;
-    }
-    return searchString
-      .split("")
-      .every((searchChar) => allChars.includes(searchChar));
-  });
+  const [searchString, setSearchString] = useSearch();
 
   const missingPinyin = getMissingPinyin();
 
@@ -46,22 +36,40 @@ export default function Chinese() {
           placeholder="找"
         />
       </div>
-      <div className="sdjhh sssdsv">
-        {matchingPhrases.map(
-          ({ label, parts, isValidateGrammar, isFocusedLearning }) => (
-            <p
-              key={label}
-              className={cx({ isValidateGrammar, isFocusedLearning })}
-            >
-              <a href={`/laolun/${label}/edit`}>{label}</a>
-              <span className="complexity">
-                {getComplexityFromParts(parts)}
-              </span>
-            </p>
-          )
-        )}
-      </div>
+
       <Add />
+      <div className="sdjhh">
+        <table className="phrase-list-table">
+          <thead>
+            <tr>
+              <td>Phrase</td>
+              <td>Tags</td>
+              <td>Complexity</td>
+            </tr>
+          </thead>
+          <tbody>
+            {getMatchingPhrases(phrases, searchString).map(
+              ({ label, parts, isValidateGrammar, isFocusedLearning }) => (
+                <tr
+                  key={label}
+                  className={cx({ isValidateGrammar, isFocusedLearning })}
+                >
+                  <td>
+                    <a href={`/laolun/${label}/edit`}>{label}</a>
+                  </td>
+                  <td>
+                    {isValidateGrammar && <span>🧙‍♀️ validate grammar</span>}
+                    {isFocusedLearning && <span>focused learning</span>}
+                  </td>
+                  <td className="complexity">
+                    {getComplexityFromParts(parts)}
+                  </td>
+                </tr>
+              )
+            )}
+          </tbody>
+        </table>
+      </div>
       <small>{phrases.length} phrases</small>
     </main>
   );
@@ -69,7 +77,7 @@ export default function Chinese() {
 
 function Add() {
   const router = useRouter();
-  const ref = useRef<HTMLInputElement | null>(null);
+  const [value, setValue] = useState("");
   const addNewPhrase = async () => {
     const messyLabel = ref.current?.value ?? Math.random().toString();
     const label = cleanChineseString(messyLabel);
@@ -84,10 +92,10 @@ function Add() {
   };
   return (
     <div style={{ paddingBlock: "3em", display: "flex", gap: "0.1em" }}>
-      <input
-        ref={ref}
+      <InputChinese
         type="text"
-        defaultValue=""
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
         placeholder="使用'|'符分隔"
       />
       <button className="add" onClick={addNewPhrase}>
@@ -103,29 +111,14 @@ function getComplexityFromParts(parts) {
   return complexity;
 }
 
-function InputChinese({ className = undefined, value, onChange, placeholder }) {
-  const preventOnChange = useRef(false);
-  const [isCompositionMode, setIsCompositionMode] = useState(false);
-
-  return (
-    <input
-      defaultValue={value}
-      placeholder={placeholder}
-      className={cx("input-chinese", className, { isCompositionMode })}
-      onCompositionStart={() => {
-        preventOnChange.current = true;
-        setIsCompositionMode(true);
-      }}
-      onChange={(e) => {
-        if (!preventOnChange.current) {
-          onChange(e);
-        }
-      }}
-      onCompositionEnd={(e) => {
-        preventOnChange.current = false;
-        setIsCompositionMode(false);
-        onChange(e);
-      }}
-    />
-  );
+function getMatchingPhrases(phrases, searchString) {
+  return phrases.filter((phrase) => {
+    const allChars = phrase.parts.flat().join();
+    if (!searchString) {
+      return true;
+    }
+    return searchString
+      .split("")
+      .every((searchChar) => allChars.includes(searchChar));
+  });
 }
