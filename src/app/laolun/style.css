@@ -361,6 +361,7 @@ main#zhongwen {
     &.isFocusedLearning {
       background: var(--accent-color);
       &:hover::after {
+        background: var(--accent-color);
         content: '📌说:\A"重点"';
       }
     }

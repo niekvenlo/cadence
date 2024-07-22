@@ -32,8 +32,8 @@ var tryEm = some.map(([charCount, pinyin]) => {
   }
   return breakPinyinIntoSylables(pinyin);
 });
-console.log(
-  tryEm.length,
-  tryEm.filter((g) => g).length,
-  tryEm.filter((g) => g)
-);
+// console.log(
+//   tryEm.length,
+//   tryEm.filter((g) => g).length,
+//   tryEm.filter((g) => g)
+// );

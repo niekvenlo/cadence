@@ -42,7 +42,10 @@ export default function Chinese() {
       <div id="pin">
         <Dumb />
         {/* <L list={inLaolun} title="In Laolun" /> */}
-        <L list={appearOnlyTwice} title="Appear only twice" />
+        <L
+          list={appearOnlyTwice}
+          title="Segments that appear only once or twice standalone"
+        />
         <L list={inHsk1} title="Only in HSK1" />
         <L list={inHsk2} title="Only in HSK2" />
         <L list={inHsk3} title="Only in HSK3" />

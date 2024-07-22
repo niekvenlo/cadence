@@ -69,10 +69,6 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
   };
 
   const kanjiUsed = parts.map((p) => p.map((c) => c.split(""))).flat(4);
-  console.log(
-    kanjiUsed,
-    getDangerousKanji().map((f) => f[0])
-  );
   const getDangerousKanjiUsed = () =>
     getDangerousKanji().filter((k) => kanjiUsed.includes(k[0]));
   return (

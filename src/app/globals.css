@@ -466,7 +466,7 @@ main#cadence {
         .recently-complete {
           display: none;
         }
-        &:hover {
+        /* &:hover {
           max-height: 8em;
           grid-template-areas:
             "title buttons"
@@ -478,7 +478,7 @@ main#cadence {
           .recently-complete {
             display: block;
           }
-        }
+        } */
       }
     }
   }
