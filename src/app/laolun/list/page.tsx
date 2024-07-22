@@ -29,41 +29,40 @@ export default function Chinese() {
           {missingPinyin.length > 2 && " and more"}
         </a>
       )}
-      <div className="search">
+      <InteractiveElements>
         <InputChinese
           value={searchString}
           onChange={(e) => setSearchString(e.target.value)}
           placeholder="找"
         />
-      </div>
-
-      <Add />
+      </InteractiveElements>
       <div className="sdjhh">
         <table className="phrase-list-table">
           <thead>
             <tr>
-              <td>Phrase</td>
               <td>Tags</td>
-              <td>Complexity</td>
+              <td>Phrase</td>
+              <td>Permutations</td>
+              <td>Variants</td>
             </tr>
           </thead>
           <tbody>
             {getMatchingPhrases(phrases, searchString).map(
               ({ label, parts, isValidateGrammar, isFocusedLearning }) => (
-                <tr
-                  key={label}
-                  className={cx({ isValidateGrammar, isFocusedLearning })}
-                >
+                <tr key={label}>
                   <td>
-                    <a href={`/laolun/${label}/edit`}>{label}</a>
+                    {isValidateGrammar && <Tag type="grammar" />}
+                    {isFocusedLearning && <Tag type="focus" />}
                   </td>
                   <td>
-                    {isValidateGrammar && <span>🧙‍♀️ validate grammar</span>}
-                    {isFocusedLearning && <span>focused learning</span>}
+                    <a
+                      className={cx({ isValidateGrammar, isFocusedLearning })}
+                      href={`/laolun/${label}/edit`}
+                    >
+                      {label}
+                    </a>
                   </td>
-                  <td className="complexity">
-                    {getComplexityFromParts(parts)}
-                  </td>
+                  <ComplexityTDs parts={parts} />
                 </tr>
               )
             )}
@@ -75,23 +74,30 @@ export default function Chinese() {
   );
 }
 
-function Add() {
+function Tag({ type }) {
+  if (type === "grammar") {
+    return <span className="tag grammar">validate grammar</span>;
+  }
+  return <span className="tag">focused learning</span>;
+}
+
+function InteractiveElements({ children }) {
   const router = useRouter();
   const [value, setValue] = useState("");
   const addNewPhrase = async () => {
-    const messyLabel = ref.current?.value ?? Math.random().toString();
-    const label = cleanChineseString(messyLabel);
+    const label = cleanChineseString(value);
     if (!label) {
       return;
     }
-    const parts = label.includes("|")
-      ? label.split("|").map((f) => [f])
-      : [label];
     router.push(`/laolun/${await getSafePhraseLabel(label)}/edit`);
-    writePhrase({ label, parts });
+    writePhrase({ label, parts: label.split("|").map((f) => [f]) });
   };
   return (
-    <div style={{ paddingBlock: "3em", display: "flex", gap: "0.1em" }}>
+    <div
+      className="interactive-elements"
+      style={{ paddingBlock: "3em", display: "flex", gap: "0.1em" }}
+    >
+      {children}
       <InputChinese
         type="text"
         value={value}
@@ -105,10 +111,23 @@ function Add() {
   );
 }
 
-function getComplexityFromParts(parts) {
+function ComplexityTDs({ parts }) {
   let complexity = 1;
   parts.forEach((part) => (complexity *= part.length));
-  return complexity;
+  const boringKanji = "我门你们他门妈妈弟弟";
+  const maxLength = Math.max(
+    ...parts.map((p) => p.filter((f) => !boringKanji.includes(f)).length)
+  );
+  return (
+    <>
+      <td className="complexity">
+        {complexity} <small>permutations</small>
+      </td>
+      <td className={cx("complexity", { prettyLong: maxLength > 10 })}>
+        {maxLength}+ <small>max. variants</small>
+      </td>
+    </>
+  );
 }
 
 function getMatchingPhrases(phrases, searchString) {

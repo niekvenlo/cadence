@@ -3,8 +3,10 @@ import { useRef, useState } from "react";
 import { pinyin as pinyinJson, getPinyin } from "./phrase-util-sync";
 import { Accent, Accents } from "./Accents";
 import PersonaModal from "./PersonaModal";
+import { writePhrase } from "./phrase-actions-async";
+import { cx } from "../utils";
 
-function Part({ label, part }) {
+function Part({ label, part, isFocusedLearning, isValidateGrammar }) {
   const [isSelected, setIsSelected] = useState(false);
   const style = useRef({
     color: `hsl(${230 + Math.random() * 50}, 60%, 60%)`,
@@ -17,6 +19,11 @@ function Part({ label, part }) {
     .split("")
     .map((char, i) => [char, pinyin[i], tones[i]]);
   const alternativeKanji = part.filter((c) => c !== kanji);
+
+  const toggleFocus = () =>
+    writePhrase({ label, isFocusedLearning: !isFocusedLearning });
+  const toggleGrammar = () =>
+    writePhrase({ label, isValidateGrammar: !isValidateGrammar });
 
   return (
     <>
@@ -48,7 +55,23 @@ function Part({ label, part }) {
           <Accents pinyin={pinyinJson[kanji.current]} />
           <h2>{kanji.current}</h2>
           <p>{pinyinJson[kanji.current]?.replace(/-/g, " ")}</p>
-          <a href={`/laolun/${label}/edit`}>Go to edit page</a>
+          <div className="buttons">
+            <button
+              className={cx({ on: isFocusedLearning })}
+              onClick={toggleFocus}
+            >
+              <span>📌</span> focus
+            </button>
+            <button
+              className={cx({ on: isValidateGrammar })}
+              onClick={toggleGrammar}
+            >
+              <span>🧙‍♀️</span> grammar
+            </button>
+            <a href={`/laolun/${label}/edit`}>
+              <span>✏️</span>Go to edit page
+            </a>
+          </div>
         </PersonaModal>
       )}
     </>

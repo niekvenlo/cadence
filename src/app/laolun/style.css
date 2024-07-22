@@ -66,54 +66,34 @@ main#zhongwen {
     }
     a {
       color: var(--primary-color-lighter);
-    }
-  }
-
-  .sssdsv {
-    display: block !important;
-    a {
-      color: var(--primary-color-lighter);
-    }
-    .isValidateGrammar {
-      a {
+      &.isValidateGrammar {
         color: var(--accent-color);
         position: relative;
-        &:before {
-          content: "🧙‍♀️ ";
+        &:after {
+          content: " 🧙‍♀️";
         }
       }
-    }
-    .isFocusedLearning {
-      a {
+      &.isFocusedLearning {
         color: var(--primary-color-darker);
         position: relative;
-        &:before {
-          content: "📌 ";
+        &:after {
+          content: " 📌";
         }
-        /* &:hover::after {
-          content: '女巫说:\A"请检查语法"';
-          white-space: pre;
-          position: absolute;
-          top: 2em;
-          left: 0;
-          width: 10em;
-          aspect-ratio: 1/1;
-          border-radius: 6em;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: var(--accent-color);
-          color: var(--on-primary-color);
-          z-index: 2;
-        } */
       }
     }
-    .complexity {
-      font-weight: 100;
-      opacity: 0.6;
-      &::before {
-        content: "x";
+    .tag {
+      background: var(--primary-color);
+      color: white;
+      font-size: 0.5em;
+      padding: 0.3em 1em;
+      margin-block: 0.3em;
+      border-radius: 1em;
+      &.grammar {
+        background: var(--accent-color);
       }
+    }
+    .complexity.prettyLong {
+      color: red;
     }
   }
 
@@ -229,6 +209,7 @@ main#zhongwen {
   }
 
   .persona-modal {
+    overflow: visible;
     border: none;
     height: 100dvh;
     max-height: 100%;
@@ -236,13 +217,43 @@ main#zhongwen {
     outline: none;
     padding: 0 2em;
     transform: translate(0%, calc(100vh - 12em));
-    width: 103vw;
+    width: 105vw;
     .close-button {
       display: none;
     }
     &::backdrop {
       background: var(--background-color);
       opacity: 0.5;
+    }
+    .buttons {
+      transform: rotate(-5deg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1em;
+      aspect-ratio: 1/1;
+      width: 14em;
+      translate: 0 -30em;
+      background: var(--primary-color);
+      padding: 1em;
+      border-radius: 100em;
+      button,
+      a {
+        display: flex;
+        text-decoration: none;
+        transform: scale(1.2);
+        color: white;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+        border: none;
+        background: transparent;
+        padding: 0.1em 0.5em;
+        margin: 0.1em;
+        &.on {
+          background: var(--accent-color);
+        }
+      }
     }
   }
 

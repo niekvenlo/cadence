@@ -10,6 +10,7 @@ import { CSSProperties, useState } from "react";
 import { toChunk, toShuffle } from "./util";
 import Part from "./Part";
 import { Accent } from "./Accents";
+import { writePhrase } from "./phrase-actions-async";
 
 export default function Chinese() {
   const [fontSize, setFontSize] = useState(12);
@@ -88,20 +89,30 @@ function Chunk({ chunk, idx, reload }: ChunkProps) {
       <button className="sparkle" onDoubleClick={reload}>
         Page {idx + 1}✨
       </button>
-      {chunk.map(({ label, parts }, i) => (
-        <span className="phrase-s" key={label + i}>
-          {parts.map((part, i) => (
-            <Part key={part[0] + i} part={part} label={label} />
-          ))}
-          <span className="part">
-            <span className="full-stop char">
-              <span className="pinyin"></span>
-              <span className="tone">{<Accent />}</span>
-              <span className="kanji">。</span>
+      {chunk.map(
+        ({ label, parts, isFocusedLearning, isValidateGrammar }, i) => {
+          return (
+            <span className="phrase-s" key={label + i}>
+              {parts.map((part, i) => (
+                <Part
+                  key={part[0] + i}
+                  part={part}
+                  label={label}
+                  isFocusedLearning={isFocusedLearning}
+                  isValidateGrammar={isValidateGrammar}
+                />
+              ))}
+              <span className="part">
+                <span className="full-stop char">
+                  <span className="pinyin"></span>
+                  <span className="tone">{<Accent />}</span>
+                  <span className="kanji">。</span>
+                </span>
+              </span>
             </span>
-          </span>
-        </span>
-      ))}
+          );
+        }
+      )}
     </div>
   );
 }
