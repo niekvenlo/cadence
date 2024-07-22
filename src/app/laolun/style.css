@@ -71,7 +71,7 @@ main#zhongwen {
         &:before {
           content: "🧙‍♀️ ";
         }
-        &:hover::after {
+        /* &:hover::after {
           content: '女巫说:\A"请检查语法"';
           white-space: pre;
           position: absolute;
@@ -86,7 +86,7 @@ main#zhongwen {
           background: var(--accent-color);
           color: var(--on-primary-color);
           z-index: 2;
-        }
+        } */
       }
     }
     .isFocusedLearning {
@@ -96,7 +96,7 @@ main#zhongwen {
         &:before {
           content: "📌 ";
         }
-        &:hover::after {
+        /* &:hover::after {
           content: '女巫说:\A"请检查语法"';
           white-space: pre;
           position: absolute;
@@ -111,7 +111,7 @@ main#zhongwen {
           background: var(--accent-color);
           color: var(--on-primary-color);
           z-index: 2;
-        }
+        } */
       }
     }
     .complexity {

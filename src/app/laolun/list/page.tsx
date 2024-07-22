@@ -70,7 +70,7 @@ export default function Chinese() {
 function Add() {
   const router = useRouter();
   const ref = useRef<HTMLInputElement | null>(null);
-  const addNewPhrase = () => {
+  const addNewPhrase = async () => {
     const messyLabel = ref.current?.value ?? Math.random().toString();
     const label = cleanChineseString(messyLabel);
     if (!label) {
@@ -79,7 +79,7 @@ function Add() {
     const parts = label.includes("|")
       ? label.split("|").map((f) => [f])
       : [label];
-    router.push(`/laolun/${getSafePhraseLabel(label)}/edit`);
+    router.push(`/laolun/${await getSafePhraseLabel(label)}/edit`);
     writePhrase({ label, parts });
   };
   return (

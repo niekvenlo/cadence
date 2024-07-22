@@ -40,7 +40,7 @@ export const updateLabel = async (oldLabel, newLabel) => {
   const uniqueLabel = isNameClash
     ? `${newLabel} ${Math.random().toString().slice(14)}`
     : newLabel;
-  const safeLabel = getSafePhraseLabel(uniqueLabel);
+  const safeLabel = await getSafePhraseLabel(uniqueLabel);
 
   if (foundPhraseIdx > -1) {
     phrases[foundPhraseIdx].label = safeLabel;
