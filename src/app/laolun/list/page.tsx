@@ -20,6 +20,8 @@ export default function Chinese() {
 
   const missingPinyin = getMissingPinyin();
 
+  const matchingPhrases = getMatchingPhrases(phrases, searchString);
+
   return (
     <main id="zhongwen">
       {missingPinyin.length > 0 && (
@@ -33,7 +35,7 @@ export default function Chinese() {
         <InputChinese
           value={searchString}
           onChange={(e) => setSearchString(e.target.value)}
-          placeholder="找"
+          placeholder="搜索"
         />
       </InteractiveElements>
       <div className="sdjhh">
@@ -47,7 +49,7 @@ export default function Chinese() {
             </tr>
           </thead>
           <tbody>
-            {getMatchingPhrases(phrases, searchString).map(
+            {matchingPhrases.map(
               ({ label, parts, isValidateGrammar, isFocusedLearning }) => (
                 <tr key={label}>
                   <td>
@@ -69,7 +71,12 @@ export default function Chinese() {
           </tbody>
         </table>
       </div>
-      <small>{phrases.length} phrases</small>
+      <small>
+        {matchingPhrases.length} phrases
+        {matchingPhrases.length !== phrases.length && (
+          <span> of {phrases.length}</span>
+        )}
+      </small>
     </main>
   );
 }

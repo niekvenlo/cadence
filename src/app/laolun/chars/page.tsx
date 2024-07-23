@@ -32,7 +32,7 @@ export default function Chinese() {
     .map(({ parts }) => parts.map((part) => part))
     .flat(2);
 
-  const getMissingHskWords = (hskwords, count = 1) =>
+  const getMissingHskWords = (hskwords, count = 0) =>
     hskwords
       .split(/[,]\s/g)
       .filter(
@@ -62,7 +62,7 @@ export default function Chinese() {
               title={`HKS${level} words never used`}
             />
             <L
-              list={getMissingHskWords(hskWords[level], 2)}
+              list={getMissingHskWords(hskWords[level], 1)}
               title={`HKS${level} words only once`}
             />
             <L
