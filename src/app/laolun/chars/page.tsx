@@ -1,6 +1,6 @@
 "use client";
 
-import { hsk1, hsk2, hsk3, hsk4, hsk5, duolingo, sheetList } from "./data";
+import { hskChars, hskWords, duolingo, sheetList } from "./data";
 import "../style.css";
 
 import "../webcomtest";
@@ -15,15 +15,6 @@ export default function Chinese() {
   );
   const sheetSet = new Set(sheetList.map((p) => p.split("")).flat());
 
-  const inLaolun = [...phrasesCharSet];
-  const inSheet = [...sheetSet.difference(phrasesCharSet)];
-  const inDuolingo = [...new Set(duolingo).difference(phrasesCharSet)];
-  const inHsk1 = [...new Set(hsk1).difference(phrasesCharSet)];
-  const inHsk2 = [...new Set(hsk2).difference(phrasesCharSet)];
-  const inHsk3 = [...new Set(hsk3).difference(phrasesCharSet)];
-  const inHsk4 = [...new Set(hsk4).difference(phrasesCharSet)];
-  const inHsk5 = [...new Set(hsk5).difference(phrasesCharSet)];
-
   const segmentMap = new Map();
   phrases.forEach((phrase) =>
     phrase.parts.forEach((part) =>
@@ -37,22 +28,61 @@ export default function Chinese() {
     .map((f) => f[0])
     .sort((a, b) => (a.length < b.length ? -1 : 1));
 
+  const allSegments = phrases
+    .map(({ parts }) => parts.map((part) => part))
+    .flat(2);
+
+  const getMissingHskWords = (hskwords, count = 1) =>
+    hskwords
+      .split(/[,]\s/g)
+      .filter(
+        (word) =>
+          allSegments.filter((seg) => seg.includes(word)).length === count
+      );
+
   return (
     <main id="zhongwen">
       <div id="pin">
-        <Dumb />
-        {/* <L list={inLaolun} title="In Laolun" /> */}
+        <p>
+          We cannot fully trust these sources. The Duolingo data comes from a
+          third party scraper, and the list of HSK words is shorter than the
+          list of HSK characters, which makes no sense.
+        </p>
+        <p>That said, it&apos;s a start</p>
+        {/* <Dumb /> */}
+        {/* <L list={[...phrasesCharSet]} title="In Laolun" /> */}
+        {[1, 2, 3, 4, 5].map((level) => (
+          <details key={level}>
+            <summary>
+              <h2>HSK{level}</h2>
+            </summary>
+
+            <L
+              list={getMissingHskWords(hskWords[level])}
+              title={`HKS${level} words never used`}
+            />
+            <L
+              list={getMissingHskWords(hskWords[level], 2)}
+              title={`HKS${level} words only once`}
+            />
+            <L
+              list={[...new Set(hskChars[level]).difference(phrasesCharSet)]}
+              title={`HKS${level} chars never used`}
+            />
+          </details>
+        ))}
         <L
           list={appearOnlyTwice}
           title="Segments that appear only once or twice standalone"
         />
-        <L list={inHsk1} title="Only in HSK1" />
-        <L list={inHsk2} title="Only in HSK2" />
-        <L list={inHsk3} title="Only in HSK3" />
-        <L list={inHsk4} title="Only in HSK4" />
-        <L list={inHsk5} title="Only in HSK5" />
-        <L list={inDuolingo} title="Only in Duolingo" />
-        <L list={inSheet} title="Only in Google Sheet" />
+        <L
+          list={[...new Set(duolingo).difference(phrasesCharSet)]}
+          title="Only in Duolingo"
+        />
+        <L
+          list={[...sheetSet.difference(phrasesCharSet)]}
+          title="Only in Google Sheet"
+        />
       </div>
     </main>
   );
@@ -61,55 +91,56 @@ export default function Chinese() {
 const L = ({ title, list }) => {
   const cleanList = list.filter((f) => f !== "," && f !== " ");
   return (
-    <>
-      <h2>
-        {title}
-        <small>({cleanList.length})</small>
-      </h2>
+    <details>
+      <summary>
+        <h3>
+          {title} <small>({cleanList.length})</small>
+        </h3>
+      </summary>
       <div className="ddfdx">
         {cleanList.map((d) => (
           <span key={d}>{d}</span>
         ))}
       </div>
-    </>
+    </details>
   );
 };
 
-function Dumb() {
-  return (
-    <div hidden>
-      {phrases.map((p) => (
-        <chinese-phrase key={p.label} is={p.label} />
-      ))}
-      <br />
-      <chinese-phrase onClick={() => console.log("d")} is="不可以" />
-      <chinese-phrase onClick={() => console.log("d")} is="不可以" />
-      <chinese-phrase onClick={() => console.log("d")} is="不可以" />
-      <chinese-phrase onClick={() => console.log("d")} is="不可以" />
-      <chinese-phrase
-        onClick={() => console.log("d")}
-        is="酒店的早饭是免费的"
-      />
-      <chinese-phrase
-        onClick={() => console.log("d")}
-        is="酒店的早饭是免费的"
-      />
-      <chinese-phrase onClick={() => console.log("d")} is="不可以" />
-      <chinese-phrase onClick={() => console.log("d")} is="不可以" />
-      <chinese-phrase onClick={() => console.log("d")} is="不可以" />
-      <chinese-phrase
-        onClick={() => console.log("d")}
-        is="酒店的早饭是免费的"
-      />
-      <chinese-phrase onClick={() => console.log("d")} is="不可以" />
-      <chinese-phrase onClick={() => console.log("d")} is="不可以" />
-      <chinese-phrase onClick={() => console.log("d")} is="不可以" />
-      <chinese-phrase onClick={() => console.log("d")} is="不可以" />
-      <chinese-phrase
-        onClick={() => console.log("d")}
-        is="酒店的早饭是免费的"
-      />
-      <chinese-phrase onClick={() => console.log("d")} is="不可以" />
-    </div>
-  );
-}
+// function Dumb() {
+//   return (
+//     <div hidden>
+//       {phrases.map((p) => (
+//         <chinese-phrase key={p.label} is={p.label} />
+//       ))}
+//       <br />
+//       <chinese-phrase onClick={() => console.log("d")} is="不可以" />
+//       <chinese-phrase onClick={() => console.log("d")} is="不可以" />
+//       <chinese-phrase onClick={() => console.log("d")} is="不可以" />
+//       <chinese-phrase onClick={() => console.log("d")} is="不可以" />
+//       <chinese-phrase
+//         onClick={() => console.log("d")}
+//         is="酒店的早饭是免费的"
+//       />
+//       <chinese-phrase
+//         onClick={() => console.log("d")}
+//         is="酒店的早饭是免费的"
+//       />
+//       <chinese-phrase onClick={() => console.log("d")} is="不可以" />
+//       <chinese-phrase onClick={() => console.log("d")} is="不可以" />
+//       <chinese-phrase onClick={() => console.log("d")} is="不可以" />
+//       <chinese-phrase
+//         onClick={() => console.log("d")}
+//         is="酒店的早饭是免费的"
+//       />
+//       <chinese-phrase onClick={() => console.log("d")} is="不可以" />
+//       <chinese-phrase onClick={() => console.log("d")} is="不可以" />
+//       <chinese-phrase onClick={() => console.log("d")} is="不可以" />
+//       <chinese-phrase onClick={() => console.log("d")} is="不可以" />
+//       <chinese-phrase
+//         onClick={() => console.log("d")}
+//         is="酒店的早饭是免费的"
+//       />
+//       <chinese-phrase onClick={() => console.log("d")} is="不可以" />
+//     </div>
+//   );
+// }

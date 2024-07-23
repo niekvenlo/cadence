@@ -2,8 +2,8 @@
     "shopping": [
         {
             "label": "🍞 Bread",
-            "timestamp": 1721382215840,
-            "isSelected": true
+            "timestamp": 1721723554945,
+            "isSelected": false
         },
         {
             "label": "🥛 Milk",
@@ -83,7 +83,7 @@
         {
             "id": "aec808ac-b2dd-4b97-9673-adad313cdd0f",
             "title": "Clean the sink with soda crystals",
-            "nextEpochDay": 19927,
+            "nextEpochDay": 19934,
             "cadenceInDays": 7
         },
         {
@@ -108,7 +108,7 @@
         {
             "id": "58c36c00-58df-4130-907f-f7869b701312",
             "title": "Take pills",
-            "nextEpochDay": 19927,
+            "nextEpochDay": 19928,
             "cadenceInDays": 1
         },
         {
@@ -192,7 +192,7 @@
         {
             "title": "Take out the trash",
             "cadenceInDays": 4,
-            "nextEpochDay": 19927,
+            "nextEpochDay": 19931,
             "id": "eb9220be-02ba-4db3-988f-c0b119d4d053"
         },
         {
@@ -234,7 +234,7 @@
         {
             "title": "Clean out Eufy",
             "cadenceInDays": 1,
-            "nextEpochDay": 19927,
+            "nextEpochDay": 19928,
             "id": "ba96235d-7601-4d56-914e-484bc2904c30"
         },
         {
@@ -292,6 +292,13 @@
             "cadenceInDays": 100,
             "id": "4624f0eb-048d-42aa-bae2-92a8b6ff3e81",
             "nextEpochDay": 19925
+        },
+        {
+            "title": "401k notary",
+            "cadenceInDays": 10,
+            "type": "NUDGE",
+            "id": "bf9e8433-33e9-4000-a501-be6789a9e979",
+            "nextEpochDay": 19930
         }
     ]
 }

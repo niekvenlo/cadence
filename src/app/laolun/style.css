@@ -472,6 +472,27 @@ main#zhongwen {
       font-weight: 100;
     }
   }
+  details {
+    summary {
+      list-style-position: outside;
+      margin-left: 1em;
+      padding: 10px 10px 10px 20px;
+      border-radius: 5px;
+      h2,
+      h3 {
+        display: inline;
+        width: fit-content;
+      }
+    }
+    summary::marker {
+      color: var(--primary-color-lighter);
+    }
+    details {
+      summary {
+        margin-left: 2em;
+      }
+    }
+  }
   .ddfdx {
     display: flex;
     flex-wrap: wrap;
