@@ -59,15 +59,19 @@ export default function Chinese() {
 
             <L
               list={getMissingHskWords(hskWords[level])}
-              title={`HKS${level} words never used`}
+              title={`HSK${level} words never used`}
             />
             <L
               list={getMissingHskWords(hskWords[level], 1)}
-              title={`HKS${level} words only once`}
+              title={`HSK${level} words only once`}
             />
             <L
-              list={[...new Set(hskChars[level]).difference(phrasesCharSet)]}
-              title={`HKS${level} chars never used`}
+              list={[
+                ...new Set(hskChars[level])
+                  .difference(phrasesCharSet)
+                  .difference(new Set(getMissingHskWords(hskWords[level]))),
+              ]}
+              title={`Other HSK${level} chars never used`}
             />
           </details>
         ))}
