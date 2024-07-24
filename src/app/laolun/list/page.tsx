@@ -46,6 +46,7 @@ export default function Chinese() {
               <td>Phrase</td>
               <td>Permutations</td>
               <td>Variants</td>
+              <td>Parts/Columns</td>
             </tr>
           </thead>
           <tbody>
@@ -132,6 +133,9 @@ function ComplexityTDs({ parts }) {
       </td>
       <td className={cx("complexity", { prettyLong: maxLength > 10 })}>
         {maxLength}+ <small>max. variants</small>
+      </td>
+      <td className={cx("complexity", { prettyLong: parts.length === 1 })}>
+        {parts.length} <small>parts</small>
       </td>
     </>
   );

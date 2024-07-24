@@ -108,7 +108,7 @@
         {
             "id": "58c36c00-58df-4130-907f-f7869b701312",
             "title": "Take pills",
-            "nextEpochDay": 19928,
+            "nextEpochDay": 19929,
             "cadenceInDays": 1
         },
         {
@@ -132,7 +132,7 @@
         {
             "id": "57613513-ce48-4892-8ab8-6a350599f33b",
             "title": "Descale the bathroom",
-            "nextEpochDay": 19927,
+            "nextEpochDay": 19953,
             "cadenceInDays": 25
         },
         {
@@ -234,7 +234,7 @@
         {
             "title": "Clean out Eufy",
             "cadenceInDays": 1,
-            "nextEpochDay": 19928,
+            "nextEpochDay": 19929,
             "id": "ba96235d-7601-4d56-914e-484bc2904c30"
         },
         {
