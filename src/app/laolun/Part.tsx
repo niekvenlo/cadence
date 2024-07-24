@@ -1,35 +1,25 @@
-import { breakPinyinIntoSylables, getRandomElement, getTones } from "./util";
-import { useRef, useState } from "react";
+"use client";
+
+import { breakPinyinIntoSylables, getTones } from "./util";
+import { useId, useRef, useState } from "react";
 import { pinyin as pinyinJson, getPinyin } from "./phrase-util-sync";
 import { Accent, Accents } from "./Accents";
 import PersonaModal from "./PersonaModal";
-import { writePhrase } from "./phrase-actions-async";
-import { cx } from "../utils";
 
-function Part({ label, part, isFocusedLearning, isValidateGrammar }) {
+function Part({ label, part }) {
   const [isSelected, setIsSelected] = useState(false);
-  const style = useRef({
-    color: `hsl(${230 + Math.random() * 50}, 60%, 60%)`,
-  });
-  const kanji = useRef(getRandomElement(part));
-  const p = getPinyin(kanji.current) || "";
+  const { style, segment } = useRandomNess(part);
+  const p = getPinyin(segment) || "";
   const pinyin = breakPinyinIntoSylables(p);
   const tones = getTones(p);
-  const chars = kanji.current
-    .split("")
-    .map((char, i) => [char, pinyin[i], tones[i]]);
-  const alternativeKanji = part.filter((c) => c !== kanji);
-
-  const toggleFocus = () =>
-    writePhrase({ label, isFocusedLearning: !isFocusedLearning });
-  const toggleGrammar = () =>
-    writePhrase({ label, isValidateGrammar: !isValidateGrammar });
+  const chars = segment.split("").map((char, i) => [char, pinyin[i], tones[i]]);
+  const alternativeKanji = part.filter((c) => c !== segment);
 
   return (
     <>
       <button
         className="part"
-        style={style.current}
+        style={style}
         onDoubleClick={() => setIsSelected((t) => !t)}
       >
         {chars.map(([char, pinyin, tone], i) => (
@@ -52,22 +42,10 @@ function Part({ label, part, isFocusedLearning, isValidateGrammar }) {
               <span key={a}>{a}</span>
             ))}
           </p>
-          <Accents pinyin={pinyinJson[kanji.current]} />
-          <h2>{kanji.current}</h2>
-          <p>{pinyinJson[kanji.current]?.replace(/-/g, " ")}</p>
+          <Accents pinyin={pinyinJson[segment]} />
+          <h2>{segment}</h2>
+          <p>{pinyinJson[segment]?.replace(/-/g, " ")}</p>
           <div className="buttons">
-            <button
-              className={cx({ on: isFocusedLearning })}
-              onClick={toggleFocus}
-            >
-              <span>📌</span> focus
-            </button>
-            <button
-              className={cx({ on: isValidateGrammar })}
-              onClick={toggleGrammar}
-            >
-              <span>🧙‍♀️</span> grammar
-            </button>
             <a href={`/laolun/${label}/edit`}>
               <span>✏️</span>Go to edit page
             </a>
@@ -76,6 +54,25 @@ function Part({ label, part, isFocusedLearning, isValidateGrammar }) {
       )}
     </>
   );
+}
+
+function turnIdIntoNumber(string) {
+  let hash = 0;
+  if (string.length === 0) return hash;
+  for (let i = 0; i < string.length; i++) {
+    hash = (hash << 5) - hash + string.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash);
+}
+function useRandomNess(part) {
+  const randomNumber = turnIdIntoNumber(useId());
+  const hue = 230 + (randomNumber % 50);
+  const randomStuff = {
+    style: { color: `hsl(${hue}, 60%, 60%)` },
+    segment: part[randomNumber % part.length],
+  };
+  return useRef(randomStuff).current;
 }
 
 export default Part;

@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 
 import ask from "../../../public/ask.png";

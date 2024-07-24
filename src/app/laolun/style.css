@@ -8,6 +8,12 @@ main#zhongwen {
   background: white;
   .chunk {
     border-bottom: 0.5px dotted black;
+    .page-number {
+      text-align: end;
+      color: var(--primary-color-darker);
+      font-size: 0.7em;
+      margin-inline: -2em;
+    }
   }
   @media (min-width: 1000px) {
     background: var(--background-color);
@@ -17,6 +23,16 @@ main#zhongwen {
       border-radius: var(--medium-radius);
       padding-inline: 2em;
       margin: 0.2em;
+    }
+  }
+  &.chinese-serif-font {
+    .kanji {
+      font-family: var(--chinese-font-source);
+    }
+  }
+  &.large-font {
+    .kanji {
+      font-size: 1.8em !important;
     }
   }
 
@@ -187,7 +203,6 @@ main#zhongwen {
         }
         .kanji {
           font-size: 1.4em;
-          font-family: var(--chinese-font-source);
           @media (max-width: 800px) {
             font-size: 1.5em;
           }
