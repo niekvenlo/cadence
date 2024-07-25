@@ -421,7 +421,10 @@ main#zhongwen {
   .column {
     text-align: center;
     font-size: 1.5em;
-    width: 4ch;
+    width: 20ch;
+    &.width-1 {
+      width: 4ch;
+    }
     &.width-2 {
       width: 6ch;
     }
