@@ -51,7 +51,6 @@ export default function Chinese() {
         if (!pinyinArray[i]) {
           return;
         }
-        console.log(part.toString().replace(",", ""), pinyinArray[i]);
         update(part.toString().replace(",", ""), pinyinArray[i]);
       }, i * 100);
       setTimeout(() => {

@@ -38,7 +38,6 @@ export function InputChinese({
         setIsCompositionMode(true);
       }}
       onChange={(e) => {
-        console.log(e.target.value);
         if (!preventOnChange.current) {
           onChange(e);
           caretRef.current = inputRef.current?.selectionStart ?? -1;
