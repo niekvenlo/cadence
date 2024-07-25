@@ -22,6 +22,11 @@ export default function Chinese() {
 
   const matchingPhrases = getMatchingPhrases(phrases, searchString);
 
+  const totalPermutations = phrases.reduce(
+    (acc, { parts }) => acc + parts.reduce((a, part) => a * part.length, 1),
+    0
+  );
+
   return (
     <main id="zhongwen">
       {missingPinyin.length > 0 && (
@@ -77,6 +82,7 @@ export default function Chinese() {
         {matchingPhrases.length !== phrases.length && (
           <span> of {phrases.length}</span>
         )}
+        | {totalPermutations} total permutations
       </small>
     </main>
   );
