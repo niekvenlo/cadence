@@ -8,21 +8,37 @@ main#zhongwen {
   background: white;
   .chunk {
     border-bottom: 0.5px dotted black;
+    width: 100%;
+    min-height: 80vh;
     .page-number {
       text-align: end;
       color: var(--primary-color-darker);
+      @media (prefers-color-scheme: dark) {
+        color: var(--primary-color-lighter);
+      }
       font-size: 0.7em;
-      margin-inline: -2em;
+      margin-inline: 2em;
     }
   }
   @media (min-width: 1000px) {
     background: var(--background-color);
+    .page-number {
+      margin-inline: -2em;
+    }
+    @media (prefers-color-scheme: dark) {
+      background: black;
+    }
     margin-top: 1em;
     .chunk {
       background: white;
       border-radius: var(--medium-radius);
       padding-inline: 2em;
       margin: 0.2em;
+
+      @media (prefers-color-scheme: dark) {
+        background: black;
+        box-shadow: 0 0 10px 1px var(--primary-color-lighter);
+      }
     }
   }
   &.chinese-serif-font {
@@ -125,15 +141,6 @@ main#zhongwen {
         font-weight: 600;
       }
     }
-    button.sparkle {
-      background: inherit;
-      border: none;
-      outline: none;
-      margin: 1em;
-      display: block;
-      width: 100%;
-      text-align: right;
-    }
     .part {
       display: contents;
       .char {
@@ -158,6 +165,9 @@ main#zhongwen {
         &:hover {
           .pinyin {
             background: white;
+            @media (prefers-color-scheme: dark) {
+              background: var(--primary-color-darker);
+            }
             opacity: 1;
             scale: 3;
           }
@@ -238,6 +248,9 @@ main#zhongwen {
     }
     &::backdrop {
       background: var(--background-color);
+      @media (prefers-color-scheme: dark) {
+        background: black;
+      }
       opacity: 0.5;
     }
     .buttons {
@@ -275,6 +288,10 @@ main#zhongwen {
   .selected {
     rotate: 3deg;
     background: var(--background-color-darker);
+    @media (prefers-color-scheme: dark) {
+      background: black;
+      color: white;
+    }
     box-shadow: var(--card-shadow-up);
     padding-top: 0.2em;
     padding-bottom: 5em;
@@ -477,6 +494,11 @@ main#zhongwen {
   input {
     font-size: 1.4em;
     text-align: center;
+    @media (prefers-color-scheme: dark) {
+      color: var(--primary-color-lighter);
+      background: #111;
+      border: #444;
+    }
   }
   h2 {
     display: flex;
