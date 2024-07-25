@@ -27,6 +27,7 @@ export default function SpecialCheckbox() {
         />
         Serif font
       </label>
+      <button onClick={() => window.location.reload()}>Reload page</button>
     </>
   );
 }

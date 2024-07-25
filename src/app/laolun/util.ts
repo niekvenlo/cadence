@@ -57,6 +57,14 @@ export const breakPinyinIntoSylables = (string: string = "") => {
   return string.split(/[-]|[']|\s/).filter((d) => d);
 };
 
+export const breakRawPinyin = (string = "") =>
+  string
+    .replace(/([aieouǎěǐǔǒāēīōūàèìòùáíéóúǚǜ])([bcdfghjklmpqstvwxyz])/g, "$1-$2")
+    .replace(/(n)([bdfhjklmnpqstwxyz])/g, "$1-$2")
+    .replace(/(r)([fhlmpqsyz])/g, "$1-$2") //
+    .replace(/(ng)([abcdfgjklmnpqstuwxyz])/g, "$1-$2")
+    .replace(/([?,])/g, " $1 ");
+
 export function toChunk<T>(array: T[], size: number): T[][] {
   const chunks: any[] = [];
   for (let i = 0; i < array.length; i = i + size) {

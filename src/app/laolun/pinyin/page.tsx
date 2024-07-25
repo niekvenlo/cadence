@@ -1,11 +1,11 @@
 "use client";
 
-import BasicLink from "../../components/basic/BasicLink";
 import "../style.css";
 
 import { getPinyin, phrases, pinyin } from "../phrase-util-sync";
 import { setPinyin } from "../phrase-actions-async";
 import { useEffect, useState } from "react";
+import { breakRawPinyin } from "../util";
 
 export default function Chinese() {
   const [newPinyin, setNewPinyin] = useState("");
@@ -32,7 +32,8 @@ export default function Chinese() {
     const pinyinArray = newPinyin
       .split(/,\s?/)
       .map((f) => f.trim())
-      .filter((f) => f);
+      .filter((f) => f)
+      .map(breakRawPinyin);
     if (pinyinArray.length === 0) {
       console.log("No new pinyin given");
       return;
