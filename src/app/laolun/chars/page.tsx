@@ -49,32 +49,31 @@ export default function Chinese() {
           list of HSK characters, which makes no sense.
         </p>
         <p>That said, it&apos;s a start</p>
-        {/* <Dumb /> */}
-        {/* <L list={[...phrasesCharSet]} title="In Laolun" /> */}
-        {[1, 2, 3, 4, 5].map((level) => (
-          <details key={level}>
-            <summary>
-              <h2>HSK{level}</h2>
-            </summary>
+        {[1, 2, 3, 4, 5].map((level) => {
+          const missing = getMissingHskWords(hskWords[level]);
+          const usedOnce = getMissingHskWords(hskWords[level], 1);
+          const otherNeverUsed = [
+            ...new Set(hskChars[level])
+              .difference(phrasesCharSet)
+              .difference(new Set(missing)),
+          ];
+          return (
+            <details key={level}>
+              <summary>
+                <h2>
+                  HSK{level} <small>({missing.length} never used)</small>
+                </h2>
+              </summary>
 
-            <L
-              list={getMissingHskWords(hskWords[level])}
-              title={`HSK${level} words never used`}
-            />
-            <L
-              list={getMissingHskWords(hskWords[level], 1)}
-              title={`HSK${level} words only once`}
-            />
-            <L
-              list={[
-                ...new Set(hskChars[level])
-                  .difference(phrasesCharSet)
-                  .difference(new Set(getMissingHskWords(hskWords[level]))),
-              ]}
-              title={`Other HSK${level} chars never used`}
-            />
-          </details>
-        ))}
+              <L list={missing} title={`HSK${level} words never used`} />
+              <L list={usedOnce} title={`HSK${level} words only once`} />
+              <L
+                list={otherNeverUsed}
+                title={`Other HSK${level} chars never used`}
+              />
+            </details>
+          );
+        })}
         <L
           list={appearOnlyTwice}
           title="Segments that appear only once or twice standalone"
@@ -87,6 +86,7 @@ export default function Chinese() {
           list={[...sheetSet.difference(phrasesCharSet)]}
           title="Only in Google Sheet"
         />
+        <L list={[...phrasesCharSet]} title="In Laolun" />
       </div>
     </main>
   );
