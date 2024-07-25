@@ -6,6 +6,9 @@ main#zhongwen {
   align-items: center;
   margin-bottom: 10em;
   background: white;
+  @media (prefers-color-scheme: dark) {
+    background: black;
+  }
   .chunk {
     border-bottom: 0.5px dotted black;
     width: 100%;
@@ -52,15 +55,6 @@ main#zhongwen {
     }
   }
 
-  .search {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    width: 100%;
-    input {
-      height: 36px;
-    }
-  }
   #label-edit-box {
     align-self: flex-end;
   }
@@ -92,9 +86,19 @@ main#zhongwen {
     thead td {
       background: var(--background-color-darker);
       border-bottom: 1px solid black;
+      @media (prefers-color-scheme: dark) {
+        background: var(--background-color-lighter);
+        border-bottom: 1px solid white;
+      }
     }
     tbody tr:nth-of-type(2n) {
       background: #eee;
+      @media (prefers-color-scheme: dark) {
+        background: #222;
+      }
+    }
+    tbody td:nth-of-type(2) {
+      min-width: 20ch;
     }
     a {
       color: var(--primary-color-lighter);
@@ -120,8 +124,19 @@ main#zhongwen {
       padding: 0.3em 1em;
       margin-block: 0.3em;
       border-radius: 1em;
+      white-space: nowrap;
       &.grammar {
         background: var(--accent-color);
+      }
+    }
+    @media (max-width: 1000px) {
+      thead {
+        display: none;
+      }
+      .complexity {
+        small {
+          display: none;
+        }
       }
     }
     .complexity.prettyLong {
@@ -474,6 +489,15 @@ main#zhongwen {
       user-select: none;
     }
   }
+  input {
+    background: white;
+    @media (prefers-color-scheme: dark) {
+      background: #111;
+      color: white;
+      outline: rgb(233, 170, 170);
+      border: 1px solid #444;
+    }
+  }
 }
 
 .phrase-s {
@@ -497,7 +521,8 @@ main#zhongwen {
     @media (prefers-color-scheme: dark) {
       color: var(--primary-color-lighter);
       background: #111;
-      border: #444;
+      border: 1px solid var(--primary-color);
+      outline: #999;
     }
   }
   h2 {
