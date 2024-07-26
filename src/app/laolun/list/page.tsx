@@ -47,11 +47,11 @@ export default function Chinese() {
         <table className="phrase-list-table">
           <thead>
             <tr>
-              <td>Tags</td>
-              <td>Phrase</td>
-              <td>Permutations</td>
-              <td>Variants</td>
-              <td>Parts/Columns</td>
+              <th>Tags</th>
+              <th>Phrase</th>
+              <th>Permutations</th>
+              <th>Variants</th>
+              <th>Parts/Columns</th>
             </tr>
           </thead>
           <tbody>
