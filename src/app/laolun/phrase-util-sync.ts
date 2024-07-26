@@ -118,3 +118,30 @@ export const getPinyin = (
 
 export const getSafePhraseLabel = (label: string) =>
   label.replace(/[|]/g, "").replace(/[,]/g, "，").replace(/[?]/g, "？");
+
+export const getSegmentsRarity = () => {
+  const segmentsRarityMap = new Map();
+  phrases.forEach((phrase) => {
+    phrase.parts.forEach((part) => {
+      part.forEach((segment) => {
+        const count = segmentsRarityMap.get(segment) || 0;
+        segmentsRarityMap.set(segment, count + 1);
+      });
+    });
+  });
+  const entries = [...segmentsRarityMap];
+  const annotatedEntries = entries.map(([segment, count]) => {
+    const appearsInOtherEntriesCount =
+      entries.filter(([e]) => e.includes(segment)).length - 1;
+    return {
+      segment,
+      baseCount: count,
+      appearsInOtherEntriesCount,
+      totalCount: appearsInOtherEntriesCount + count,
+      length: segment.length,
+    };
+  });
+  return annotatedEntries.sort((a, b) =>
+    a.totalCount < b.totalCount ? -1 : 1
+  );
+};

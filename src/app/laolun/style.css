@@ -78,6 +78,12 @@ main#zhongwen {
     }
   }
 
+  .interactive-elements {
+    padding-block: 1em;
+    display: flex;
+    gap: 0.1em;
+  }
+
   .phrase-list-table {
     border-collapse: collapse;
     position: relative;
@@ -149,10 +155,12 @@ main#zhongwen {
   }
 
   .sdjhh {
+    &.ddd {
+      max-height: 70vh;
+      overflow: scroll;
+    }
     display: flex;
     flex-wrap: wrap;
-    max-height: 80vh;
-    overflow: scroll;
     font-size: 1.1em;
     & > p {
       display: flex;
@@ -168,7 +176,8 @@ main#zhongwen {
         display: inline-flex;
         flex-direction: column;
         align-items: center;
-        padding-block: 1.1em;
+        padding-top: 1.4em;
+        padding-bottom: 0.6em;
         align-content: end;
         .pinyin {
           opacity: 0.4;
@@ -176,7 +185,6 @@ main#zhongwen {
           height: 2em;
           pointer-events: none;
           user-select: none;
-          /* transition: all 0.1s ease-in-out; */
           &:empty::before {
             content: "-";
             opacity: 0;
@@ -614,6 +622,21 @@ main#zhongwen {
     }
     span:not(:last-of-type)::after {
       content: "|";
+    }
+  }
+}
+
+#segments-page {
+  table {
+    border-collapse: collapse;
+    thead th {
+      padding: 1em;
+    }
+    tbody tr:nth-of-type(2n) {
+      background: #eee;
+      @media (prefers-color-scheme: dark) {
+        background: #222;
+      }
     }
   }
 }

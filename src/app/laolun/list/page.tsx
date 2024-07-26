@@ -43,7 +43,7 @@ export default function Chinese() {
           placeholder="搜索"
         />
       </InteractiveElements>
-      <div className="sdjhh">
+      <div className="sdjhh ddd">
         <table className="phrase-list-table">
           <thead>
             <tr>
@@ -107,10 +107,7 @@ function InteractiveElements({ children }) {
     writePhrase({ label, parts: label.split("|").map((f) => [f]) });
   };
   return (
-    <div
-      className="interactive-elements"
-      style={{ paddingBlock: "3em", display: "flex", gap: "0.1em" }}
-    >
+    <div className="interactive-elements">
       {children}
       <InputChinese
         type="text"
