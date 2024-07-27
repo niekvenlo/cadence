@@ -183,7 +183,7 @@
         }
       }
       .add-column-overlay {
-        transform: translate(50%);
+        transform: translate(50%, 0.5em);
         bottom: 0;
         right: 0;
         z-index: 2;
@@ -224,6 +224,17 @@
       background: var(--accent-color);
       border-color: white;
       color: white;
+    }
+  }
+  @media (max-width: 900px) {
+    .overlay {
+      display: none !important;
+    }
+    .column-wrapper textarea {
+      width: 9ch !important;
+    }
+    .suggestions {
+      width: 9ch !important;
     }
   }
 }

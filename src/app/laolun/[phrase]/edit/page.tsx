@@ -21,7 +21,7 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
     <main id="zhongwen" className="tweak-page">
       <div style={{ width: "100%" }}>
         <a href="tweak" style={{ float: "right" }}>
-          Old
+          Old editor
         </a>
       </div>
       <PhraseEditor phrase={findPhraseByLabel(decodeURI(params.phrase))} />
