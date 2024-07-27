@@ -16,40 +16,33 @@ import { updateLabel, writePhrase } from "../../phrase-actions-async";
 import { useRouter } from "next/navigation";
 import NoSSR from "../../../components/NoSSR";
 
-const no_text = "。";
-
 export default function Chinese({ params }: { params: { phrase: string } }) {
-  const router = useRouter();
-  const { label, parts, isValidateGrammar, isFocusedLearning } =
-    findPhraseByLabel(decodeURI(params.phrase));
-
-  const changeLabel = async (newLabel: string) => {
-    const finalLabel = await updateLabel(label, newLabel);
-    router.replace(`/laolun/${finalLabel}/edit`);
-  };
   return (
     <main id="zhongwen" className="tweak-page">
-      <div id="label-edit-box">
-        <input
-          className="label-edit"
-          type="text"
-          defaultValue={label}
-          onBlur={(e) => {
-            if (e.target.value !== label) {
-              changeLabel(e.target.value);
-            }
-          }}
-        />
-      </div>
-
-      <PhraseEditor label={label} parts={parts} />
+      <PhraseEditor phrase={findPhraseByLabel(decodeURI(params.phrase))} />
     </main>
   );
 }
 
-function PhraseEditor({ label, parts }) {
+function PhraseEditor({ phrase }) {
+  const router = useRouter();
+  const { label, parts, isValidateGrammar, isFocusedLearning } = phrase;
+  const changeLabel = async (newLabel: string) => {
+    const finalLabel = await updateLabel(phrase.label, newLabel);
+    router.replace(`/laolun/${finalLabel}/edit`);
+  };
+  const toggleIsValidateGrammar = () => {
+    writePhrase({ label, parts, isValidateGrammar: !isValidateGrammar });
+  };
+  const toggleIsFocusedLearning = () => {
+    writePhrase({ label, parts, isFocusedLearning: !isFocusedLearning });
+  };
+
   const setPartInColumnByIdx = (idx, part) => {
     writePhrase({ label, parts: parts.toSpliced(idx, 1, part) });
+  };
+  const addColumnByIdx = (idx) => {
+    writePhrase({ label, parts: parts.toSpliced(idx + 1, 0, []) });
   };
   const deleteColumnByIdx = (idx) => {
     writePhrase({ label, parts: parts.toSpliced(idx, 1) });
@@ -73,17 +66,49 @@ function PhraseEditor({ label, parts }) {
     writePhrase({ label, parts: newParts });
   };
   return (
-    <div className="editor">
-      {parts.map((part, i) => (
-        <Column
-          key={part.join() + i}
-          part={part}
-          setPart={(n) => setPartInColumnByIdx(i, n)}
-          deleteColumn={() => deleteColumnByIdx(i)}
-          addSegmentToColumn={(segment) => addSegmentToColumnByIdx(i, segment)}
-          dragColumn={(chunkMoved) => dragColumnByIdx(i, chunkMoved)}
+    <div className="editor-wrapper">
+      <div className="top">
+        <input
+          type="text"
+          defaultValue={label}
+          onBlur={(e) => {
+            if (e.target.value !== label) {
+              changeLabel(e.target.value);
+            }
+          }}
         />
-      ))}
+        <div>
+          <button>Copy</button>
+          <button
+            data-highlight={isValidateGrammar}
+            onClick={toggleIsValidateGrammar}
+          >
+            Grammar
+          </button>
+          <button
+            data-highlight={isFocusedLearning}
+            onClick={toggleIsFocusedLearning}
+          >
+            Focused
+          </button>
+        </div>
+      </div>
+
+      <div className="editor">
+        {parts.map((part, i) => (
+          <Column
+            key={i}
+            part={part}
+            setPart={(n) => setPartInColumnByIdx(i, n)}
+            addColumn={() => addColumnByIdx(i)}
+            deleteColumn={() => deleteColumnByIdx(i)}
+            addSegmentToColumn={(segment) =>
+              addSegmentToColumnByIdx(i, segment)
+            }
+            dragColumn={(chunkMoved) => dragColumnByIdx(i, chunkMoved)}
+          />
+        ))}
+      </div>
     </div>
   );
 }
@@ -98,16 +123,18 @@ const splitPartStringIntoPart = (string) =>
 const Column = ({
   part,
   setPart,
+  addColumn,
   deleteColumn,
   addSegmentToColumn,
   dragColumn,
 }) => {
-  const isWide = Math.max(...part.map((p) => p.length)) > 3;
+  const isWide = Math.max(...part.map((p) => p.length)) > 2;
   const isEmpty = part.length < 1;
   return (
     <>
       <div className={cx("column-wrapper", { isWide, isEmpty })}>
         <TextArea
+          key={part.join()}
           value={part.join("\n")}
           onChange={(e) => setPart(splitPartStringIntoPart(e.target.value))}
           onDragGetChunk={dragColumn}
@@ -118,6 +145,11 @@ const Column = ({
         <div className="delete-column-overlay">
           <div>
             <button onClick={deleteColumn}>Delete</button>
+          </div>
+        </div>
+        <div className="add-column-overlay">
+          <div>
+            <button onClick={addColumn}>+</button>
           </div>
         </div>
       </div>

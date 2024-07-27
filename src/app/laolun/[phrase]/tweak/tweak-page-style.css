@@ -1,4 +1,37 @@
 .tweak-page {
+  .editor-wrapper {
+    display: flex;
+    flex-direction: column;
+    .top {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 0 0 0.5em 0;
+      overflow: hidden;
+      input {
+        font-size: 1.1em;
+        color: var(--accent-color);
+        cursor: pointer;
+        width: 15ch;
+        transition: width 0.1s linear;
+      }
+      input:focus-within {
+        width: 30ch;
+      }
+      input:focus-within + div {
+        max-width: 0ch;
+        overflow: hidden;
+      }
+      div {
+        transition: max-width 0.05s linear;
+        max-width: 30ch;
+        display: flex;
+        flex-direction: row;
+        gap: 0.2em;
+      }
+    }
+  }
   .editor {
     display: flex;
     gap: 0em;
@@ -52,6 +85,9 @@
         }
         .delete-column-overlay {
           display: flex;
+        }
+        .add-column-overlay {
+          display: none;
         }
       }
       textarea[draggable="true"] + .overlay {
@@ -118,6 +154,7 @@
         width: var(--column-initial-width);
         p {
           font-size: 0.7em;
+          padding-top: 1em;
         }
         & > div {
           display: flex;
@@ -140,18 +177,53 @@
         left: 0;
         position: absolute;
         top: 0;
-        width: 12ch;
+        width: 14ch;
+        button {
+          width: 100%;
+        }
+      }
+      .add-column-overlay {
+        transform: translate(50%);
+        bottom: 0;
+        right: 0;
+        z-index: 2;
+        position: absolute;
         button {
           width: 100%;
         }
       }
     }
+  }
 
-    button {
-      font-size: 1rem;
-      margin: 0;
-      padding: 0 0.6ch;
-      width: fit-content;
+  button {
+    font-size: 1rem;
+    margin: 0;
+    padding: 0 1.5ch;
+    width: fit-content;
+    border-radius: 3em;
+    border: 2px white solid;
+    border-color: white;
+    background: #ddd;
+    color: var(--primary-color);
+    transition: border-color 100ms linear;
+    outline: none;
+    &:hover:not(:disabled) {
+      border-color: grey;
+    }
+    &:focus,
+    &:active {
+      border-color: var(--accent-color);
+    }
+    &:disabled {
+      background: #bbb;
+      border-color: #999;
+      opacity: 0.8;
+      cursor: not-allowed;
+    }
+    &[data-highlight="true"] {
+      background: var(--accent-color);
+      border-color: white;
+      color: white;
     }
   }
 }
