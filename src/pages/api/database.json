@@ -108,7 +108,7 @@
         {
             "id": "58c36c00-58df-4130-907f-f7869b701312",
             "title": "Take pills",
-            "nextEpochDay": 19931,
+            "nextEpochDay": 19932,
             "cadenceInDays": 1
         },
         {
@@ -163,7 +163,7 @@
             "title": "Water the plants",
             "cadenceInDays": 3,
             "id": "2c3e317c-6c09-4116-a92f-569356dc3945",
-            "nextEpochDay": 19928
+            "nextEpochDay": 19934
         },
         {
             "title": "Vacuum bedroom",
@@ -187,12 +187,12 @@
             "title": "Change the cats' water",
             "cadenceInDays": 10,
             "id": "c4cf117b-7410-4e9e-bba4-5a1f2d55c78b",
-            "nextEpochDay": 19929
+            "nextEpochDay": 19941
         },
         {
             "title": "Take out the trash",
             "cadenceInDays": 4,
-            "nextEpochDay": 19931,
+            "nextEpochDay": 19935,
             "id": "eb9220be-02ba-4db3-988f-c0b119d4d053"
         },
         {
@@ -234,13 +234,13 @@
         {
             "title": "Clean out Eufy",
             "cadenceInDays": 1,
-            "nextEpochDay": 19930,
+            "nextEpochDay": 19932,
             "id": "ba96235d-7601-4d56-914e-484bc2904c30"
         },
         {
             "title": "Feed the plants",
             "cadenceInDays": 9,
-            "nextEpochDay": 19931,
+            "nextEpochDay": 19940,
             "id": "bccccd80-4466-4a6e-a05a-17e4e6f66ce5"
         },
         {

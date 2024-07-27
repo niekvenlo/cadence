@@ -131,13 +131,25 @@ const segmentsRarityArray = (() => {
   });
   const entries = [...segmentsRarityMap];
   const annotatedEntries = entries.map(([segment, count]) => {
-    const appearsInOtherEntriesCount =
-      entries.filter(([e]) => e.includes(segment)).length - 1;
+    const existsAsSubstringInOtherEntry =
+      entries.reduce((acc, [otherSegment, count]) => {
+        if (
+          otherSegment !== segment &&
+          segment.length > 2 &&
+          segment.slice(1) === otherSegment
+        ) {
+          return acc + count + 1;
+        }
+        if (otherSegment.includes(segment)) {
+          return acc + count;
+        }
+        return acc;
+      }, 0) - 1;
     return {
       segment,
       baseCount: count,
-      appearsInOtherEntriesCount,
-      totalCount: appearsInOtherEntriesCount + count,
+      appearsInOtherEntriesCount: existsAsSubstringInOtherEntry,
+      totalCount: existsAsSubstringInOtherEntry + count,
       length: segment.length,
     };
   });

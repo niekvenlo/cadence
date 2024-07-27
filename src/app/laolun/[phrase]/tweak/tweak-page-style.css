@@ -12,8 +12,7 @@
       height: 100%;
       padding: 0;
       margin: 0;
-      border: 1px dotted var(--primary-color-lighter);
-      background: white;
+      border: none;
       textarea {
         --c: rgb(233, 232, 170);
         background: repeating-linear-gradient(
@@ -22,7 +21,7 @@
           var(--c) calc(var(--lineheight) - 1px),
           currentColor var(--lineheight)
         );
-        border: none;
+        border: 1px dotted var(--primary-color-lighter);
         height: 15.3lh;
         line-height: var(--lineheight);
         outline: none;
@@ -32,15 +31,16 @@
         width: var(--column-initial-width);
         transition: width 0.2s, transform 0.5s;
         &[draggable="true"] {
-          transform: translateY(-3em);
+          transform: translateY(-2em) !important;
         }
+        &:focus-within {
+          box-shadow: var(--card-shadow);
+          transform: translateY(-1px);
+          opacity: 1;
+        }
+        opacity: 0.9;
       }
-      opacity: 0.9;
-      &:focus-within {
-        box-shadow: var(--card-shadow);
-        transform: translateY(-1px);
-        opacity: 1;
-      }
+
       &.isWide:focus-within {
         textarea {
           width: 25ch;
@@ -55,7 +55,7 @@
         }
       }
       textarea[draggable="true"] + .overlay {
-        transform: translateY(-3em);
+        transform: translateY(-2em);
       }
       .overlay {
         display: flex;
