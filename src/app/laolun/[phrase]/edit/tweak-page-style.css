@@ -63,6 +63,7 @@
         resize: none;
         width: var(--column-initial-width);
         transition: width 0.2s, transform 0.5s;
+        transition-delay: 0.1s;
         &[draggable="true"] {
           transform: translateY(-2em) !important;
         }

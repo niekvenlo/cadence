@@ -166,7 +166,7 @@ const PinyinOverlay = ({ part }) => (
   <div className="overlay">
     {part.map((segment) => (
       <div key={segment} className={cx("line", `offset-${segment.length}`)}>
-        <span className="pinyin">{pinyin[segment].replace(/[-]/g, "")}</span>
+        <span className="pinyin">{pinyin[segment]?.replace(/[-]/g, "")}</span>
         <RaritySpan segment={segment} />
       </div>
     ))}
