@@ -1,0 +1,80 @@
+.tweak-page {
+  .editor {
+    display: flex;
+    gap: 0em;
+    font-size: 1rem;
+  }
+}
+
+textarea {
+  height: 15lh;
+  overflow: hidden;
+}
+
+.column-wrapper {
+  --lineheight: 1.5rem;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: 1px dotted var(--primary-color-lighter);
+  textarea {
+    line-height: var(--lineheight);
+    padding: 0;
+    width: 20ch;
+    border: none;
+    --c: rgb(233, 232, 170);
+    background: repeating-linear-gradient(
+      180deg,
+      var(--c),
+      var(--c) 1.45em,
+      currentColor 1.5em
+    );
+  }
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    user-select: none;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    padding-top: 2px;
+    .line {
+      height: var(--lineheight);
+      min-height: var(--lineheight);
+      max-height: var(--lineheight);
+      overflow: clip;
+      color: hsl(130, 40%, 30%, 0.8);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-inline-end: 0.4em;
+      &.offset-1 {
+        padding-inline-start: calc(1 * 2ch + 1ch);
+      }
+      &.offset-2 {
+        padding-inline-start: calc(2 * 2ch + 1ch);
+      }
+      &.offset-3 {
+        padding-inline-start: calc(3 * 2ch + 1ch);
+      }
+      &.offset-4 {
+        padding-inline-start: calc(4 * 2ch + 1ch);
+      }
+      &.offset-5 {
+        padding-inline-start: calc(5 * 2ch + 1ch);
+      }
+      & > .pinyin {
+        color: #666;
+        font-size: 0.6em;
+      }
+      & > .rarity {
+        font-size: 0.4em;
+      }
+    }
+  }
+}
