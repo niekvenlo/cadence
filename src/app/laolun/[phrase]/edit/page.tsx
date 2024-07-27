@@ -1,65 +1,40 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import NoSSR from "../../../components/NoSSR";
+import "./tweak-page-style.css";
+
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   findPhraseByLabel,
-  getDangerousKanji,
+  getSegmentsRarity,
   getSuggested,
+  pinyin,
 } from "../../phrase-util-sync";
-import { writePhrase, updateLabel } from "../../phrase-actions-async";
 import "../../style.css";
 import { getIsChinese } from "../../util";
 import { cx } from "../../../utils";
+import { updateLabel, writePhrase } from "../../phrase-actions-async";
 import { useRouter } from "next/navigation";
-
-const no_text = "。";
+import NoSSR from "../../../components/NoSSR";
 
 export default function Chinese({ params }: { params: { phrase: string } }) {
+  return (
+    <main id="zhongwen" className="tweak-page">
+      <div style={{ width: "100%" }}>
+        <a href="tweak" style={{ float: "right" }}>
+          Old
+        </a>
+      </div>
+      <PhraseEditor phrase={findPhraseByLabel(decodeURI(params.phrase))} />
+    </main>
+  );
+}
+
+function PhraseEditor({ phrase }) {
   const router = useRouter();
-  const { label, parts, isValidateGrammar, isFocusedLearning } =
-    findPhraseByLabel(decodeURI(params.phrase));
-
-  const [_, setX] = useState(0);
-
-  const [shiftColumnIdx, setShiftColumnIdx] = useState<number | null>(null);
-
-  const onChangePart = (i, part, append = false) => {
-    if (part === "rem-col-hack") {
-      writePhrase({ label, parts: parts.toSpliced(i, 1) });
-      return;
-    }
-    if (part === "insert-col-hack") {
-      writePhrase({ label, parts: parts.toSpliced(i + 1, 0, [no_text]) });
-      return;
-    }
-    if (part === "shift-col-hack") {
-      if (shiftColumnIdx !== null) {
-        // move
-        [parts[shiftColumnIdx], parts[i]] = [parts[i], parts[shiftColumnIdx]];
-        setShiftColumnIdx(null);
-      } else {
-        setShiftColumnIdx(i);
-      }
-      return;
-    }
-    if (append) {
-      parts[i] = [...(parts[i] || []), ...part];
-    } else {
-      parts[i] = part.length < 1 ? [no_text] : part;
-    }
-
-    writePhrase({ label, parts });
-    setX((x) => x + 1);
-  };
+  const { label, parts, isValidateGrammar, isFocusedLearning } = phrase;
   const changeLabel = async (newLabel: string) => {
-    const finalLabel = await updateLabel(label, newLabel);
+    const finalLabel = await updateLabel(phrase.label, newLabel);
     router.replace(`/laolun/${finalLabel}/edit`);
-  };
-  const duplicatePhrase = async () => {
-    const dupeLabel = `${label} 🗳️`;
-    router.push(`/laolun/${dupeLabel}/edit`);
-    writePhrase({ label: dupeLabel, parts });
   };
   const toggleIsValidateGrammar = () => {
     writePhrase({ label, parts, isValidateGrammar: !isValidateGrammar });
@@ -68,141 +43,230 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
     writePhrase({ label, parts, isFocusedLearning: !isFocusedLearning });
   };
 
-  const kanjiUsed = parts.map((p) => p.map((c) => c.split(""))).flat(4);
-  const getDangerousKanjiUsed = () =>
-    getDangerousKanji().filter((k) => kanjiUsed.includes(k[0]));
+  const setPartInColumnByIdx = (idx, part) => {
+    writePhrase({ label, parts: parts.toSpliced(idx, 1, part) });
+  };
+  const addColumnByIdx = (idx) => {
+    writePhrase({ label, parts: parts.toSpliced(idx + 1, 0, []) });
+  };
+  const deleteColumnByIdx = (idx) => {
+    writePhrase({ label, parts: parts.toSpliced(idx, 1) });
+  };
+  const addSegmentToColumnByIdx = (idx, segment) => {
+    const newParts = [...parts];
+    newParts[idx] = [...newParts[idx], segment];
+    writePhrase({ label, parts: newParts });
+  };
+  const dragColumnByIdx = (idx, chunk) => {
+    const newParts = [...parts];
+    if (chunk % 1 === 0) {
+      [newParts[idx], newParts[idx + chunk]] = [
+        newParts[idx + chunk],
+        newParts[idx],
+      ];
+    } else {
+      const partToMove = newParts.splice(idx, 1)[0];
+      newParts.splice(idx + Math.floor(chunk), 0, partToMove);
+    }
+    writePhrase({ label, parts: newParts });
+  };
   return (
-    <NoSSR>
-      <main id="zhongwen">
-        <div id="label-edit-box">
-          <input
-            className="label-edit"
-            type="text"
-            defaultValue={label}
-            onBlur={(e) => {
-              if (e.target.value !== label) {
-                changeLabel(e.target.value);
-              }
-            }}
-          />
-
-          <button className="duplicate" onClick={duplicatePhrase}>
-            🗳️
-          </button>
-
+    <div className="editor-wrapper">
+      <div className="top">
+        <input
+          type="text"
+          defaultValue={label}
+          onBlur={(e) => {
+            if (e.target.value !== label) {
+              changeLabel(e.target.value);
+            }
+          }}
+        />
+        <div>
+          <button>Copy</button>
           <button
-            className={cx("witch", { isValidateGrammar })}
+            data-highlight={isValidateGrammar}
             onClick={toggleIsValidateGrammar}
           >
-            🧙‍♀️
+            Grammar
           </button>
           <button
-            className={cx("pin", { isFocusedLearning })}
+            data-highlight={isFocusedLearning}
             onClick={toggleIsFocusedLearning}
           >
-            📌
+            Focused
           </button>
-          <div className="dangerous-kanji-warning">
-            <div>
-              {getDangerousKanjiUsed().map((k) => (
-                <span key={k[0]} title={k[1]}>
-                  {k[0]}
-                </span>
-              ))}
-            </div>
-          </div>
         </div>
+      </div>
 
-        <div className="phrase">
-          {parts.map((part, i) => (
-            <Column
-              key={part?.join() + i}
-              part={part}
-              shiftColumnIdx={shiftColumnIdx}
-              onChangePart={(part, append) => onChangePart(i, part, append)}
-            />
-          ))}
-        </div>
-      </main>
-    </NoSSR>
-  );
-}
-
-type ColumnProps = {
-  part: string[];
-  shiftColumnIdx: number | null;
-  onChangePart: (
-    part: string[] | "rem-col-hack" | "shift-col-hack" | "insert-col-hack",
-    append?: boolean
-  ) => void;
-};
-
-const Column = ({ part, shiftColumnIdx, onChangePart }: ColumnProps) => {
-  const suggested = useMemo(() => getSuggested(part), [part]);
-  const getRandom = () => part[Math.floor(Math.random() * part.length)];
-  const canBeDeleted = part.toString() === "。";
-  const longestStringInColumn = Math.max(...part.map((chars) => chars.length));
-  return (
-    <div className={cx("column", `width-${longestStringInColumn}`)}>
-      <span className="init">{part?.[0]}</span>
-      <span className="random">{getRandom()}</span>
-      <span className="random">{getRandom()}</span>
-      <span className="random">{getRandom()}</span>
-      <button
-        className={cx("shift", { isActive: shiftColumnIdx !== null })}
-        onClick={() => onChangePart("shift-col-hack")}
-      >
-        {shiftColumnIdx !== null ? "挑选" : "移动"}
-      </button>
-      <TextArea part={part} onBlur={(part) => onChangePart(part)} />
-
-      {canBeDeleted ? (
-        <button className="minus" onClick={() => onChangePart("rem-col-hack")}>
-          除字
-        </button>
-      ) : (
-        <button
-          className="insert"
-          onClick={() => onChangePart("insert-col-hack")}
-        >
-          右加
-        </button>
-      )}
-      <div className="suggested">
-        {suggested?.map((s) => (
-          <div key={s} onClick={() => onChangePart([s], true)}>
-            {s}
-          </div>
+      <div className="editor">
+        {parts.map((part, i) => (
+          <Column
+            key={i}
+            part={part}
+            setPart={(n) => setPartInColumnByIdx(i, n)}
+            addColumn={() => addColumnByIdx(i)}
+            deleteColumn={() => deleteColumnByIdx(i)}
+            addSegmentToColumn={(segment) =>
+              addSegmentToColumnByIdx(i, segment)
+            }
+            dragColumn={(chunkMoved) => dragColumnByIdx(i, chunkMoved)}
+          />
         ))}
       </div>
     </div>
   );
+}
+
+const splitPartStringIntoPart = (string) =>
+  string
+    .split("\n")
+    .filter((c) => c)
+    .filter(getIsChinese)
+    .map((f) => f.trim());
+
+const Column = ({
+  part,
+  setPart,
+  addColumn,
+  deleteColumn,
+  addSegmentToColumn,
+  dragColumn,
+}) => {
+  const isWide = Math.max(...part.map((p) => p.length)) > 2;
+  const isEmpty = part.length < 1;
+  return (
+    <>
+      <div className={cx("column-wrapper", { isWide, isEmpty })}>
+        <TextArea
+          key={part.join()}
+          value={part.join("\n")}
+          onChange={(e) => setPart(splitPartStringIntoPart(e.target.value))}
+          onDragGetChunk={dragColumn}
+        />
+        <PinyinOverlay part={part} />
+        <Suggestions part={part} addSegmentToColumn={addSegmentToColumn} />
+
+        <div className="delete-column-overlay">
+          <div>
+            <button onClick={deleteColumn}>Delete</button>
+          </div>
+        </div>
+        <div className="add-column-overlay">
+          <div>
+            <button onClick={addColumn}>+</button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 
-const TextArea = ({ part, onBlur }) => {
-  const cleanValues = (string) => {
-    const foundValues = string
-      .split("\n")
-      .filter((c) => c)
-      .filter(getIsChinese)
-      .map((f) => f.trim());
-    const unique = [...new Set(foundValues)];
-    return unique;
+const PinyinOverlay = ({ part }) => (
+  <div className="overlay">
+    {part.map((segment) => (
+      <div key={segment} className={cx("line", `offset-${segment.length}`)}>
+        <span className="pinyin">{pinyin[segment].replace(/[-]/g, "")}</span>
+        <RaritySpan segment={segment} />
+      </div>
+    ))}
+  </div>
+);
+
+const RaritySpan = ({ segment }) => {
+  const totalCount =
+    getSegmentsRarity().find((s) => s.segment === segment)?.totalCount ?? 0;
+  let emoji = "🟢";
+  if (totalCount < 10) emoji = "🟣";
+  if (totalCount < 6) emoji = "🟡";
+  if (totalCount < 4) emoji = "🟠";
+  if (totalCount < 2) emoji = "🔴";
+  return (
+    <span className="rarity">
+      <span>{totalCount}</span>
+      <span>{emoji}</span>
+    </span>
+  );
+};
+
+const Suggestions = ({ part, addSegmentToColumn }) => {
+  const suggestions = getSuggested(part);
+  if (suggestions.length < 1) {
+    return null;
+  }
+  return (
+    <NoSSR>
+      <div className="suggestions">
+        <p>Quick add</p>
+        <div>
+          {suggestions.map((s) => (
+            <button key={s} onClick={() => addSegmentToColumn(s)}>
+              {s}
+            </button>
+          ))}
+        </div>
+      </div>
+    </NoSSR>
+  );
+};
+
+const TextArea = ({
+  value,
+  className = "",
+  onChange,
+  onPaste = (e: Event) => {},
+  onDragGetChunk = (e: number) => {},
+}) => {
+  // draggable
+  const [isDraggable, setIsDraggable] = useState(false);
+
+  // We don't want onChange to trigger while we are in composition mode.
+  const preventOnChange = useRef(false);
+  // We want to call handlePaste once the value has been updated.
+  const justPasted = useRef(false);
+  const dragStartX = useRef<number | null>(null);
+  const draggableTimer = useRef<NodeJS.Timeout | null>(null);
+
+  const handleChange = (e) => {
+    if (justPasted.current === true) {
+      justPasted.current = false;
+      handlePaste(e);
+    }
+    if (preventOnChange.current === true) {
+      return;
+    }
+    onChange(e);
+  };
+  const handlePaste = (e) => {
+    onPaste(e);
+  };
+  const handleDoubleClick = () => {
+    setIsDraggable(true);
+    draggableTimer.current = setTimeout(() => setIsDraggable(false), 1000);
   };
   return (
     <textarea
-      className="options"
-      defaultValue={
-        part
-          .toSorted()
-          .filter((c) => c)
-          .join("\n") + "\n"
-      }
-      onBlur={(e) => onBlur(cleanValues(e.target.value))}
-      onPaste={(e) => {
-        const textarea = e.target as HTMLTextAreaElement;
-        setTimeout(() => onBlur(cleanValues(textarea.value)), 100);
+      draggable={isDraggable}
+      className={className}
+      defaultValue={value}
+      onCompositionStart={() => (preventOnChange.current = true)}
+      onCompositionEnd={() => (preventOnChange.current = false)}
+      onPaste={() => (justPasted.current = true)}
+      onChange={handleChange}
+      onDragStart={(c) => {
+        dragStartX.current = c.screenX;
+        if (draggableTimer.current) {
+          clearTimeout(draggableTimer.current);
+        }
       }}
+      onDragEnd={(c) => {
+        const xMovement = c.screenX - dragStartX.current!;
+        dragStartX.current = null;
+        const xMovementInChunks = Math.round(xMovement / 80) / 2;
+        onDragGetChunk(xMovementInChunks);
+        setIsDraggable(false);
+      }}
+      onDoubleClick={handleDoubleClick}
     />
   );
 };
