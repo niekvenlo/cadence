@@ -2,79 +2,147 @@
   .editor {
     display: flex;
     gap: 0em;
-    font-size: 1rem;
-  }
-}
+    font-size: 1.3rem;
 
-textarea {
-  height: 15lh;
-  overflow: hidden;
-}
+    .column-wrapper {
+      --column-initial-width: 14ch;
+      --lineheight: 1.5em;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+      border: 1px dotted var(--primary-color-lighter);
+      textarea {
+        --c: rgb(233, 232, 170);
+        background: repeating-linear-gradient(
+          180deg,
+          var(--c),
+          var(--c) calc(var(--lineheight) - 1px),
+          currentColor var(--lineheight)
+        );
+        border: none;
+        height: 15.3lh;
+        line-height: var(--lineheight);
+        outline: none;
+        overflow: clip hidden;
+        padding: 0;
+        resize: none;
+        width: var(--column-initial-width);
+        transition: width 0.2s;
+      }
+      opacity: 0.9;
+      &:focus-within {
+        box-shadow: var(--card-shadow);
+        transform: translateY(-1px);
+        opacity: 1;
+      }
+      &.isWide:focus-within {
+        textarea {
+          width: 25ch;
+        }
+      }
+      &.isEmpty {
+        textarea {
+          opacity: 0.5;
+        }
+      }
+      .overlay {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        left: 0;
+        padding-top: 2px;
+        pointer-events: none;
+        position: absolute;
+        top: 0;
+        user-select: none;
+        width: 100%;
+        overflow: clip;
+        .line {
+          height: var(--lineheight);
+          min-height: var(--lineheight);
+          max-height: var(--lineheight);
+          overflow: clip;
+          color: hsl(130, 40%, 30%, 0.8);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding-inline-end: 0.4em;
+          &.offset-1 {
+            padding-inline-start: calc(1 * 2ch + 1ch);
+          }
+          &.offset-2 {
+            padding-inline-start: calc(2 * 2ch + 1ch);
+          }
+          &.offset-3 {
+            padding-inline-start: calc(3 * 2ch + 1ch);
+          }
+          &.offset-4 {
+            padding-inline-start: calc(4 * 2ch + 1ch);
+          }
+          &.offset-5 {
+            padding-inline-start: calc(5 * 2ch + 1ch);
+          }
+          & > .pinyin {
+            color: #666;
+            font-size: 0.6em;
+            white-space: nowrap;
+          }
+          & > .rarity {
+            font-size: 0.4em;
+            display: flex;
+            gap: 1ch;
+          }
+        }
+      }
+      .suggestions {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        transform: translate(0, 100%);
+        width: var(--column-initial-width);
+        p {
+          font-size: 0.7em;
+        }
+        & > div {
+          display: flex;
+          align-items: flex-start;
+          flex-wrap: wrap;
+          gap: 1ch;
+          font-size: 0.8em;
+          height: fit-content;
+          button {
+            margin: 0;
+            padding: 0 0.6ch;
+            width: fit-content;
+          }
+        }
+      }
 
-.column-wrapper {
-  --lineheight: 1.5rem;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  border: 1px dotted var(--primary-color-lighter);
-  textarea {
-    line-height: var(--lineheight);
-    padding: 0;
-    width: 20ch;
-    border: none;
-    --c: rgb(233, 232, 170);
-    background: repeating-linear-gradient(
-      180deg,
-      var(--c),
-      var(--c) 1.45em,
-      currentColor 1.5em
-    );
-  }
-  .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    user-select: none;
-    pointer-events: none;
-    display: flex;
-    flex-direction: column;
-    padding-top: 2px;
-    .line {
-      height: var(--lineheight);
-      min-height: var(--lineheight);
-      max-height: var(--lineheight);
-      overflow: clip;
-      color: hsl(130, 40%, 30%, 0.8);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-inline-end: 0.4em;
-      &.offset-1 {
-        padding-inline-start: calc(1 * 2ch + 1ch);
+      .delete-column-overlay {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        height: 30%;
+        transform: translate(0, 200%);
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: var(--column-initial-width);
+        button {
+          width: 100%;
+        }
       }
-      &.offset-2 {
-        padding-inline-start: calc(2 * 2ch + 1ch);
-      }
-      &.offset-3 {
-        padding-inline-start: calc(3 * 2ch + 1ch);
-      }
-      &.offset-4 {
-        padding-inline-start: calc(4 * 2ch + 1ch);
-      }
-      &.offset-5 {
-        padding-inline-start: calc(5 * 2ch + 1ch);
-      }
-      & > .pinyin {
-        color: #666;
-        font-size: 0.6em;
-      }
-      & > .rarity {
-        font-size: 0.4em;
-      }
+    }
+
+    button {
+      font-size: 1rem;
     }
   }
 }

@@ -119,7 +119,7 @@ export const getPinyin = (
 export const getSafePhraseLabel = (label: string) =>
   label.replace(/[|]/g, "").replace(/[,]/g, "，").replace(/[?]/g, "？");
 
-export const getSegmentsRarity = () => {
+const segmentsRarityArray = (() => {
   const segmentsRarityMap = new Map();
   phrases.forEach((phrase) => {
     phrase.parts.forEach((part) => {
@@ -144,4 +144,5 @@ export const getSegmentsRarity = () => {
   return annotatedEntries.sort((a, b) =>
     a.totalCount < b.totalCount ? -1 : 1
   );
-};
+})();
+export const getSegmentsRarity = () => segmentsRarityArray;

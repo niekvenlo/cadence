@@ -3,19 +3,30 @@
 import "./tweak-page-style.css";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { findPhraseByLabel, pinyin } from "../../phrase-util-sync";
-// import { writePhrase, updateLabel } from "../../phrase-actions-async";
+import {
+  findPhraseByLabel,
+  getSegmentsRarity,
+  getSuggested,
+  pinyin,
+} from "../../phrase-util-sync";
 import "../../style.css";
 import { getIsChinese } from "../../util";
 import { cx } from "../../../utils";
-import { InputChinese } from "../../components/InputChinese";
+import { updateLabel } from "../../phrase-actions-async";
+import { useRouter } from "next/navigation";
+import NoSSR from "../../../components/NoSSR";
 
 const no_text = "。";
 
 export default function Chinese({ params }: { params: { phrase: string } }) {
+  const router = useRouter();
   const { label, parts, isValidateGrammar, isFocusedLearning } =
     findPhraseByLabel(decodeURI(params.phrase));
 
+  const changeLabel = async (newLabel: string) => {
+    const finalLabel = await updateLabel(label, newLabel);
+    router.replace(`/laolun/${finalLabel}/edit`);
+  };
   return (
     <main id="zhongwen" className="tweak-page">
       <div id="label-edit-box">
@@ -23,11 +34,11 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
           className="label-edit"
           type="text"
           defaultValue={label}
-          // onBlur={(e) => {
-          //   if (e.target.value !== label) {
-          //     changeLabel(e.target.value);
-          //   }
-          // }}
+          onBlur={(e) => {
+            if (e.target.value !== label) {
+              changeLabel(e.target.value);
+            }
+          }}
         />
       </div>
 
@@ -37,38 +48,98 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
 }
 
 function PhraseEditor({ parts }) {
+  const [x, setX] = useState(parts);
   return (
     <div className="editor">
-      {parts.map((part, i) => (
-        <Column key={i} part={part} onChange={(e) => console.log(e)} />
+      {x.map((part, i) => (
+        <Column
+          key={i}
+          part={part}
+          setPart={(n) =>
+            setX((x) => {
+              x[i] = n;
+              return [...x];
+            })
+          }
+        />
       ))}
     </div>
   );
 }
 
-// const cleanValues = (string) => {
-//   const foundValues = string
-//     .split("\n")
-//     .filter((c) => c)
-//     .filter(getIsChinese)
-//     .map((f) => f.trim());
-//   const unique = [...new Set(foundValues)];
-//   return unique;
-// };
+const splitPartStringIntoPart = (string) =>
+  string
+    .split("\n")
+    .filter((c) => c)
+    .filter(getIsChinese)
+    .map((f) => f.trim());
 
-const Column = ({ part, onChange }) => {
+const Column = ({ part, setPart }) => {
+  const isWide = Math.max(...part.map((p) => p.length)) > 3;
+  const isEmpty = part.length < 1;
   return (
-    <div className="column-wrapper">
-      <TextArea value={part.join("\n")} onChange={onChange} />
-      <div className="overlay">
-        {part.map((segment) => (
-          <div key={segment} className={cx("line", `offset-${segment.length}`)}>
-            <span className="pinyin">{pinyin[segment]}</span>
-            <span className="rarity">🔵</span>
+    <>
+      <div className={cx("column-wrapper", { isWide, isEmpty })}>
+        <TextArea
+          value={part.join("\n")}
+          onChange={(e) => setPart(splitPartStringIntoPart(e.target.value))}
+        />
+        <div className="overlay">
+          {part.map((segment) => (
+            <div
+              key={segment}
+              className={cx("line", `offset-${segment.length}`)}
+            >
+              <span className="pinyin">{pinyin[segment]}</span>
+              <RaritySpan segment={segment} />
+            </div>
+          ))}
+        </div>
+        <Suggestions part={part} />
+        {isEmpty && (
+          <div className="delete-column-overlay">
+            <div>
+              <button>Delete</button>
+            </div>
           </div>
-        ))}
+        )}
       </div>
-    </div>
+    </>
+  );
+};
+
+const RaritySpan = ({ segment }) => {
+  const totalCount =
+    getSegmentsRarity().find((s) => s.segment === segment)?.totalCount ?? 0;
+  let emoji = "🟢";
+  if (totalCount < 10) emoji = "🟣";
+  if (totalCount < 6) emoji = "🟡";
+  if (totalCount < 4) emoji = "🟠";
+  if (totalCount < 2) emoji = "🔴";
+  return (
+    <span className="rarity">
+      <span>{totalCount}</span>
+      <span>{emoji}</span>
+    </span>
+  );
+};
+
+const Suggestions = ({ part }) => {
+  const suggestions = getSuggested(part);
+  if (suggestions.length < 1) {
+    return null;
+  }
+  return (
+    <NoSSR>
+      <div className="suggestions">
+        <p>Quick add</p>
+        <div>
+          {suggestions.map((s) => (
+            <button key={s}>{s}</button>
+          ))}
+        </div>
+      </div>
+    </NoSSR>
   );
 };
 
@@ -87,7 +158,6 @@ const TextArea = ({
     if (justPasted.current === true) {
       justPasted.current = false;
       handlePaste(e);
-      return;
     }
     if (preventOnChange.current === true) {
       return;
