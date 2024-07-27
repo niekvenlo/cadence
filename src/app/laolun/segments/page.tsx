@@ -7,9 +7,9 @@ import { useState } from "react";
 
 export default function Chinese() {
   const [sortBy, setSortBy] = useState("totalCount");
-  const [asc, setAsc] = useState(false);
+  const [isAsc, setIsAsc] = useState(false);
   const toggleAsc = (column) => {
-    setAsc((asc) => {
+    setIsAsc((asc) => {
       if (sortBy === column) {
         return !asc;
       }
@@ -27,11 +27,26 @@ export default function Chinese() {
     length: "Length",
   };
 
+  const sortRarity = (a, b) => {
+    const asc = () => (isAsc ? 1 : -1);
+    if (a[sortBy] === b[sortBy]) {
+      if (a.length < b.length) {
+        return asc();
+      } else {
+        return -asc();
+      }
+    }
+    if (a[sortBy] < b[sortBy]) {
+      return asc();
+    }
+    return -asc();
+  };
+
   return (
     <main id="zhongwen">
       <div id="segments-page">
         Sorted by &quot;{columnNames[sortBy] ?? "[unknown]"}&quot;,{" "}
-        {asc ? "Ascending" : "Descending"}
+        {isAsc ? "Ascending" : "Descending"}
         <table>
           <thead>
             <tr>
@@ -44,9 +59,7 @@ export default function Chinese() {
           </thead>
           <tbody>
             {getSegmentsRarity()
-              .sort((a, b) =>
-                a[sortBy] < b[sortBy] ? (asc ? 1 : -1) : asc ? -1 : 1
-              )
+              .sort(sortRarity)
               .map((s) => (
                 <tr key={s.segment}>
                   <td>{s.segment}</td>
