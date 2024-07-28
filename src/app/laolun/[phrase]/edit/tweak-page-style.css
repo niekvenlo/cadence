@@ -60,7 +60,7 @@
         height: 15.3lh;
         line-height: var(--lineheight);
         outline: none;
-        overflow: clip hidden;
+        overflow: hidden;
         padding: 0;
         resize: none;
         width: var(--column-initial-width);
