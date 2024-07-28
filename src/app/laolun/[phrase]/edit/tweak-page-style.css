@@ -7,6 +7,8 @@
       flex-direction: row;
       flex-wrap: wrap;
       justify-content: space-between;
+      margin-inline: -4em;
+      max-width: 90vw;
       padding: 0 0 0.5em 0;
       overflow: hidden;
       input {
@@ -117,25 +119,31 @@
           justify-content: space-between;
           align-items: center;
           padding-inline-end: 0.4em;
+          --offset-step: 1.8ch;
           &.offset-1 {
-            padding-inline-start: calc(1 * 2ch + 1ch);
+            padding-inline-start: calc(1 * var(--offset-step) + 0.5ch);
           }
           &.offset-2 {
-            padding-inline-start: calc(2 * 2ch + 1ch);
+            padding-inline-start: calc(2 * var(--offset-step) + 0.5ch);
           }
           &.offset-3 {
-            padding-inline-start: calc(3 * 2ch + 1ch);
+            padding-inline-start: calc(3 * var(--offset-step) + 0.5ch);
           }
           &.offset-4 {
-            padding-inline-start: calc(4 * 2ch + 1ch);
+            padding-inline-start: calc(4 * var(--offset-step) + 0.5ch);
           }
           &.offset-5 {
-            padding-inline-start: calc(5 * 2ch + 1ch);
+            padding-inline-start: calc(5 * var(--offset-step) + 0.5ch);
+          }
+          &.offset-6 {
+            padding-inline-start: calc(6 * var(--offset-step) + 0.5ch);
           }
           & > .pinyin {
             color: #666;
             font-size: 0.6em;
-            white-space: nowrap;
+            /* white-space: nowrap; */
+            translate: 0 -2px;
+            line-height: 0.95;
           }
           & > .rarity {
             font-size: 0.4em;
