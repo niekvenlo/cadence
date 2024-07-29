@@ -454,11 +454,14 @@ main#cadence {
         }
         box-shadow: none;
         padding: 0.5em;
-        grid-template-areas: "title buttons";
+        grid-template-areas:
+          "title buttons"
+          "due ."
+          "every ."
+          "recent .";
         grid-template-columns: 4fr 1fr;
         grid-template-rows: unset;
-        gap: 0.1em;
-        max-height: 4em;
+        gap: 0.15em 0.1em;
         overflow-y: hidden;
         .buttons {
           gap: 0.5em;
@@ -467,21 +470,15 @@ main#cadence {
         .due,
         .every,
         .recently-complete {
-          display: none;
+          display: block;
         }
-        /* &:hover {
+        max-height: 2.5em;
+        transition: max-height 0.5s linear;
+        transition-delay: 1s;
+        &:hover {
+          transition-delay: 0.3s;
           max-height: 8em;
-          grid-template-areas:
-            "title buttons"
-            "due ."
-            "every ."
-            "recent .";
-          .due,
-          .every,
-          .recently-complete {
-            display: block;
-          }
-        } */
+        }
       }
     }
   }

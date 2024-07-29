@@ -103,8 +103,8 @@ function InteractiveElements({ children }) {
     if (!label) {
       return;
     }
+    await writePhrase({ label, parts: label.split("|").map((f) => [f]) });
     router.push(`/laolun/${await getSafePhraseLabel(label)}/edit`);
-    writePhrase({ label, parts: label.split("|").map((f) => [f]) });
   };
   return (
     <div className="interactive-elements">

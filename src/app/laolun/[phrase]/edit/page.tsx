@@ -36,6 +36,11 @@ function PhraseEditor({ phrase }) {
     const finalLabel = await updateLabel(phrase.label, newLabel);
     router.replace(`/laolun/${finalLabel}/edit`);
   };
+  const duplicatePhrase = async () => {
+    const dupeLabel = `${label} 🗳️`;
+    await writePhrase({ label: dupeLabel, parts });
+    router.push(`/laolun/${dupeLabel}/edit`);
+  };
   const toggleIsValidateGrammar = () => {
     writePhrase({ label, parts, isValidateGrammar: !isValidateGrammar });
   };
@@ -83,7 +88,7 @@ function PhraseEditor({ phrase }) {
           }}
         />
         <div>
-          <button>Copy</button>
+          <button onClick={duplicatePhrase}>Copy</button>
           <button
             data-highlight={isValidateGrammar}
             onClick={toggleIsValidateGrammar}
