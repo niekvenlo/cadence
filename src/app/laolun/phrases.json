@@ -3970,14 +3970,13 @@
         "印",
         "扫",
         "扮",
-        "扰",
         "架",
         "球",
         "电话",
         "飞机"
       ]
     ],
-    "isValidateGrammar": true
+    "isValidateGrammar": false
   },
   {
     "label": "我来中国一个月了，已经会用筷子了",
@@ -4179,7 +4178,7 @@
         "，对吧"
       ]
     ],
-    "isValidateGrammar": true
+    "isValidateGrammar": false
   },
   {
     "label": "六点半怎么样",
@@ -4198,10 +4197,10 @@
       ],
       [
         "怎么样",
-        "怎么样了"
+        "怎么样呢"
       ]
     ],
-    "isValidateGrammar": true
+    "isValidateGrammar": false
   },
   {
     "label": "又帅又壮",
@@ -4226,7 +4225,8 @@
     "label": "请选择一部电影",
     "parts": [
       [
-        "请选择"
+        "请选择",
+        "请选"
       ],
       [
         "一部电影",
@@ -4239,7 +4239,7 @@
         "您最喜爱的食物"
       ]
     ],
-    "isValidateGrammar": true
+    "isValidateGrammar": false
   },
   {
     "label": "你喜欢哪种动物",
@@ -4254,7 +4254,7 @@
       ],
       [
         "哪",
-        "这个"
+        "这"
       ],
       [
         "种"
@@ -4266,7 +4266,7 @@
         "演员"
       ]
     ],
-    "isValidateGrammar": true
+    "isValidateGrammar": false
   },
   {
     "label": "他告诉了我一个秘密",
@@ -4407,12 +4407,12 @@
     ]
   },
   {
-    "label": "容易，先转左边，然后转右边",
+    "label": "很简单，先转左边，然后转右边",
     "parts": [
       [
         "先",
         "首先",
-        "容易，先"
+        "很简单，先"
       ],
       [
         "转右边",
@@ -4430,10 +4430,11 @@
       [
         "转右边",
         "转左边",
-        "你就会看到它"
+        "你就会看到它",
+        "地点就在前面"
       ]
     ],
-    "isValidateGrammar": true
+    "isValidateGrammar": false
   },
   {
     "label": "他一个下午都坐在电视前",
@@ -4447,7 +4448,7 @@
         "一个下午都",
         "每下午都",
         "一个上午",
-        "一个上午都"
+        "正个上午都"
       ],
       [
         "坐在电视前",
@@ -4455,7 +4456,7 @@
         "去跳舞"
       ]
     ],
-    "isValidateGrammar": true
+    "isValidateGrammar": false
   },
   {
     "label": "我在中国学汉语",
@@ -4489,5 +4490,53 @@
         "数学"
       ]
     ]
+  },
+  {
+    "label": "我们去看电影，怎么样",
+    "parts": [
+      [
+        "我们",
+        "你们"
+      ],
+      [
+        "去"
+      ],
+      [
+        "看电影",
+        "荷兰",
+        "朋友",
+        "理发店",
+        "意大利",
+        "市中心",
+        "饭店",
+        "商店"
+      ],
+      [
+        "，"
+      ],
+      [
+        "怎么样"
+      ]
+    ],
+    "isValidateGrammar": true
+  },
+  {
+    "label": "你怎么去北京",
+    "parts": [
+      [
+        "你"
+      ],
+      [
+        "怎么去"
+      ],
+      [
+        "北京",
+        "游泳",
+        "市中心",
+        "火车站",
+        "飞机场"
+      ]
+    ],
+    "isValidateGrammar": true
   }
 ]
