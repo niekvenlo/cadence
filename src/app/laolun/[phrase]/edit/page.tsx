@@ -2,7 +2,7 @@
 
 import "./tweak-page-style.css";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   findPhraseByLabel,
   getSegmentsRarity,
@@ -31,7 +31,14 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
 
 function PhraseEditor({ phrase }) {
   const router = useRouter();
-  const { label, parts, isValidateGrammar, isFocusedLearning } = phrase;
+  const { label, parts, isValidateGrammar, isFocusedLearning } = phrase || {};
+  if (!label) {
+    return (
+      <>
+        Not found.<a href="/laolun/list/"> Go to list of phrases.</a>
+      </>
+    );
+  }
   const changeLabel = async (newLabel: string) => {
     const finalLabel = await updateLabel(phrase.label, newLabel);
     router.replace(`/laolun/${finalLabel}/edit`);

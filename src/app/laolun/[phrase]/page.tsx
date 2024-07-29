@@ -1,5 +1,6 @@
 "use client";
 
+import { redirect } from "next/navigation";
 import NoSSR from "../../components/NoSSR";
 import BasicLink from "../../components/basic/BasicLink";
 import { findPhraseByLabel } from "../phrase-util-sync";
@@ -7,7 +8,10 @@ import "../style.css";
 import { getRandomElement } from "../util";
 
 export default function Chinese({ params }: { params: { phrase: string } }) {
-  const { label, parts } = findPhraseByLabel(decodeURI(params.phrase));
+  const { label, parts } = findPhraseByLabel(decodeURI(params.phrase)) || {};
+  if (!label || !parts) {
+    redirect("/laolun/list");
+  }
   return (
     <NoSSR>
       <main id="zhongwen">

@@ -17,12 +17,15 @@ const no_text = "。";
 
 export default function Chinese({ params }: { params: { phrase: string } }) {
   const router = useRouter();
-  const { label, parts, isValidateGrammar, isFocusedLearning } =
-    findPhraseByLabel(decodeURI(params.phrase));
-
   const [_, setX] = useState(0);
-
   const [shiftColumnIdx, setShiftColumnIdx] = useState<number | null>(null);
+
+  const { label, parts, isValidateGrammar, isFocusedLearning } =
+    findPhraseByLabel(decodeURI(params.phrase)) || {};
+
+  if (!label || !parts) {
+    return "404";
+  }
 
   const onChangePart = (i, part, append = false) => {
     if (part === "rem-col-hack") {

@@ -45,8 +45,8 @@ export const getDangerousKanji = () => {
   return [...dangerousKanji];
 };
 
-export const findPhraseByLabel = (label: string): Phrase =>
-  phrases.find((phrase) => phrase.label === label) || phrases[0];
+export const findPhraseByLabel = (label: string): Phrase | undefined =>
+  phrases.find((phrase) => phrase.label === label);
 
 const suggestionMap = new Map();
 
