@@ -60,7 +60,7 @@ export const breakPinyinIntoSylables = (string: string = "") => {
 export const breakRawPinyin = (string = "") =>
   string
     .replace(/([aieouǎěǐǔǒāēīōūàèìòùáíéóúǚǜ])([bcdfghjklmpqstvwxyz])/g, "$1-$2")
-    .replace(/(n)([bdfhjklmnpqstwxyz])/g, "$1-$2")
+    .replace(/(n)([bcdfhjklmnpqstwxyz])/g, "$1-$2")
     .replace(/(r)([fhlmpqsyz])/g, "$1-$2") //
     .replace(/(ng)([abcdfgjklmnpqstuwxyz])/g, "$1-$2")
     .replace(/([?,])/g, " $1 ");
