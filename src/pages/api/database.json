@@ -77,7 +77,7 @@
         {
             "id": "f01d955c-b950-47b0-88ae-09554b7e5737",
             "title": "Wash the bedsheets",
-            "nextEpochDay": 19939,
+            "nextEpochDay": 19954,
             "cadenceInDays": 14
         },
         {
@@ -108,7 +108,7 @@
         {
             "id": "58c36c00-58df-4130-907f-f7869b701312",
             "title": "Take pills",
-            "nextEpochDay": 19936,
+            "nextEpochDay": 19942,
             "cadenceInDays": 1
         },
         {
@@ -145,7 +145,7 @@
             "title": "Vacuum the little storage room",
             "cadenceInDays": 15,
             "id": "2e247db3-3a37-405c-8e8d-590d4e7c7c33",
-            "nextEpochDay": 19940
+            "nextEpochDay": 19956
         },
         {
             "title": "Clean the fans",
@@ -163,7 +163,7 @@
             "title": "Water the plants",
             "cadenceInDays": 3,
             "id": "2c3e317c-6c09-4116-a92f-569356dc3945",
-            "nextEpochDay": 19934
+            "nextEpochDay": 19944
         },
         {
             "title": "Vacuum bedroom",
@@ -187,19 +187,19 @@
             "title": "Change the cats' water",
             "cadenceInDays": 10,
             "id": "c4cf117b-7410-4e9e-bba4-5a1f2d55c78b",
-            "nextEpochDay": 19941
+            "nextEpochDay": 19951
         },
         {
             "title": "Take out the trash",
             "cadenceInDays": 4,
-            "nextEpochDay": 19935,
+            "nextEpochDay": 19941,
             "id": "eb9220be-02ba-4db3-988f-c0b119d4d053"
         },
         {
             "title": "Laundry",
             "cadenceInDays": 6,
             "id": "e57352c3-c92f-4433-ac9a-a5456a395048",
-            "nextEpochDay": 19938
+            "nextEpochDay": 19946
         },
         {
             "title": "Clean stove hood",
@@ -211,7 +211,7 @@
             "title": "Trim Tux's nails",
             "cadenceInDays": 14,
             "id": "a70db5ba-765f-4e09-82b8-b98becf3ae71",
-            "nextEpochDay": 19935
+            "nextEpochDay": 19951
         },
         {
             "title": "Trim Toto's nails",
@@ -228,19 +228,19 @@
         {
             "title": "Wipe bathroom surfaces",
             "cadenceInDays": 4,
-            "nextEpochDay": 19938,
+            "nextEpochDay": 19944,
             "id": "420032ac-3a25-4800-a19b-841856bb4293"
         },
         {
             "title": "Clean out Eufy",
             "cadenceInDays": 1,
-            "nextEpochDay": 19936,
+            "nextEpochDay": 19942,
             "id": "ba96235d-7601-4d56-914e-484bc2904c30"
         },
         {
             "title": "Feed the plants",
             "cadenceInDays": 9,
-            "nextEpochDay": 19940,
+            "nextEpochDay": 19950,
             "id": "bccccd80-4466-4a6e-a05a-17e4e6f66ce5"
         },
         {
@@ -252,14 +252,14 @@
         {
             "title": "Clean the shower doors",
             "cadenceInDays": 21,
-            "nextEpochDay": 19935,
+            "nextEpochDay": 19956,
             "id": "efdb8179-b16f-43a6-ad18-3ca6aee0d5d1"
         },
         {
             "title": "Recycle paper ",
             "cadenceInDays": 10,
             "id": "926978d8-1248-4077-a8db-007271792fde",
-            "nextEpochDay": 19935
+            "nextEpochDay": 19945
         },
         {
             "title": "Clean the water bottles",
@@ -270,7 +270,7 @@
         {
             "title": "Set up driving lessons",
             "cadenceInDays": 7,
-            "nextEpochDay": 19941,
+            "nextEpochDay": 19948,
             "id": "ddd213f9-6d27-4190-9216-c8de3493ceff"
         },
         {
