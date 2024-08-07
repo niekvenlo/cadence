@@ -13,7 +13,7 @@ import BasicModal from "./components/basic/BasicModal";
 import EditModal from "./components/EditModal";
 import TaskCardGroup from "./components/TaskCardGroup";
 
-import { delay } from "./utils";
+import { cx, delay } from "./utils";
 import { HIGHLIGHT_DELAY } from "./constants";
 
 type Props = {
@@ -27,8 +27,8 @@ export default function CadencePage({ initialTasks }: Props) {
 
   // Copy of the selected task. Safe to mutate.
   const [selectedTask, setSelectedTask] = useState<Task | NewTask | null>(null);
-
-  const [isFilterActive, setIsFilterActive] = useState(true);
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchString, setSearchString] = useState("");
 
   // Lists tasks that have _just_ been clicked.
   const [completedIds, setCompletedIds] = useState<string[]>([]);
@@ -52,16 +52,10 @@ export default function CadencePage({ initialTasks }: Props) {
   const forOverdue = tasksQuery.data?.filter((t) => t.daysFromNow < 0);
   const forToday = tasksQuery.data?.filter((t) => t.daysFromNow === 0);
   const forLessThanAWeek = tasksQuery.data?.filter(
-    (t) =>
-      t.daysFromNow >= 1 &&
-      t.daysFromNow <= 4 &&
-      (t.cadenceInDays > 4 || !isFilterActive)
+    (t) => t.daysFromNow >= 1 && t.daysFromNow <= 4 && t.cadenceInDays > 4
   );
   const forLessThanAMonth = tasksQuery.data?.filter(
-    (t) =>
-      t.daysFromNow > 7 &&
-      t.daysFromNow <= 21 &&
-      (t.cadenceInDays >= 21 || !isFilterActive)
+    (t) => t.daysFromNow > 7 && t.daysFromNow <= 21 && t.cadenceInDays >= 21
   );
   const forInACoupleOfMonths = tasksQuery.data?.filter(
     (t) => t.daysFromNow > 31 && t.daysFromNow <= 365
@@ -69,8 +63,33 @@ export default function CadencePage({ initialTasks }: Props) {
   return (
     <main id="cadence">
       {tasksQuery.isLoading && <p>Loading...</p>}
-      <div id="cadence-cards">
+      <div id="cadence-cards" className={cx({ "cadence-search": isSearching })}>
         <Flipper flipKey={tasksQuery.data}>
+          {isSearching && (
+            <>
+              <input
+                type="text"
+                value={searchString}
+                onChange={(e) => setSearchString(e.target.value)}
+                placeholder="Search for a task"
+                style={{
+                  padding: "1em 3em",
+                  borderRadius: "2em",
+                  border: "none",
+                }}
+              />
+              <TaskCardGroup
+                group="search-results"
+                tasks={tasksQuery.data?.filter((t) =>
+                  t.title.includes(searchString)
+                )}
+                setSelectedTask={setSelectedTask}
+                mutateCompleteTask={mutateCompleteTask}
+                completedIds={completedIds}
+              />
+            </>
+          )}
+
           <TaskCardGroup
             group="overdue"
             tasks={forOverdue}
@@ -125,9 +144,9 @@ export default function CadencePage({ initialTasks }: Props) {
       <div id="page-buttons-wrapper">
         <BasicButton
           variant="primary"
-          onClick={() => setIsFilterActive((t) => !t)}
+          onClick={() => setIsSearching((t) => !t)}
         >
-          Toggle filter
+          Toggle search
         </BasicButton>
         <BasicButton
           variant="accent"

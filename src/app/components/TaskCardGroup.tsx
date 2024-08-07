@@ -12,7 +12,8 @@ type Props = {
     | "today"
     | "less than a week"
     | "less than a month"
-    | "in a couple of months";
+    | "in a couple of months"
+    | "search-results";
   mutateCompleteTask: (task: Task) => void;
   setSelectedTask: (task: Task) => void;
   tasks?: Task[];
@@ -55,6 +56,7 @@ const headers = {
   "less than a week": "In a few days",
   "less than a month": "In a few weeks",
   "in a couple of months": "In a couple of months",
+  "search-results": "Search results",
 };
 
 export default TaskCardGroup;

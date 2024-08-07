@@ -83,13 +83,13 @@
         {
             "id": "aec808ac-b2dd-4b97-9673-adad313cdd0f",
             "title": "Clean the sink with soda crystals",
-            "nextEpochDay": 19942,
+            "nextEpochDay": 19949,
             "cadenceInDays": 7
         },
         {
             "id": "51158bb1-7d58-478c-9324-6d8fc0583c34",
             "title": "Replace contact lenses",
-            "nextEpochDay": 19942,
+            "nextEpochDay": 19943,
             "cadenceInDays": 35,
             "daysFromNow": 4
         },
@@ -108,7 +108,7 @@
         {
             "id": "58c36c00-58df-4130-907f-f7869b701312",
             "title": "Take pills",
-            "nextEpochDay": 19942,
+            "nextEpochDay": 19943,
             "cadenceInDays": 1
         },
         {
@@ -192,7 +192,7 @@
         {
             "title": "Take out the trash",
             "cadenceInDays": 4,
-            "nextEpochDay": 19941,
+            "nextEpochDay": 19945,
             "id": "eb9220be-02ba-4db3-988f-c0b119d4d053"
         },
         {
@@ -205,7 +205,7 @@
             "title": "Clean stove hood",
             "cadenceInDays": 32,
             "id": "25679d98-79d7-4501-9d9f-48df0311c2c8",
-            "nextEpochDay": 19941
+            "nextEpochDay": 19973
         },
         {
             "title": "Trim Tux's nails",
@@ -234,7 +234,7 @@
         {
             "title": "Clean out Eufy",
             "cadenceInDays": 1,
-            "nextEpochDay": 19942,
+            "nextEpochDay": 19943,
             "id": "ba96235d-7601-4d56-914e-484bc2904c30"
         },
         {
