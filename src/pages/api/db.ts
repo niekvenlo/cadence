@@ -4,8 +4,9 @@ const JSONdb = require("simple-json-db");
 const db = new JSONdb("src/pages/api/database.json");
 
 // CADENCE TASKS
-export const getTasks = () => {
-  const tasks = db.get("tasks");
+export const getTasks = async () => {
+  const response = await fetch("http://192.168.2.14:3333/api/v1/getTasks");
+  const tasks = await response.json();
 
   // Auto-reschedule any overdue nudges
   // This is bad practice, of course. Getters should not have side-effects.
@@ -21,7 +22,13 @@ export const getTasks = () => {
   return tasks;
 };
 
-export const setTasks = (tasks) => db.set("tasks", tasks);
+export const setTasks = async (tasks) => {
+  const response = await fetch("http://192.168.2.14:3333/api/v1/setTasks", {
+    body: JSON.stringify(tasks),
+  });
+  db.set("tasks", tasks); // TODO: Remove
+  return response.json();
+};
 
 // SHOPPING
 export const getShopping = () => db.get("shopping");

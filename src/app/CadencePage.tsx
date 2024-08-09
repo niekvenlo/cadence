@@ -81,7 +81,9 @@ export default function CadencePage({ initialTasks }: Props) {
               <TaskCardGroup
                 group="search-results"
                 tasks={tasksQuery.data?.filter((t) =>
-                  t.title.includes(searchString)
+                  t.title
+                    .toLocaleLowerCase()
+                    .includes(searchString.toLocaleLowerCase())
                 )}
                 setSelectedTask={setSelectedTask}
                 mutateCompleteTask={mutateCompleteTask}

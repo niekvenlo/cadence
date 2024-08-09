@@ -89,8 +89,8 @@
         {
             "id": "51158bb1-7d58-478c-9324-6d8fc0583c34",
             "title": "Replace contact lenses",
-            "nextEpochDay": 19943,
-            "cadenceInDays": 35,
+            "nextEpochDay": 19957,
+            "cadenceInDays": 44,
             "daysFromNow": 4
         },
         {
@@ -108,13 +108,13 @@
         {
             "id": "58c36c00-58df-4130-907f-f7869b701312",
             "title": "Take pills",
-            "nextEpochDay": 19943,
+            "nextEpochDay": 19945,
             "cadenceInDays": 1
         },
         {
             "id": "9795df93-2207-4b19-b11a-0ccccdfb02cb",
             "title": "Check for weird nose and ear hair",
-            "nextEpochDay": 19946,
+            "nextEpochDay": 19993,
             "cadenceInDays": 50
         },
         {
@@ -234,7 +234,7 @@
         {
             "title": "Clean out Eufy",
             "cadenceInDays": 1,
-            "nextEpochDay": 19943,
+            "nextEpochDay": 19945,
             "id": "ba96235d-7601-4d56-914e-484bc2904c30"
         },
         {
@@ -299,6 +299,12 @@
             "type": "NUDGE",
             "id": "bf9e8433-33e9-4000-a501-be6789a9e979",
             "nextEpochDay": 19944
+        },
+        {
+            "title": "Magic truffles",
+            "cadenceInDays": 60,
+            "id": "bf26a20a-e1e7-4d67-b605-2985bbe173eb",
+            "nextEpochDay": 20003
         }
     ]
 }
