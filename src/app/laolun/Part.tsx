@@ -2,14 +2,18 @@
 
 import { breakPinyinIntoSylables, getTones } from "./util";
 import { useId, useRef, useState } from "react";
-import { pinyin as pinyinJson, getPinyin } from "./phrase-util-sync";
+import { getPinyin } from "./phrase-util-sync";
 import { Accent, Accents } from "./Accents";
 import PersonaModal from "./PersonaModal";
+import useLaolunQuery from "../api/useLaolunQuery";
 
 function Part({ label, part }) {
+  const laolunQuery = useLaolunQuery();
+  const pinyinJson = laolunQuery.data?.pinyin ?? {};
+
   const [isSelected, setIsSelected] = useState(false);
   const { style, segment } = useRandomNess(part);
-  const p = getPinyin(segment) || "";
+  const p = getPinyin(pinyinJson, segment) || "";
   const pinyin = breakPinyinIntoSylables(p);
   const tones = getTones(p);
   const chars = segment.split("").map((char, i) => [char, pinyin[i], tones[i]]);

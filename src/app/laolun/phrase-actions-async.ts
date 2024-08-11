@@ -1,21 +1,44 @@
 "use server";
 
-import fs from "fs/promises";
+// import fs from "fs/promises";
 
 import { getSafePhraseLabel, type Phrase } from "./phrase-util-sync";
 
 const phrasesJsonFilePath = "src/app/laolun/phrases.json";
 const pinyinJsonFilePath = "src/app/laolun/pinyin.json";
 
-const readPhrases = async () =>
-  JSON.parse(await fs.readFile(phrasesJsonFilePath, "utf-8"));
-const writePhrases = (data) =>
-  fs.writeFile(phrasesJsonFilePath, JSON.stringify(data, null, 2), "utf-8");
+const readPhrases = async () => {
+  const response = await fetch("http://192.168.2.14:3333/api/v1/getLaolun");
+  const { phrases } = await response.json();
+  return phrases;
+};
 
-const readPinyin = async () =>
-  JSON.parse(await fs.readFile(pinyinJsonFilePath, "utf-8"));
-const writePinyin = (data) =>
-  fs.writeFile(pinyinJsonFilePath, JSON.stringify(data, null, 2), "utf-8");
+// JSON.parse(await fs.readFile(phrasesJsonFilePath, "utf-8"));
+const writePhrases = async (phrases) => {
+  const response = await fetch("http://192.168.2.14:3333/api/v1/setLaolun", {
+    body: JSON.stringify({ phrases }),
+    method: "POST",
+    headers: new Headers({ "content-type": "application/json" }),
+  });
+  return response.json();
+};
+// fs.writeFile(phrasesJsonFilePath, JSON.stringify(data, null, 2), "utf-8");
+
+const readPinyin = async () => {
+  const response = await fetch("http://192.168.2.14:3333/api/v1/getLaolun");
+  const { pinyin } = await response.json();
+  return pinyin;
+};
+// JSON.parse(await fs.readFile(pinyinJsonFilePath, "utf-8"));
+const writePinyin = async (pinyin) => {
+  const response = await fetch("http://192.168.2.14:3333/api/v1/setLaolun", {
+    body: JSON.stringify({ pinyin }),
+    method: "POST",
+    headers: new Headers({ "content-type": "application/json" }),
+  });
+  return response.json();
+};
+// fs.writeFile(pinyinJsonFilePath, JSON.stringify(data, null, 2), "utf-8");
 
 export const writePhrase = async (phraseToWrite) => {
   phraseToWrite.label = await getSafePhraseLabel(phraseToWrite.label);

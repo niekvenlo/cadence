@@ -7,7 +7,6 @@ import {
   findPhraseByLabel,
   getSegmentsRarity,
   getSuggested,
-  pinyin,
 } from "../../phrase-util-sync";
 import "../../style.css";
 import { getIsChinese } from "../../util";
@@ -15,8 +14,12 @@ import { cx } from "../../../utils";
 import { updateLabel, writePhrase } from "../../phrase-actions-async";
 import { useRouter } from "next/navigation";
 import NoSSR from "../../../components/NoSSR";
+import useLaolunQuery from "../../../api/useLaolunQuery";
 
 export default function Chinese({ params }: { params: { phrase: string } }) {
+  const laolunQuery = useLaolunQuery();
+  const phrases = laolunQuery.data?.phrases ?? [];
+  const pinyin = laolunQuery.data?.pinyin ?? {};
   return (
     <main id="zhongwen" className="tweak-page">
       <div style={{ width: "100%" }}>
@@ -24,12 +27,16 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
           Old editor
         </a>
       </div>
-      <PhraseEditor phrase={findPhraseByLabel(decodeURI(params.phrase))} />
+      <PhraseEditor
+        phrase={findPhraseByLabel(phrases, decodeURI(params.phrase))}
+        pinyin={pinyin}
+        phrases={phrases}
+      />
     </main>
   );
 }
 
-function PhraseEditor({ phrase }) {
+function PhraseEditor({ phrase, pinyin, phrases }) {
   const router = useRouter();
   const { label, parts, isValidateGrammar, isFocusedLearning } = phrase || {};
   if (!label) {
@@ -123,6 +130,8 @@ function PhraseEditor({ phrase }) {
               addSegmentToColumnByIdx(i, segment)
             }
             dragColumn={(chunkMoved) => dragColumnByIdx(i, chunkMoved)}
+            pinyin={pinyin}
+            phrases={phrases}
           />
         ))}
       </div>
@@ -144,6 +153,8 @@ const Column = ({
   deleteColumn,
   addSegmentToColumn,
   dragColumn,
+  pinyin,
+  phrases,
 }) => {
   const isWide = Math.max(...part.map((p) => p.length)) > 2;
   const isEmpty = part.length < 1;
@@ -156,8 +167,12 @@ const Column = ({
           onChange={(e) => setPart(splitPartStringIntoPart(e.target.value))}
           onDragGetChunk={dragColumn}
         />
-        <PinyinOverlay part={part} />
-        <Suggestions part={part} addSegmentToColumn={addSegmentToColumn} />
+        <PinyinOverlay part={part} pinyin={pinyin} phrases={phrases} />
+        <Suggestions
+          part={part}
+          addSegmentToColumn={addSegmentToColumn}
+          phrases={phrases}
+        />
 
         <div className="delete-column-overlay">
           <div>
@@ -174,20 +189,21 @@ const Column = ({
   );
 };
 
-const PinyinOverlay = ({ part }) => (
+const PinyinOverlay = ({ part, pinyin, phrases }) => (
   <div className="overlay">
     {part.map((segment) => (
       <div key={segment} className={cx("line", `offset-${segment.length}`)}>
         <span className="pinyin">{pinyin[segment]?.replace(/[-]/g, "")}</span>
-        <RaritySpan segment={segment} />
+        <RaritySpan segment={segment} phrases={phrases} />
       </div>
     ))}
   </div>
 );
 
-const RaritySpan = ({ segment }) => {
+const RaritySpan = ({ segment, phrases }) => {
   const totalCount =
-    getSegmentsRarity().find((s) => s.segment === segment)?.totalCount ?? 0;
+    getSegmentsRarity(phrases).find((s) => s.segment === segment)?.totalCount ??
+    0;
   let emoji = "🟢";
   if (totalCount < 10) emoji = "🟣";
   if (totalCount < 6) emoji = "🟡";
@@ -201,8 +217,8 @@ const RaritySpan = ({ segment }) => {
   );
 };
 
-const Suggestions = ({ part, addSegmentToColumn }) => {
-  const suggestions = getSuggested(part);
+const Suggestions = ({ phrases, part, addSegmentToColumn }) => {
+  const suggestions = getSuggested(phrases, part);
   if (suggestions.length < 1) {
     return null;
   }

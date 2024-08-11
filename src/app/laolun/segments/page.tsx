@@ -4,8 +4,12 @@ import "../style.css";
 
 import { getSegmentsRarity } from "../phrase-util-sync";
 import { useState } from "react";
+import useLaolunQuery from "../../api/useLaolunQuery";
 
 export default function Chinese() {
+  const laolunQuery = useLaolunQuery();
+  const phrases = laolunQuery.data?.phrases ?? [];
+  const pinyin = laolunQuery.data?.pinyin ?? {};
   const [sortBy, setSortBy] = useState("totalCount");
   const [isAsc, setIsAsc] = useState(false);
   const toggleAsc = (column) => {
@@ -58,7 +62,7 @@ export default function Chinese() {
             </tr>
           </thead>
           <tbody>
-            {getSegmentsRarity()
+            {getSegmentsRarity(phrases)
               .sort(sortRarity)
               .map((s) => (
                 <tr key={s.segment}>

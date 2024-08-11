@@ -1,14 +1,20 @@
+"use client";
+
 import "./style.css";
 
 import type { Phrase } from "./phrase-util-sync";
 
-import { phrases } from "./phrase-util-sync";
 import { toChunk, toShuffle } from "./util";
 import Part from "./Part";
 import { Accent } from "./Accents";
 import SpecialCheckbox from "./SpecialCheckbox";
+import useLaolunQuery from "../api/useLaolunQuery";
 
 export default function Chinese() {
+  const laolunQuery = useLaolunQuery();
+  const phrases = laolunQuery.data?.phrases ?? [];
+  const pinyin = laolunQuery.data?.pinyin ?? {};
+
   const itemsPerChunk = 25;
   const phrasesWithFocusedLearning = [
     ...phrases,
@@ -32,7 +38,11 @@ export default function Chinese() {
       </div>
       <SpecialCheckbox />
       <small>
-        Based on {phrases.length} phrases | {new Date().toLocaleTimeString()}
+        Based on {phrases.length} phrases |{" "}
+        {new Date().toLocaleTimeString("NL", {
+          hour: "2-digit",
+          minute: "2-digit",
+        })}
       </small>
     </main>
   );

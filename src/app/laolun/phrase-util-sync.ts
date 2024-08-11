@@ -1,10 +1,4 @@
-import phrasesJson from "./phrases.json";
-import pinyinJson from "./pinyin.json";
 import { breakPinyinIntoSylables } from "./util";
-
-// I trust that the JSON is correctly formed.
-export const phrases = phrasesJson as Phrase[];
-export const pinyin = pinyinJson;
 
 export type Phrase = {
   label: string;
@@ -13,12 +7,15 @@ export type Phrase = {
   isValidateGrammar?: boolean;
 };
 
-export const getMissingPinyin = () => {
+export const getMissingPinyin = (phrases, pinyin) => {
   const missing: string[] = [];
+  if (phrases === undefined) {
+    return missing;
+  }
   phrases.forEach(({ parts }) => {
     parts.forEach((part) => {
       part.forEach((variant) => {
-        const isThere = getPinyin(variant, { requireExplicit: true });
+        const isThere = getPinyin(pinyin, variant, { requireExplicit: true });
         if (!isThere) {
           missing.push(variant);
         }
@@ -28,7 +25,7 @@ export const getMissingPinyin = () => {
   return missing;
 };
 
-export const getDangerousKanji = () => {
+export const getDangerousKanji = (pinyin: Map<string, string>) => {
   const kanjiMap = new Map();
   const dangerousKanji = new Map();
   Object.entries(pinyin).forEach(([kanji, pinyin]) => {
@@ -45,12 +42,12 @@ export const getDangerousKanji = () => {
   return [...dangerousKanji];
 };
 
-export const findPhraseByLabel = (label: string): Phrase | undefined =>
+export const findPhraseByLabel = (phrases, label: string): Phrase | undefined =>
   phrases.find((phrase) => phrase.label === label);
 
 const suggestionMap = new Map();
 
-const fillSuggestedMap = () => {
+const fillSuggestedMap = (phrases) => {
   phrases.forEach((phrase) => {
     phrase.parts.forEach((part) => {
       if (part.length < 2) {
@@ -68,9 +65,9 @@ const fillSuggestedMap = () => {
   });
 };
 
-export const getSuggested = (options: string[]) => {
+export const getSuggested = (phrases, options: string[]) => {
   if (suggestionMap.size < 1) {
-    fillSuggestedMap();
+    fillSuggestedMap(phrases);
   }
 
   const combinedMap = new Map();
@@ -91,6 +88,7 @@ export const getSuggested = (options: string[]) => {
 };
 
 export const getPinyin = (
+  pinyin: Map<string, string>,
   kanji: string,
   options: {
     requireExplicit?: boolean;
@@ -119,16 +117,22 @@ export const getPinyin = (
 export const getSafePhraseLabel = (label: string) =>
   label.replace(/[|]/g, "").replace(/[,]/g, "，").replace(/[?]/g, "？");
 
-const segmentsRarityArray = (() => {
-  const segmentsRarityMap = new Map();
-  phrases.forEach((phrase) => {
-    phrase.parts.forEach((part) => {
-      part.forEach((segment) => {
-        const count = segmentsRarityMap.get(segment) || 0;
-        segmentsRarityMap.set(segment, count + 1);
+const segmentsRarityMap = new Map();
+export const getSegmentsRarity = (phrases) => {
+  if (phrases.length < 1) {
+    return [];
+  }
+  if (segmentsRarityMap.size === 0) {
+    phrases.forEach((phrase) => {
+      phrase.parts.forEach((part) => {
+        part.forEach((segment) => {
+          const count = segmentsRarityMap.get(segment) || 0;
+          segmentsRarityMap.set(segment, count + 1);
+        });
       });
     });
-  });
+  }
+
   const entries = [...segmentsRarityMap];
   const annotatedEntries = entries.map(([segment, count]) => {
     const existsAsSubstringInOtherEntry =
@@ -156,5 +160,4 @@ const segmentsRarityArray = (() => {
   return annotatedEntries.sort((a, b) =>
     a.totalCount < b.totalCount ? -1 : 1
   );
-})();
-export const getSegmentsRarity = () => segmentsRarityArray;
+};

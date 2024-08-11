@@ -3,11 +3,12 @@
 import { hskChars, hskWords, duolingo, sheetList } from "./data";
 import "../style.css";
 
-import "../webcomtest";
-
-import { phrases } from "../phrase-util-sync";
+import useLaolunQuery from "../../api/useLaolunQuery";
 
 export default function Chinese() {
+  const laolunQuery = useLaolunQuery();
+  const phrases = laolunQuery.data?.phrases ?? [];
+  const pinyin = laolunQuery.data?.pinyin ?? {};
   const phrasesCharSet = new Set(
     phrases
       .map((phrase) => phrase.parts.map((part) => part.map((c) => c.split(""))))

@@ -6,12 +6,12 @@ import { getTasks, setTasks } from "./db";
 
 type ResponseData = Object[];
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
 ) {
   const taskToUpdate = JSON.parse(`${req.query.taskJson}`);
-  const tasks = getTasks();
+  const tasks = await getTasks();
   const idx = tasks.findIndex((task) => task.id === taskToUpdate.id);
   if (idx < 0) {
     // If the task is new, we add it:

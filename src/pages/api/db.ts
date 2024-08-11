@@ -1,7 +1,7 @@
 import { getEpochDayNow } from "../../app/utils";
 
 const JSONdb = require("simple-json-db");
-const db = new JSONdb("src/pages/api/database.json");
+const db = new JSONdb("src/pages/api/database-deprecated.json");
 
 // CADENCE TASKS
 export const getTasks = async () => {
@@ -25,8 +25,9 @@ export const getTasks = async () => {
 export const setTasks = async (tasks) => {
   const response = await fetch("http://192.168.2.14:3333/api/v1/setTasks", {
     body: JSON.stringify(tasks),
+    method: "POST",
+    headers: new Headers({ "content-type": "application/json" }),
   });
-  db.set("tasks", tasks); // TODO: Remove
   return response.json();
 };
 

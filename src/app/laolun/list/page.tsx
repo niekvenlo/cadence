@@ -1,24 +1,25 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import "../style.css";
 
-import {
-  getSafePhraseLabel,
-  getMissingPinyin,
-  phrases,
-} from "../phrase-util-sync";
+import { getSafePhraseLabel, getMissingPinyin } from "../phrase-util-sync";
 import { writePhrase } from "../phrase-actions-async";
 import { cleanChineseString } from "../util";
 import { cx } from "../../utils";
 import { useSearch } from "../hooks";
 import { useRouter } from "next/navigation";
 import { InputChinese } from "../components/InputChinese";
+import useLaolunQuery from "../../api/useLaolunQuery";
 
 export default function Chinese() {
+  const laolunQuery = useLaolunQuery();
+  const phrases = laolunQuery.data?.phrases ?? [];
+  const pinyin = laolunQuery.data?.pinyin ?? {};
+
   const [searchString, setSearchString] = useSearch();
 
-  const missingPinyin = getMissingPinyin();
+  const missingPinyin = getMissingPinyin(phrases, pinyin);
 
   const matchingPhrases = getMatchingPhrases(phrases, searchString);
 
@@ -145,6 +146,9 @@ function ComplexityTDs({ parts }) {
 }
 
 function getMatchingPhrases(phrases, searchString) {
+  if (phrases === undefined) {
+    return [];
+  }
   return phrases.filter((phrase) => {
     const allChars = phrase.parts.flat().join();
     if (!searchString) {

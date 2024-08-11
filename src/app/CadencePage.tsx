@@ -1,5 +1,5 @@
 "use client";
-import type { Task, NewTask, ShopItem } from "./types";
+import type { Task, NewTask } from "./types";
 
 import { useState } from "react";
 import { Flipper } from "react-flip-toolkit";

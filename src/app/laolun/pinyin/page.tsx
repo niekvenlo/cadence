@@ -2,12 +2,17 @@
 
 import "../style.css";
 
-import { getPinyin, phrases, pinyin } from "../phrase-util-sync";
+import { getPinyin } from "../phrase-util-sync";
 import { setPinyin } from "../phrase-actions-async";
 import { useEffect, useState } from "react";
 import { breakRawPinyin } from "../util";
+import useLaolunQuery from "../../api/useLaolunQuery";
 
 export default function Chinese() {
+  const laolunQuery = useLaolunQuery();
+  const phrases = (laolunQuery.data?.phrases ?? []) as { parts: string[][] }[];
+  const pinyin = laolunQuery.data?.pinyin ?? {};
+
   const [newPinyin, setNewPinyin] = useState("");
   const pinyinArray = newPinyin
     .split(/,\s?/)
@@ -19,7 +24,7 @@ export default function Chinese() {
   ].sort();
   const partsPlus = allUniqueParts.map((p) => [
     p,
-    getPinyin(p, { requireExplicit: true }),
+    getPinyin(pinyin, p, { requireExplicit: true }),
   ]);
   const partsWithoutPinyin = partsPlus.filter(([_, v]) => !v);
   const partsWithPinyin = partsPlus.filter(([_, v]) => v);

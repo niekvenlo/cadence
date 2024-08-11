@@ -52,3 +52,13 @@ export const fetchWeather = async () => {
 
   return basicFetch(url.href, { absolute: true });
 };
+
+export const fetchLaolun = async () => {
+  const response = await fetch("http://192.168.2.14:3333/api/v1/getLaolun");
+  const { phrases, pinyin } = await response.json();
+  return { phrases, pinyin };
+};
+
+export const patchLaolun = async ({ pinyin, phrases }) => {
+  return { pinyin: [], phrases: [] };
+};
