@@ -247,3 +247,26 @@
     }
   }
 }
+
+.pending-mutation-notification {
+  position: fixed;
+  top: 1em;
+  right: 1em;
+  border-radius: 10em;
+  width: calc(min(10em, 50vw));
+  aspect-ratio: 1/1;
+  background: orange;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.5s linear;
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
+  padding: 1em;
+  &.isPending {
+    opacity: 0.95;
+  }
+}

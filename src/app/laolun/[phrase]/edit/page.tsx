@@ -5,16 +5,18 @@ import "./tweak-page-style.css";
 import { useRef, useState } from "react";
 import {
   findPhraseByLabel,
+  getSafePhraseLabel,
   getSegmentsRarity,
   getSuggested,
 } from "../../phrase-util-sync";
 import "../../style.css";
 import { getIsChinese } from "../../util";
 import { cx } from "../../../utils";
-import { updateLabel, writePhrase } from "../../phrase-actions-async";
+import { updateLabel } from "../../phrase-actions-async";
 import { useRouter } from "next/navigation";
 import NoSSR from "../../../components/NoSSR";
 import useLaolunQuery from "../../../api/useLaolunQuery";
+import useLaolunMutation from "../../../api/useLaolunMutation";
 
 export default function Chinese({ params }: { params: { phrase: string } }) {
   const laolunQuery = useLaolunQuery();
@@ -27,17 +29,40 @@ export default function Chinese({ params }: { params: { phrase: string } }) {
           Old editor
         </a>
       </div>
-      <PhraseEditor
-        phrase={findPhraseByLabel(phrases, decodeURI(params.phrase))}
-        pinyin={pinyin}
-        phrases={phrases}
-      />
+      {laolunQuery.isLoading ? (
+        <h1>loading</h1>
+      ) : (
+        <PhraseEditor
+          phrase={findPhraseByLabel(phrases, decodeURI(params.phrase))}
+          pinyin={pinyin}
+          phrases={phrases}
+        />
+      )}
     </main>
   );
 }
 
 function PhraseEditor({ phrase, pinyin, phrases }) {
   const router = useRouter();
+  const laolunMutation = useLaolunMutation();
+  const writePhrase = (phrase) => {
+    const phrasesClone = structuredClone(phrases);
+    const safeLabel = getSafePhraseLabel(phrase.label);
+    const foundPhraseIdx = phrasesClone.findIndex(
+      (p) => p.label === phrase.label
+    );
+    if (foundPhraseIdx === -1) {
+      phrasesClone.push({ phrase, label: safeLabel });
+    } else {
+      const oldPhrase = phrasesClone[foundPhraseIdx];
+      phrasesClone[foundPhraseIdx] = {
+        ...oldPhrase,
+        ...phrase,
+        label: safeLabel,
+      };
+    }
+    return laolunMutation.mutateAsync({ phrases: phrasesClone });
+  };
   const { label, parts, isValidateGrammar, isFocusedLearning } = phrase || {};
   if (!label) {
     return (
@@ -91,6 +116,13 @@ function PhraseEditor({ phrase, pinyin, phrases }) {
   };
   return (
     <div className="editor-wrapper">
+      <div
+        className={cx("pending-mutation-notification", {
+          isPending: laolunMutation.isPending,
+        })}
+      >
+        Running to the server real quick
+      </div>
       <div className="top">
         <input
           type="text"
@@ -167,7 +199,12 @@ const Column = ({
           onChange={(e) => setPart(splitPartStringIntoPart(e.target.value))}
           onDragGetChunk={dragColumn}
         />
-        <PinyinOverlay part={part} pinyin={pinyin} phrases={phrases} />
+        <PinyinOverlay
+          part={part}
+          pinyin={pinyin}
+          phrases={phrases}
+          key={phrases.join}
+        />
         <Suggestions
           part={part}
           addSegmentToColumn={addSegmentToColumn}
@@ -189,16 +226,18 @@ const Column = ({
   );
 };
 
-const PinyinOverlay = ({ part, pinyin, phrases }) => (
-  <div className="overlay">
-    {part.map((segment) => (
-      <div key={segment} className={cx("line", `offset-${segment.length}`)}>
-        <span className="pinyin">{pinyin[segment]?.replace(/[-]/g, "")}</span>
-        <RaritySpan segment={segment} phrases={phrases} />
-      </div>
-    ))}
-  </div>
-);
+const PinyinOverlay = ({ part, pinyin, phrases }) => {
+  return (
+    <div className="overlay">
+      {part.map((segment) => (
+        <div key={segment} className={cx("line", `offset-${segment.length}`)}>
+          <span className="pinyin">{pinyin[segment]?.replace(/[-]/g, "")}</span>
+          <RaritySpan segment={segment} phrases={phrases} />
+        </div>
+      ))}
+    </div>
+  );
+};
 
 const RaritySpan = ({ segment, phrases }) => {
   const totalCount =

@@ -59,6 +59,17 @@ export const fetchLaolun = async () => {
   return { phrases, pinyin };
 };
 
-export const patchLaolun = async ({ pinyin, phrases }) => {
-  return { pinyin: [], phrases: [] };
+export const patchLaolun = async ({
+  pinyin,
+  phrases,
+}: {
+  pinyin?: Map<string, string>;
+  phrases?: any[];
+}) => {
+  const response = await fetch("http://192.168.2.14:3333/api/v1/setLaolun", {
+    body: JSON.stringify({ phrases, pinyin }),
+    method: "POST",
+    headers: new Headers({ "content-type": "application/json" }),
+  });
+  return response.json();
 };
