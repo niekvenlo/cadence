@@ -25,7 +25,7 @@ export const getMissingPinyin = (phrases, pinyin) => {
   return missing;
 };
 
-export const getDangerousKanji = (pinyin: Map<string, string>) => {
+export const getDangerousKanji = (pinyin: Record<string, string>) => {
   const kanjiMap = new Map();
   const dangerousKanji = new Map();
   Object.entries(pinyin).forEach(([kanji, pinyin]) => {
@@ -88,7 +88,7 @@ export const getSuggested = (phrases, options: string[]) => {
 };
 
 export const getPinyin = (
-  pinyin: Map<string, string>,
+  pinyin: Record<string, string>,
   kanji: string,
   options: {
     requireExplicit?: boolean;

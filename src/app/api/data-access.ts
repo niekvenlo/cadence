@@ -1,3 +1,5 @@
+import { type Phrase } from "../laolun/phrase-util-sync";
+
 const ROOT = "http://192.168.2.8:3000/" || "http://localhost:3000";
 
 /*
@@ -56,14 +58,17 @@ export const fetchWeather = async () => {
 export const fetchLaolun = async () => {
   const response = await fetch("http://192.168.2.14:3333/api/v1/getLaolun");
   const { phrases, pinyin } = await response.json();
-  return { phrases, pinyin };
+  return { phrases, pinyin } as {
+    phrases: Phrase[];
+    pinyin: Record<string, string>;
+  };
 };
 
 export const patchLaolun = async ({
   pinyin,
   phrases,
 }: {
-  pinyin?: Map<string, string>;
+  pinyin?: Record<string, string>;
   phrases?: any[];
 }) => {
   const response = await fetch("http://192.168.2.14:3333/api/v1/setLaolun", {

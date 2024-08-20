@@ -522,6 +522,7 @@ main#zhongwen {
 }
 
 #pin {
+  display: flex;
   .pin-kanji {
     font-size: 1.5em;
     width: 14ch;

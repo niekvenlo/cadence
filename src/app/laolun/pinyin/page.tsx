@@ -3,117 +3,107 @@
 import "../style.css";
 
 import { getPinyin } from "../phrase-util-sync";
-import { setPinyin } from "../phrase-actions-async";
-import { useEffect, useState } from "react";
 import { breakRawPinyin } from "../util";
 import useLaolunQuery from "../../api/useLaolunQuery";
+import useLaolunMutation from "../../api/useLaolunMutation";
+import { useState } from "react";
 
 export default function Chinese() {
+  const [entries, setEntries] = useState<string[] | undefined>();
+
   const laolunQuery = useLaolunQuery();
-  const phrases = (laolunQuery.data?.phrases ?? []) as { parts: string[][] }[];
+  const phrases = laolunQuery.data?.phrases ?? [];
   const pinyin = laolunQuery.data?.pinyin ?? {};
 
-  const [newPinyin, setNewPinyin] = useState("");
-  const pinyinArray = newPinyin
-    .split(/,\s?/)
-    .map((f) => f.trim())
-    .filter((f) => f);
+  const laolunMutation = useLaolunMutation();
 
-  const allUniqueParts = [
+  const allUniqueSegments = [
     ...new Set(phrases.map(({ parts }) => parts).flat(2)),
   ].sort();
-  const partsPlus = allUniqueParts.map((p) => [
+  const segmentsPlusPinyin = allUniqueSegments.map((p) => [
     p,
     getPinyin(pinyin, p, { requireExplicit: true }),
   ]);
-  const partsWithoutPinyin = partsPlus.filter(([_, v]) => !v);
-  const partsWithPinyin = partsPlus.filter(([_, v]) => v);
+  const segmentsThatLackPinyin = segmentsPlusPinyin.filter(([_, v]) => !v);
+  const segmentsThatHavePinyin = segmentsPlusPinyin.filter(([_, v]) => v);
 
-  const update = (kanji, pinyin) => {
-    setPinyin(kanji, pinyin.toLowerCase().trim());
-  };
+  const entriesPlusHanzi = entries?.map((entry, idx) => {
+    return { p: entry, h: segmentsThatLackPinyin[idx] };
+  });
 
-  useEffect(() => {
-    const pinyinArray = newPinyin
+  function addNewPinyin(pastedText: string) {
+    const entries = pastedText
       .split(/,\s?/)
       .map((f) => f.trim())
       .filter((f) => f)
       .map(breakRawPinyin);
-    if (pinyinArray.length === 0) {
-      console.log("No new pinyin given");
+    setEntries(entries);
+  }
+
+  function save() {
+    if (entries === undefined || entries.length > 0) {
       return;
     }
-    console.log({ pinyinArray });
-    const isFirstPinyinInStringSet = Object.values(pinyin).includes(
-      pinyinArray[0] || "never"
-    );
-    if (isFirstPinyinInStringSet) {
-      console.log("already processed.");
-      return;
-    }
-    partsWithoutPinyin.forEach((part, i) => {
-      setTimeout(() => {
-        if (!pinyinArray[i]) {
-          return;
-        }
-        update(part.toString().replace(",", ""), pinyinArray[i]);
-      }, i * 100);
-      setTimeout(() => {
-        setNewPinyin("");
-      }, partsWithoutPinyin.length * 100 + 1000);
+    const pinyinCopy = { ...pinyin };
+    const hanziArrCopy = segmentsThatLackPinyin.map((d) => d[0]) as string[];
+    entries.forEach((entry, idx) => {
+      const hanzi = hanziArrCopy[idx];
+      pinyinCopy[hanzi] = entry;
     });
-  }, [newPinyin]);
+    laolunMutation.mutateAsync({ pinyin: pinyinCopy });
+  }
+
   return (
     <main id="zhongwen">
       <div id="pin">
-        {partsWithoutPinyin.length > 0 && (
-          <>
-            <h2>Parts without Pinyin</h2>
-            <div className="pin-k">
-              <span className="pin-kanji">
-                {partsWithoutPinyin.map((p) => (
-                  <p key={p[0]}>{p[0]},</p>
-                ))}
-              </span>
-              <input
-                type="text"
-                defaultValue=""
-                onPaste={(e) => {
-                  const target = e.target as HTMLInputElement;
-                  setTimeout(() => {
-                    setNewPinyin(target.value);
-                    target.select();
-                    target.value = "";
-                  }, 100);
-                }}
-                placeholder="粘贴"
-              />
+        <div>
+          <h2>Parts with Pinyin</h2>
+          {segmentsThatHavePinyin.map(([kanji, pinyin]) => (
+            <div className="pin-k" key={kanji}>
+              <span className="pin-kanji">{kanji}</span>
+              <span>{pinyin}</span>
             </div>
-            或者
-            {partsWithoutPinyin.map(([kanji, pinyin], i) => (
-              <div className="pin-k" key={kanji}>
-                <span className="pin-kanji">{kanji}</span>
+          ))}
+        </div>
+        {segmentsThatLackPinyin.length > 0 && (
+          <div>
+            <h2>Parts without Pinyin</h2>
+            <div className="add-many-pinyin">
+              <p>
+                <code style={{ fontSize: "1.3em" }}>
+                  {segmentsThatLackPinyin.map((g) => g[0]).join(", ")}
+                </code>
+              </p>
+              <a href="https://www.chineseboost.com/tools/hanzi-pinyin-conversion">
+                Get pinyin from &quot;Chinese Boost&quot;
+              </a>
+              <div>
                 <input
                   type="text"
-                  defaultValue={pinyin || pinyinArray[i]}
-                  placeholder="❌"
-                  onBlur={(e) => update(kanji, e.target.value)}
+                  defaultValue=""
+                  onPaste={(e) => {
+                    const target = e.target as HTMLInputElement;
+                    setTimeout(() => {
+                      addNewPinyin(target.value);
+                      target.select();
+                      target.value = "";
+                    }, 100);
+                  }}
+                  placeholder="粘贴"
                 />
               </div>
-            ))}
-          </>
-        )}
-        <h2>Parts with Pinyin</h2>
-        {partsWithPinyin.map(([kanji, pinyin]) => (
-          <div className="pin-k" key={kanji}>
-            <span className="pin-kanji">{kanji}</span>
-            <input
-              type="text"
-              defaultValue={pinyin}
-              onBlur={(e) => update(kanji, e.target.value)}
-            />
+            </div>
+            <div>
+              {entriesPlusHanzi?.map(({ h, p }) => (
+                <div className="pin-k" key={p}>
+                  <span className="pin-kanji">{h}</span>
+                  <span>{p}</span>
+                </div>
+              ))}
+            </div>
+            <button onClick={save}>Save</button>
           </div>
-        ))}
+        )}
       </div>
     </main>
   );
