@@ -8,7 +8,6 @@ import useLaolunQuery from "../../api/useLaolunQuery";
 export default function Chinese() {
   const laolunQuery = useLaolunQuery();
   const phrases = laolunQuery.data?.phrases ?? [];
-  const pinyin = laolunQuery.data?.pinyin ?? {};
   const phrasesCharSet = new Set(
     phrases
       .map((phrase) => phrase.parts.map((part) => part.map((c) => c.split(""))))
@@ -43,7 +42,7 @@ export default function Chinese() {
 
   return (
     <main id="zhongwen">
-      <div id="pin">
+      <div id="chars">
         <p>
           We cannot fully trust these sources. The Duolingo data comes from a
           third party scraper, and the list of HSK words is shorter than the
@@ -94,7 +93,7 @@ export default function Chinese() {
 }
 
 const L = ({ title, list }) => {
-  const cleanList = list.filter((f) => f !== "," && f !== " ");
+  const cleanList = [...list].filter((f) => f !== "," && f !== " ");
   return (
     <details>
       <summary>
