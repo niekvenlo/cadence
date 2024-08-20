@@ -651,3 +651,13 @@ main#zhongwen {
     }
   }
 }
+
+.audiorecorder {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  a {
+    border: 1px lightblue solid;
+    text-align: center;
+  }
+}

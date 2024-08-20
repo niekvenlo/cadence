@@ -78,3 +78,20 @@ export const patchLaolun = async ({
   });
   return response.json();
 };
+export const uploadToLaolun = async ({
+  title,
+  blob,
+}: {
+  title: string;
+  blob: Blob;
+}) => {
+  const response = await fetch(
+    `http://192.168.2.14:3333/api/v1/uploadLaolunRecording?title=${title}`,
+    {
+      body: blob,
+      method: "POST",
+      // headers: new Headers({ "content-type": "application/json" }),
+    }
+  );
+  return response.json();
+};
