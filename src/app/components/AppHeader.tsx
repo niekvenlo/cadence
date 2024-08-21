@@ -75,6 +75,7 @@ export default function AppHeader({
             <BasicLink href="/laolun/pinyin">拼音</BasicLink>
             <BasicLink href="/laolun/chars">字符</BasicLink>
             <BasicLink href="/laolun/segments">木块</BasicLink>
+            <BasicLink href="/laolun/audio">🔊</BasicLink>
           </div>
         </div>
       )}

@@ -3,9 +3,11 @@
 import "../style.css";
 
 import useLaolunQuery from "../../api/useLaolunQuery";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import useLaolunAudioUploadMutation from "../../api/useLaolunAudioUploadMutation";
+import useMicrophone from "./useMicrophone";
 
+// Favours returning elements toward the end of the array
 function getWeightedRandomElement<T>(arr: T[]): T | undefined {
   if (arr.length === 0) {
     return undefined;
@@ -14,165 +16,129 @@ function getWeightedRandomElement<T>(arr: T[]): T | undefined {
   return arr[Math.max(get1(), get1())];
 }
 
-export default function Chinese() {
+export default function Page() {
   const laolunQuery = useLaolunQuery();
-  const phrases = laolunQuery.data?.phrases ?? [];
-
-  const getPhraseText = () => {
-    const randomPhrase = getWeightedRandomElement(phrases);
-    if (!randomPhrase) {
-      return "";
+  const uploadMutation = useLaolunAudioUploadMutation();
+  const {
+    audioUrl,
+    blob,
+    isNotAllowed,
+    isInactive,
+    isRecording,
+    reset,
+    start,
+    stop,
+  } = useMicrophone();
+  const [phraseText, setPhraseText] = useState<string>();
+  const [noticeText, setNoticeText] = useState<string>();
+  const [count, setCount] = useState(0);
+  const loadNewPhrase = () => {
+    const phrases = laolunQuery.data?.phrases;
+    if (phrases === undefined) {
+      return;
     }
-    const text = randomPhrase.parts
-      .map((segment) => segment[Math.floor(Math.random() * segment.length)])
+    const samplePhrase = getWeightedRandomElement(phrases);
+    if (!samplePhrase) {
+      return;
+    }
+    const samplePhraseText = samplePhrase.parts
+      .map((part) => part[Math.floor(Math.random() * part.length)])
       .join("");
-    return text;
+    setPhraseText(samplePhraseText);
   };
 
-  const [isAllowed, setIsAllowed] = useState(false);
-  const [phraseText = "", setPhraseText] = useState<string>();
-
-  useEffect(() => {
-    setPhraseText(getPhraseText());
-  }, [phrases]);
-
-  if (!isAllowed) {
-    return (
-      <main id="zhongwen">
-        <button onClick={() => setIsAllowed(true)}>
-          Request microphone permissions
-        </button>
-      </main>
-    );
-  }
-  return (
-    <main id="zhongwen">
-      <div style={{ fontSize: "2em", marginBlock: "2em" }}>{phraseText}</div>
-      <Aud
-        title={phraseText}
-        requestNew={() => setPhraseText(getPhraseText())}
-      />
-    </main>
-  );
-}
-
-const Aud = ({
-  title,
-  requestNew,
-}: {
-  title: string;
-  requestNew: () => void;
-}) => {
-  const uploadMutation = useLaolunAudioUploadMutation();
-
-  const alreadyRequested = useRef(false);
-  const recorder = useRef<MediaRecorder | undefined>();
-  const chunks = useRef<Blob[]>([]);
-  const [audioUrl, setAudioUrl] = useState<string>();
-
   const upload = () => {
-    const blob = new Blob(chunks.current, {
-      type: "audio/ogg; codecs=opus",
-    });
+    if (!blob || !phraseText) {
+      return;
+    }
     uploadMutation.mutate(
-      { title, blob },
+      { title: phraseText, blob },
       {
-        onSettled: () => {
+        onSuccess: () => {
           reset();
-          requestNew();
+          setCount((c) => c + 1);
+        },
+        onError: (err) => {
+          setNoticeText("Upload failed. Something went wrong");
+          console.error(err);
         },
       }
     );
   };
 
-  const reset = () => {
-    chunks.current = [];
-    setAudioUrl(undefined);
+  const handleKeyDown = (e) => {
+    if (e.code === "Space") {
+      start();
+      e.preventDefault();
+    }
+  };
+  const handleKeyUp = (e) => {
+    if (e.code === "Space") {
+      stop();
+    }
+    if (e.code === "Backspace") {
+      reset();
+    }
+    if (e.code === "Enter") {
+      upload();
+    }
   };
 
-  const getNewStuff = () => {
-    reset();
-    requestNew();
-  };
-
-  useEffect(() => {
-    if (!navigator.mediaDevices) {
-      console.log("ffuck");
-      return;
-    }
-    if (alreadyRequested.current) {
-      return;
-    }
-    alreadyRequested.current = true;
-    navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-      recorder.current = new MediaRecorder(stream);
-      recorder.current.ondataavailable = (e) => {
-        chunks.current.push(e.data);
-      };
-      recorder.current.onstop = (e) => {
-        const blob = new Blob(chunks.current, {
-          type: "audio/ogg; codecs=opus",
-        });
-        chunks.current = [];
-        setAudioUrl(URL.createObjectURL(blob));
-      };
-    });
-  }, []);
-
-  useEffect(() => {
-    const startRecorder = (e) => {
-      if (
-        !recorder.current ||
-        e.code !== "Space" ||
-        recorder.current?.state === "recording"
-      ) {
-        return;
-      }
-      recorder.current?.start();
-    };
-    const stopRecorder = (e) => {
-      if (
-        !recorder.current ||
-        e.code !== "Space" ||
-        recorder.current?.state !== "recording"
-      ) {
-        return;
-      }
-      recorder.current?.stop();
-    };
-    document.addEventListener("keydown", startRecorder);
-    document.addEventListener("keyup", stopRecorder);
-    () => {
-      document.removeEventListener("keydown", startRecorder);
-      document.removeEventListener("keyup", stopRecorder);
-    };
-  }, []);
+  if (isNotAllowed) {
+    return (
+      <div>
+        <h1>Recording is not allowed</h1>
+        <p>
+          This could be because the browser does not allow it, or because the
+          user has not given permission.
+        </p>
+        <p>
+          This site is served with <code>http</code>, not <code>https</code>,
+          which limits what permissions we get by default.
+        </p>
+      </div>
+    );
+  }
 
   return (
-    <div className="audiorecorder">
-      <button onClick={getNewStuff}>New phrase</button>
-      {!audioUrl && (
-        <>
-          <span> </span>
-          <span>Hold down Space to record this phrase. Release when done.</span>
-          <span> </span>
-        </>
-      )}
+    <main id="audio">
+      {noticeText && <div style={{ color: "red" }}>{noticeText}</div>}
+      <button
+        className="audio-phrase-button"
+        onKeyDown={handleKeyDown}
+        onKeyUp={handleKeyUp}
+        onClick={loadNewPhrase}
+      >
+        {phraseText || "..."}
+      </button>
+      <div className="buttons">
+        <button onClick={loadNewPhrase}>
+          {phraseText ? "Load new phrase" : "Load phrase"}
+        </button>
+        <button
+          onClick={start}
+          disabled={isRecording || phraseText === undefined}
+        >
+          Start
+        </button>
+        <button onClick={stop} disabled={isInactive}>
+          Stop
+        </button>
+        <button onClick={reset}>Reset</button>
+        <button onClick={upload} disabled={(blob && phraseText) === undefined}>
+          Upload
+        </button>
+      </div>
+      <p>recorder is {isInactive ? "stopped" : "recording"}</p>
       {audioUrl && (
-        <>
-          <a href={audioUrl} target="_blank">
-            Listen
-          </a>
-          <button onClick={reset}>Discard</button>
-          {uploadMutation.isError ? (
-            "Something went wrong uploading to the server"
-          ) : uploadMutation.isPending ? (
-            "Uploading"
-          ) : (
-            <button onClick={upload}>Upload recorded phrase</button>
-          )}
-        </>
+        <p>
+          audio recorded
+          <audio src={audioUrl} autoPlay loop />
+        </p>
       )}
-    </div>
+      <p>
+        {count} succesful {count === 1 ? "upload" : "uploads"}
+      </p>
+    </main>
   );
-};
+}

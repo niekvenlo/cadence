@@ -41,7 +41,7 @@ export default function Chinese() {
   }
 
   function save() {
-    if (entries === undefined || entries.length > 0) {
+    if (entries === undefined || entries.length < 1) {
       return;
     }
     const pinyinCopy = { ...pinyin };

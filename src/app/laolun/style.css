@@ -367,7 +367,7 @@ main#zhongwen {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    l &:hover {
+    &:hover {
       box-shadow: inset 0 0 0 2px var(--primary-color),
         inset 0 0 0 4px var(--on-primary-color);
     }
@@ -652,12 +652,82 @@ main#zhongwen {
   }
 }
 
-.audiorecorder {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+#audio {
+  text-align: center;
 
-  a {
-    border: 1px lightblue solid;
-    text-align: center;
+  button.audio-phrase-button {
+    border-radius: 10em;
+    scale: 0.9;
+    color: transparent;
+    font-size: 2em;
+    margin: 1em;
+    padding: 1em;
+    background: white;
+    position: relative;
+    min-width: 30ch;
+    transition: scale 0.1s;
+    &::before {
+      position: absolute;
+      color: var(--accent-color);
+      top: 0;
+      left: 0;
+      content: "Focus on me";
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 1;
+    }
+    &:focus {
+      scale: 1;
+      color: black;
+      opacity: 1;
+      outline: none;
+      box-shadow: 0px 0px 1px 5px var(--accent-color),
+        0px 0px 1px 4px var(--accent-color);
+      &::before {
+        content: "";
+      }
+    }
+  }
+  .buttons {
+    display: grid;
+    gap: 0.2em;
+    grid-template-columns: repeat(5, 1fr);
+    justify-items: center;
+
+    button {
+      font-size: 1rem;
+      margin: 0;
+      padding: 0 1.5ch;
+      width: fit-content;
+      min-width: 10ch;
+      border-radius: 3em;
+      border: 2px white solid;
+      border-color: white;
+      background: #ddd;
+      color: var(--primary-color);
+      transition: border-color 100ms linear;
+      outline: none;
+      &:hover:not(:disabled) {
+        border-color: grey;
+      }
+      &:focus,
+      &:active {
+        border-color: var(--accent-color);
+      }
+      &:disabled {
+        background: #bbb;
+        border-color: #999;
+        opacity: 0.8;
+        cursor: not-allowed;
+      }
+    }
+
+    a {
+      border: 1px lightblue solid;
+      text-align: center;
+    }
   }
 }

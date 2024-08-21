@@ -90,7 +90,7 @@ export const uploadToLaolun = async ({
     {
       body: blob,
       method: "POST",
-      // headers: new Headers({ "content-type": "application/json" }),
+      headers: new Headers({ "content-type": "audio/ogg" }),
     }
   );
   return response.json();
