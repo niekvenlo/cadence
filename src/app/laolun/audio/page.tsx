@@ -139,6 +139,27 @@ export default function Page() {
       <p>
         {count} succesful {count === 1 ? "upload" : "uploads"}
       </p>
+      <div className="legend">
+        <ul>
+          <li>Click the button to load a new phrase</li>
+          <li>Keyboard hotkeys will only work if the button is selected.</li>
+          <li>
+            Hold <code>Space</code> to begin recording
+          </li>
+          <li>
+            Release <code>Space</code> to end the recording
+          </li>
+          <li>The recording will automatically play on a loop for review.</li>
+          <li>
+            Press <code>Enter</code> to upload the recording. If succesful this
+            will also load a new phrase.
+          </li>
+          <li>
+            Or press <code>Backspace</code> to delete and reset so you can
+            record again.
+          </li>
+        </ul>
+      </div>
     </main>
   );
 }

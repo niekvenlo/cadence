@@ -665,6 +665,7 @@ main#zhongwen {
     background: white;
     position: relative;
     min-width: 30ch;
+    border: none;
     transition: scale 0.1s;
     &::before {
       position: absolute;
@@ -689,6 +690,9 @@ main#zhongwen {
       &::before {
         content: "";
       }
+    }
+    &:active {
+      scale: 1.01;
     }
   }
   .buttons {
@@ -729,5 +733,10 @@ main#zhongwen {
       border: 1px lightblue solid;
       text-align: center;
     }
+  }
+  .legend {
+    position: absolute;
+    bottom: 1em;
+    text-align: left;
   }
 }
