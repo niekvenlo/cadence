@@ -85,12 +85,13 @@ export const uploadToLaolun = async ({
   title: string;
   blob: Blob;
 }) => {
+  const formData = new FormData();
+  formData.append("file", blob, title);
   const response = await fetch(
-    `http://192.168.2.14:3333/api/v1/uploadLaolunRecording?title=${title}`,
+    "http://192.168.2.14:3333/api/v1/uploadLaolunRecording",
     {
-      body: blob,
+      body: formData,
       method: "POST",
-      headers: new Headers({ "content-type": "audio/ogg" }),
     }
   );
   return response.json();

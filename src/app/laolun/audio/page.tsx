@@ -32,6 +32,7 @@ export default function Page() {
   const [phraseText, setPhraseText] = useState<string>();
   const [noticeText, setNoticeText] = useState<string>();
   const [count, setCount] = useState(0);
+
   const loadNewPhrase = () => {
     const phrases = laolunQuery.data?.phrases;
     if (phrases === undefined) {

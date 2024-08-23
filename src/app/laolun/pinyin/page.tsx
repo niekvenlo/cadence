@@ -34,7 +34,7 @@ export default function Chinese() {
   function addNewPinyin(pastedText: string) {
     const entries = pastedText
       .split(/,\s?/)
-      .map((f) => f.trim())
+      .map((f) => f.trim().toLowerCase())
       .filter((f) => f)
       .map(breakRawPinyin);
     setEntries(entries);

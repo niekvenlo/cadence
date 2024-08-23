@@ -52,7 +52,7 @@ function PhraseEditor({ phrase, pinyin, phrases }) {
       (p) => p.label === phrase.label
     );
     if (foundPhraseIdx === -1) {
-      phrasesClone.push({ phrase, label: safeLabel });
+      phrasesClone.push({ ...phrase, label: safeLabel });
     } else {
       const oldPhrase = phrasesClone[foundPhraseIdx];
       phrasesClone[foundPhraseIdx] = {
@@ -194,7 +194,6 @@ const Column = ({
     <>
       <div className={cx("column-wrapper", { isWide, isEmpty })}>
         <TextArea
-          key={part.join()}
           value={part.join("\n")}
           onChange={(e) => setPart(splitPartStringIntoPart(e.target.value))}
           onDragGetChunk={dragColumn}
